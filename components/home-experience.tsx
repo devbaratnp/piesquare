@@ -187,7 +187,7 @@ function CapabilitiesScene() {
         </div>
         <div className="capability-list">
           {capabilities.map((item, index) => (
-            <Link className="capability-row" key={item} href={capabilityRoutes[index].href}>
+            <Link className="capability-row editorial-reveal" key={item} href={capabilityRoutes[index].href}>
               <span>0{index + 1}</span>
               <strong>{item}</strong>
               <span className="capability-row__meta">
@@ -392,7 +392,7 @@ function ProjectsScene() {
         </div>
         <div className="evidence-wall">
           {projects.map(([src, meta, title, copy], index) => (
-            <article className={'evidence-card evidence-card--' + (index + 1)} key={src}>
+            <article className={'evidence-card evidence-card--' + (index + 1) + ' editorial-reveal'} key={src}>
               <div className="evidence-card__image">
                 <Image src={src} alt={title} fill sizes="(max-width: 720px) 100vw, 33vw" />
               </div>

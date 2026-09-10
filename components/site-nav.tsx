@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { primaryNav } from '@/data/site';
 
-export function SiteNav() {
+type SiteNavProps = Readonly<{
+  tone?: 'dark' | 'paper';
+}>;
+
+export function SiteNav({ tone = 'dark' }: SiteNavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname() ?? '/';
@@ -29,7 +33,7 @@ export function SiteNav() {
   const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
 
   return (
-    <header className={`site-nav-shell ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
+    <header className={`site-nav-shell ${tone === 'paper' ? 'site-nav-shell--paper' : ''} ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
       <Link className="brand-lockup" href="/" aria-label="Pie Square Technologies home">
         <span className="brand-lockup__mark" aria-hidden="true"><i /><i /><i /></span>
         <span className="brand-lockup__type"><b>PIE SQUARE</b><small>TECHNOLOGIES</small></span>
