@@ -1065,8 +1065,19 @@ img {
 
 .capabilities-scene__intro {
   display: grid;
+  grid-template-columns: minmax(160px, .5fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 30px;
   justify-items: end;
   margin: 15vh 0 13vh;
+}
+
+.capabilities-scene__aside {
+  max-width: 230px;
+  margin: 14px 0 0;
+  color: var(--steel-light);
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 .capabilities-scene__intro .display-title {
@@ -2714,6 +2725,10 @@ img {
   .capabilities-scene__intro {
     justify-items: start;
     margin: 12vh 0 8vh;
+  }
+
+  .capabilities-scene__intro {
+    grid-template-columns: 1fr;
   }
 
   .capabilities-scene__intro .display-title {
