@@ -31,3 +31,5 @@ Supplied project proof is under `public/media/projects/`, and the supplied compa
 Keep effects reversible, preserve reduced-motion behavior, use optimized `next/image` assets, and test anchors, image loading, mobile overflow, and console errors before opening a pull request. See `AGENTS.md` for the detailed contributor guide.
 
 The project inquiry form is intentionally presentation-only until a backend is connected; direct email and phone links remain available on the contact route.
+
+# piesquare

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Pie Square Technologies</title>
+  <rect width="64" height="64" fill="#050505"/>
+  <path d="M16 16h15c11 0 17 5 17 14s-6 14-17 14h-6v8h-9V16Zm9 8v12h6c5 0 8-2 8-6s-3-6-8-6h-6Z" fill="#e52420"/>
+</svg>

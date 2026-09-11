@@ -25,4 +25,22 @@ describe('SiteNav', () => {
     fireEvent.keyDown(window, { key: 'Escape' });
     expect(button).toHaveAttribute('aria-expanded', 'false');
   });
+
+  it('opens the project inquiry form in an in-page dialog', () => {
+    render(<SiteNav />);
+
+    fireEvent.click(screen.getByRole('button', { name: /discuss a project/i }));
+
+    expect(screen.getByRole('dialog', { name: /discuss a project/i })).toBeInTheDocument();
+    expect(screen.getByRole('form', { name: /project inquiry/i })).toBeInTheDocument();
+  });
+
+  it('closes the project inquiry dialog with Escape', () => {
+    render(<SiteNav />);
+
+    fireEvent.click(screen.getByRole('button', { name: /discuss a project/i }));
+    fireEvent.keyDown(window, { key: 'Escape' });
+
+    expect(screen.queryByRole('dialog', { name: /discuss a project/i })).not.toBeInTheDocument();
+  });
 });

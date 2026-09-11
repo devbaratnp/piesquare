@@ -52,6 +52,26 @@ test.describe('home experience', () => {
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
   });
 
+  test('opens the project inquiry form without leaving the current page', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(1_600);
+    await expect(page.locator('.loader')).toBeHidden();
+
+    const desktopDiscussButton = page.locator('.nav-project-link');
+    if (await desktopDiscussButton.isVisible()) {
+      await desktopDiscussButton.click();
+    } else {
+      await page.locator('.menu-toggle').click({ force: true });
+      await page.locator('.mobile-menu__project').click();
+    }
+
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.getByRole('dialog', { name: /discuss a project/i })).toBeVisible();
+    await expect(page.getByRole('form', { name: /project inquiry/i })).toBeVisible();
+    await page.getByRole('button', { name: /close project inquiry/i }).click();
+    await expect(page.getByRole('dialog', { name: /discuss a project/i })).toHaveCount(0);
+  });
+
   test('keeps the full story available with reduced motion', async ({ browser }) => {
     const context = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 390, height: 844 } });
     const page = await context.newPage();
@@ -89,9 +109,16 @@ test.describe('inner routes', () => {
       });
       await page.goto(route, { waitUntil: 'domcontentloaded' });
       await expect(page.locator('.desktop-nav')).toBeAttached();
+      await expect(page.locator('.custom-cursor')).toHaveCount(1);
       await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-      await expect(page.getByRole('link', { name: /discuss a project/i }).first()).toBeVisible();
+      const desktopDiscussButton = page.locator('.nav-project-link');
+      if (await desktopDiscussButton.isVisible()) {
+        await expect(desktopDiscussButton).toBeVisible();
+      } else {
+        await page.locator('.menu-toggle').click({ force: true });
+        await expect(page.locator('.mobile-menu__project')).toBeVisible();
+      }
       await expect(page.locator('.desktop-nav a[href="/projects"]')).toHaveAttribute('href', '/projects');
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
       await page.waitForTimeout(300);

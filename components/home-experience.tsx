@@ -10,7 +10,7 @@ import { useReducedMotion } from '@/components/motion/reduced-motion';
 import { SceneShell } from '@/components/scene-shell';
 import { SignalLine } from '@/components/signal-line';
 import { SiteNav } from '@/components/site-nav';
-import { CustomCursor } from '@/components/custom-cursor';
+import { DiscussProjectButton } from '@/components/discuss-project-button';
 import {
   capabilities,
   capabilityRoutes,
@@ -458,7 +458,7 @@ function FinalScene() {
         <h2 className="display-title">ONE PARTNER. MULTIPLE INFRASTRUCTURE <em>LAYERS.</em></h2>
         <h3 className="display-title display-title--secondary">BUILD THE NEXT CONNECTION <em>WITH US.</em></h3>
         <div className="final-scene__actions">
-          <Link className="button button--primary" href="/contact" data-cursor="start">Discuss a Project ↗</Link>
+          <DiscussProjectButton className="button button--primary" dataCursor="start">Discuss a Project ↗</DiscussProjectButton>
           <a className="button button--ghost" href={'mailto:' + siteContact.email} data-cursor="contact">{siteContact.email}</a>
           <a className="button button--ghost" href={siteContact.phoneHref} data-cursor="contact">{siteContact.phone}</a>
         </div>
@@ -521,7 +521,6 @@ export function HomeExperience() {
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <Loader />
       <SiteNav />
-      <CustomCursor />
       <SignalLine state={signalState} />
       <MotionBridge onState={setSignalState} />
       <main id="main-content" className="experience">

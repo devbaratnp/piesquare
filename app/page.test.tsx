@@ -86,6 +86,6 @@ describe('home page shell', () => {
     for (const label of ['Home', 'Company', 'Capabilities', 'Projects', 'Clients', 'Contact']) {
       expect(navigation.getByRole('link', { name: new RegExp(`^${label}$`, 'i') })).toBeInTheDocument();
     }
-    expect(screen.getAllByRole('link', { name: /discuss a project/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('button', { name: /discuss a project/i }).length).toBeGreaterThan(0);
   });
 });

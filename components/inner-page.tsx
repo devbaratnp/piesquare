@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { SiteNav } from '@/components/site-nav';
 import { SignalLine } from '@/components/signal-line';
+import { DiscussProjectButton } from '@/components/discuss-project-button';
 import { primaryNav, siteContact } from '@/data/site';
 
 type InnerPageProps = Readonly<{
@@ -42,7 +43,7 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
             <h1 id="inner-page-title">{title}</h1>
             <p className="inner-page__lede">{lede}</p>
             <div className="inner-page__actions">
-              <Link className="button button--primary" href="/contact">Discuss a Project ↗</Link>
+              <DiscussProjectButton className="button button--primary">Discuss a Project ↗</DiscussProjectButton>
               <Link className="button button--ghost" href="/capabilities">Explore capabilities ↗</Link>
             </div>
             {image && (

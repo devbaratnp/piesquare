@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { primaryNav } from '@/data/site';
+import { DiscussProjectButton } from '@/components/discuss-project-button';
 
 type SiteNavProps = Readonly<{
   tone?: 'dark' | 'paper';
@@ -46,9 +47,9 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
         })}
       </nav>
 
-      <Link className="nav-project-link" href="/contact" data-cursor="start">
+      <DiscussProjectButton className="nav-project-link" dataCursor="start">
         <span>Discuss a Project</span><b aria-hidden="true">↗</b>
-      </Link>
+      </DiscussProjectButton>
 
       <button className="menu-toggle" type="button" aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen((value) => !value)}>
         <span>{open ? 'Close' : 'Menu'}</span><i aria-hidden="true" />
@@ -61,7 +62,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
             const active = isActive(item.href);
             return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={() => setOpen(false)}><span>0{index + 1}</span>{item.label}</Link>;
           })}
-          <Link href="/contact" onClick={() => setOpen(false)}><span>07</span>Discuss a Project</Link>
+          <DiscussProjectButton className="mobile-menu__project" dataCursor="start" onOpen={() => setOpen(false)}><span>07</span>Discuss a Project</DiscussProjectButton>
         </nav>
       </div>
     </header>

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { DiscussProjectButton } from '@/components/discuss-project-button';
 
 type ServiceDetailProps = Readonly<{
   lifecycle: ReadonlyArray<string>;
@@ -47,7 +48,7 @@ export function ServiceDetail({ lifecycle, scope, proof, relatedHref = '/project
       )}
       <p className="inner-page__proof">{proof}</p>
       <div className="inner-page__actions">
-        <Link className="button button--primary" href="/contact">Discuss a Project ↗</Link>
+        <DiscussProjectButton className="button button--primary">Discuss a Project ↗</DiscussProjectButton>
         <Link className="button button--ghost" href={relatedHref}>View related projects ↗</Link>
       </div>
     </>
