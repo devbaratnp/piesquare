@@ -1,43 +1,44 @@
 # Repository Guidelines
 
-## Project Structure & Architecture
+Next.js App Router marketing site for Pie Square Technologies. TypeScript, GSAP/ScrollTrigger + Lenis, Tailwind v4. No backend; no CI.
 
-This is a Next.js App Router homepage for Pie Square Technologies.
-
-- `app/` contains the route, root layout, global CSS, metadata, and robots file.
-- `components/home-experience.tsx` composes the continuous scene sequence; `components/scenes/` is reserved for future scene extraction.
-- `components/motion/` owns Lenis, GSAP/ScrollTrigger, and reduced-motion helpers. `components/signal-line.tsx` renders the shared red signal state system.
-- `data/site.ts` is the source of truth for contact details, capabilities, project proof, metrics, clients, and telecom phases.
-- `lib/motion.ts` contains typed signal states and pure motion helpers.
-- `public/media/cinematic/` contains generated cinematic stills; `public/media/projects/` contains supplied project proof images.
-- `creative/` and `docs/` contain the approved storyboard, motion system, asset manifest, component research, prototype, and implementation plan.
-
-## Build, Test, and Development Commands
+## Commands (PowerShell)
 
 ```powershell
-npm run dev             # Start the local Next.js server
-npm run build           # Create and type-check the production build
-npm run start           # Serve the production build
-npm run lint            # Run ESLint
-npm test -- --run       # Run Vitest unit/component tests
-npm run test:e2e        # Run Playwright desktop/mobile smoke tests
+npm run dev             # local server on :3000
+npm run build           # production build + type-check (uses --webpack, keep the flag)
+npm run lint            # ESLint (next core-web-vitals + typescript)
+npm test -- --run --no-file-parallelism --maxWorkers=1   # reliable Vitest run on constrained machines
+npx vitest run <path>   # single test file, e.g. npx vitest run components/site-nav.test.tsx
+npm run test:e2e        # builds, then serves :3100 and runs Playwright (chromium + Pixel 5, workers: 1)
 ```
 
-## Coding Style & Naming
+`npm run test:e2e` is expensive (full build first). Prefer targeted Vitest, then lint; run e2e only when scenes, nav, images, or layout change.
 
-Use two-space indentation, TypeScript types for shared data, and small React components. Use kebab-case CSS classes (`.project-card`), camelCase functions (`normalizeProgress`), and uppercase names for signal-state constants. Keep motion effects guarded by `useReducedMotion()` and clean up GSAP/Lenis listeners in effects.
+## Architecture
 
-## Testing Guidelines
+- `app/page.tsx` mounts `components/home-experience.tsx` (homepage scene sequence). `components/inner-page.tsx` is the paper-style shell for all non-home routes.
+- `data/site.ts` is the source of truth for business content and route records — edit copy/data there, not in components.
+- `lib/motion.ts` defines the named signal states consumed by `components/signal-line.tsx` (global overlay). Motion setup lives in `components/motion/`.
+- Path alias `@/*` maps to repo root (`tsconfig.json`). `next.config.ts` pins `experimental.cpus: 1` — do not remove.
+- Contact / project-inquiry forms are presentation-only by design (README). Do not wire a backend unasked; email/phone/WhatsApp links are the real contact path.
+- Root `index.html`, `script.js`, `styles.css` are a legacy static prototype. Never edit; the Next.js app is the source of truth.
+- ESLint ignores `creative/prototypes/**` — prototype code there is exempt from lint.
 
-Vitest tests live beside the module they cover (`*.test.ts`, `*.test.tsx`). Playwright tests live in `tests/`. When changing scenes or motion, verify anchors, image loading, mobile layout, no horizontal overflow, console errors, keyboard access, and reduced-motion behavior.
+## Motion & style
 
-## Commits & Pull Requests
+- Guard all motion with `useReducedMotion()`; reduced-motion must still render every scene anchor (`#top`, `#company`, `#expertise`, `#telecom`, `#rf`, `#fiber`, `#energy`, `#digital`, `#impact`, `#projects`, `#clients`, `#why`, `#contact`). The e2e suite asserts this.
+- Clean up GSAP/ScrollTrigger/Lenis listeners in effect teardowns.
+- Two-space indent, small components, typed shared data. Images via `next/image` with paths under `/media/` (`public/media/...`), accurate `alt`, `aria-hidden="true"` on decorative graphics. Do not add UI libraries without checking `creative/` component research first.
 
-Use short imperative Conventional Commit-style messages, for example `fix: prevent mobile rail overflow` or `docs: update architecture guide`. Pull requests should explain the visual/behavioral change, list checks run, link an issue when available, and include screenshots or a short recording for UI changes.
+## Testing
 
-## Assets & Configuration
+- Vitest files colocate with modules (`*.test.ts(x)`); jsdom with a `matchMedia` mock in `vitest.setup.ts`.
+- Playwright specs live in `tests/site.spec.ts` and enforce: zero console errors, zero broken images on inner routes, no horizontal overflow (`scrollWidth <= viewport + 1`), exactly one visible `h1`, working desktop + mobile nav. Verify these manually when touching scenes or layout.
 
-Do not commit secrets, `.next/`, test artifacts, or generated build output. Keep image paths rooted at `/media/`, use meaningful filenames and accurate `alt` text, and mark decorative graphics `aria-hidden="true"`. Do not add new UI libraries without checking the approved component research first.
+## Commits & PRs
+
+Short imperative Conventional Commits (`fix: prevent mobile rail overflow`). PRs: visual/behavioral change, checks run, screenshots or short recording for UI changes.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

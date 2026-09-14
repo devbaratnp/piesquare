@@ -1,19 +1,25 @@
 import type { Metadata } from 'next';
-import { Instrument_Sans, Young_Serif } from 'next/font/google';
+import { IBM_Plex_Mono, Inter, Inter_Tight } from 'next/font/google';
 import { siteContact } from '@/data/site';
 import { CustomCursor } from '@/components/custom-cursor';
 import './globals.css';
 
-const youngSerif = Young_Serif({
+const interTight = Inter_Tight({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: '400',
+  weight: ['700', '800', '900'],
 });
 
-const instrumentSans = Instrument_Sans({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-body',
   weight: ['400', '500', '600', '700'],
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['500', '600'],
 });
 
 export const metadata: Metadata = {
@@ -55,7 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   };
 
   return (
-    <html lang="en" className={`${youngSerif.variable} ${instrumentSans.variable}`}>
+    <html lang="en" className={`${interTight.variable} ${inter.variable} ${plexMono.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <CustomCursor />

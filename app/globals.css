@@ -14,9 +14,9 @@
   --line-dark: rgba(241, 238, 232, .18);
   --page-gutter: clamp(18px, 4vw, 72px);
   --page-max: 1440px;
-  --display: var(--font-display), "Young Serif", serif;
-  --body: var(--font-body), "Instrument Sans", sans-serif;
-  --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  --display: var(--font-display), "Inter Tight", "Inter", sans-serif;
+  --body: var(--font-body), "Inter", sans-serif;
+  --mono: var(--font-mono), "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
   --ease-heavy: cubic-bezier(.16, 1, .3, 1);
   --z-content: 1;
   --z-overlay: 10;
@@ -138,7 +138,8 @@ img {
 .eyebrow {
   margin: 0;
   color: var(--steel-light);
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: 600;
   line-height: 1.45;
 }
 
@@ -154,10 +155,10 @@ img {
   margin: 0;
   color: inherit;
   font-family: var(--display);
-  font-size: clamp(4rem, 9.6vw, 10.8rem);
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
   font-weight: 800;
-  letter-spacing: -.075em;
-  line-height: .84;
+  letter-spacing: -.02em;
+  line-height: 1.05;
   text-transform: uppercase;
   text-wrap: balance;
 }
@@ -414,14 +415,14 @@ img {
 }
 
 .brand-lockup__type b {
-  font: 700 14px/1 var(--body);
-  letter-spacing: .02em;
+  font: 800 16px/1 var(--body);
+  letter-spacing: .05em;
 }
 
 .brand-lockup__type small {
   color: var(--steel-light);
-  font: 8px/1 var(--mono);
-  letter-spacing: .2em;
+  font: 500 10px/1.2 var(--mono);
+  letter-spacing: .25em;
 }
 
 .desktop-nav {
@@ -440,9 +441,9 @@ img {
   padding: 0;
   background: transparent;
   color: var(--steel-light);
-  font: 10px/1 var(--mono);
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  font: 500 14px/1 var(--body);
+  letter-spacing: 0;
+  text-transform: none;
   transition: color .25s ease;
 }
 
@@ -512,7 +513,7 @@ img {
   min-height: 42px;
   padding: 0 12px;
   color: var(--steel-light);
-  font-size: 9px;
+  font-size: 13px;
 }
 
 .nav-services__menu a:hover,
@@ -803,8 +804,8 @@ img {
 .contact-dialog__header h2 {
   max-width: 580px;
   margin: 14px 0 12px;
-  font: 800 clamp(3rem, 7vw, 6.5rem)/.84 var(--display);
-  letter-spacing: -.075em;
+  font: 800 clamp(2.25rem, 5vw, 4rem)/1.05 var(--display);
+  letter-spacing: -.02em;
   text-transform: uppercase;
 }
 
@@ -1050,7 +1051,7 @@ img {
 .hero-scene__title {
   max-width: 1040px;
   min-width: 0;
-  font-size: clamp(4rem, 7.2vw, 8.5rem);
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
 }
 
 .hero-scene__title span {
@@ -1196,7 +1197,7 @@ img {
 
 .logo-carousel__content .display-title {
   margin-top: 22px;
-  font-size: clamp(4rem, 8.4vw, 9.7rem);
+  font-size: clamp(1.875rem, 4vw, 3rem);
 }
 
 .logo-carousel__description {
@@ -1438,8 +1439,8 @@ img {
 }
 
 .capability-row strong {
-  font: 700 clamp(2.5rem, 5.8vw, 7.4rem)/.82 var(--display);
-  letter-spacing: -.075em;
+  font: 800 clamp(1.5rem, 3vw, 2.5rem)/1 var(--display);
+  letter-spacing: -.02em;
   text-transform: uppercase;
 }
 
@@ -1648,7 +1649,7 @@ img {
 .rf-scene__layout .display-title {
   max-width: 800px;
   margin-top: 24px;
-  font-size: clamp(3.9rem, 7.1vw, 8.8rem);
+  font-size: clamp(1.875rem, 4vw, 3rem);
 }
 
 .rf-scene__body {
@@ -1882,8 +1883,8 @@ img {
 .fiber-number {
   margin: 44px 0 28px;
   color: var(--ink);
-  font: 800 clamp(7rem, 17vw, 19rem)/.72 var(--display);
-  letter-spacing: -.12em;
+  font: 800 clamp(3rem, 6vw, 4.5rem)/1 var(--display);
+  letter-spacing: -.02em;
 }
 
 .fiber-number span {
@@ -1895,7 +1896,7 @@ img {
 
 .fiber-scene .display-title {
   max-width: 910px;
-  font-size: clamp(3.2rem, 6.7vw, 7.8rem);
+  font-size: clamp(1.875rem, 4vw, 3rem);
 }
 
 .fiber-scene__submedia {
@@ -1954,7 +1955,7 @@ img {
 .energy-scene__layout .display-title {
   max-width: 760px;
   margin-top: 25px;
-  font-size: clamp(3.7rem, 7vw, 8rem);
+  font-size: clamp(1.875rem, 4vw, 3rem);
 }
 
 .energy-scene__body {
@@ -2006,8 +2007,8 @@ img {
 
 .energy-scene__spec strong {
   color: var(--signal);
-  font: 800 clamp(3.5rem, 6vw, 6.5rem)/.75 var(--display);
-  letter-spacing: -.1em;
+  font: 800 clamp(2.5rem, 5vw, 4rem)/1 var(--display);
+  letter-spacing: -.02em;
 }
 
 .energy-scene__spec span {
@@ -2045,7 +2046,7 @@ img {
 .digital-scene__layout .display-title {
   max-width: 920px;
   margin: 15vh 0 0 auto;
-  font-size: clamp(4.3rem, 10.7vw, 12.5rem);
+  font-size: clamp(2.25rem, 5vw, 4rem);
   text-align: right;
 }
 
@@ -2165,8 +2166,8 @@ img {
 
 .impact-stat strong {
   color: var(--ink);
-  font: 800 clamp(3.8rem, 7.7vw, 9.6rem)/.72 var(--display);
-  letter-spacing: -.11em;
+  font: 800 clamp(1.75rem, 3.5vw, 2.5rem)/1 var(--display);
+  letter-spacing: -.02em;
   white-space: nowrap;
 }
 
@@ -2214,7 +2215,7 @@ img {
 
 .projects-scene__head .display-title {
   max-width: 990px;
-  font-size: clamp(4rem, 8.7vw, 10rem);
+  font-size: clamp(1.875rem, 4vw, 3rem);
 }
 
 .projects-scene__head > span {
@@ -2328,7 +2329,7 @@ img {
 
 .clients-scene__layout .display-title {
   margin-top: 34px;
-  font-size: clamp(4rem, 8vw, 9.4rem);
+  font-size: clamp(1.875rem, 4vw, 3rem);
 }
 
 .clients-scene__names {
@@ -2380,7 +2381,7 @@ img {
 
 .why-scene__layout .display-title {
   margin: 34px 0 9vh;
-  font-size: clamp(4.2rem, 8vw, 9rem);
+  font-size: clamp(1.875rem, 4vw, 3rem);
 }
 
 .why-scene__grid {
@@ -2436,13 +2437,13 @@ img {
 .final-scene__layout > .display-title {
   max-width: 1200px;
   margin: 9vh 0 7vh;
-  font-size: clamp(4rem, 9.9vw, 12.5rem);
+  font-size: clamp(2.25rem, 5vw, 4rem);
 }
 
 .final-scene__layout .display-title--secondary {
   max-width: 920px;
   margin: 0 0 7vh auto;
-  font-size: clamp(2.6rem, 6vw, 7rem);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
   text-align: right;
 }
 
@@ -2536,8 +2537,8 @@ img {
 .inner-page__hero h1 {
   max-width: 1080px;
   margin: 22px 0 22px;
-  font: 800 clamp(4rem, 9vw, 10.5rem)/.82 var(--display);
-  letter-spacing: -.08em;
+  font: 800 clamp(2.25rem, 5vw, 4.5rem)/1.05 var(--display);
+  letter-spacing: -.02em;
   text-transform: uppercase;
   text-wrap: balance;
 }
@@ -3786,7 +3787,7 @@ img {
   }
 
   .display-title {
-    font-size: clamp(3.25rem, 15vw, 6.8rem);
+    font-size: clamp(2rem, 9vw, 2.75rem);
   }
 
   .hero-scene {
@@ -3809,7 +3810,7 @@ img {
   }
 
   .hero-scene__title {
-    font-size: clamp(2.8rem, 12.8vw, 5.7rem);
+    font-size: clamp(2.25rem, 10vw, 3rem);
     text-align: left;
   }
 
@@ -3864,7 +3865,7 @@ img {
   }
 
   .logo-carousel__content .display-title {
-    font-size: 14vw;
+    font-size: 9vw;
   }
 
   .logo-carousel__description {
@@ -3929,7 +3930,7 @@ img {
   }
 
   .capability-row strong {
-    font-size: 10vw;
+    font-size: 7vw;
   }
 
   .capability-row small {
@@ -3955,7 +3956,7 @@ img {
   }
 
   .telecom-scene__copy .display-title {
-    font-size: 14vw;
+    font-size: 9vw;
   }
 
   .telecom-scene__copy > p:not(.eyebrow) {
@@ -3989,7 +3990,7 @@ img {
   }
 
   .rf-scene__layout .display-title {
-    font-size: 13.4vw;
+    font-size: 9vw;
   }
 
   .rf-scene__visual {
@@ -4036,7 +4037,7 @@ img {
 
   .fiber-number {
     margin-top: 34px;
-    font-size: 25vw;
+    font-size: 14vw;
   }
 
   .fiber-number span {
@@ -4046,7 +4047,7 @@ img {
   }
 
   .fiber-scene .display-title {
-    font-size: 11vw;
+    font-size: 9vw;
   }
 
   .fiber-scene__submedia {
@@ -4072,7 +4073,7 @@ img {
   }
 
   .energy-scene__layout .display-title {
-    font-size: 13.5vw;
+    font-size: 9vw;
   }
 
   .energy-scene__points {
@@ -4095,7 +4096,7 @@ img {
 
   .digital-scene__layout .display-title {
     margin-top: 10vh;
-    font-size: 14.5vw;
+    font-size: 9.5vw;
     text-align: left;
   }
 
@@ -4141,7 +4142,7 @@ img {
   }
 
   .impact-stat strong {
-    font-size: 22vw;
+    font-size: 12vw;
   }
 
   .impact-stat span {
@@ -4159,7 +4160,7 @@ img {
   }
 
   .projects-scene__head .display-title {
-    font-size: 13.5vw;
+    font-size: 9vw;
   }
 
   .projects-scene__head > span {
@@ -4195,7 +4196,7 @@ img {
 
   .clients-scene__layout .display-title {
     margin-top: 30px;
-    font-size: 13.5vw;
+    font-size: 9vw;
   }
 
   .clients-scene__names {
@@ -4212,7 +4213,7 @@ img {
 
   .why-scene__layout .display-title {
     margin: 30px 0 7vh;
-    font-size: 14vw;
+    font-size: 9vw;
   }
 
   .why-scene__grid {
@@ -4231,12 +4232,12 @@ img {
 
   .final-scene__layout > .display-title {
     margin: 8vh 0 6vh;
-    font-size: 14vw;
+    font-size: 9.5vw;
   }
 
   .final-scene__layout .display-title--secondary {
     margin-bottom: 6vh;
-    font-size: 9vw;
+    font-size: 7vw;
   }
 
   .final-scene__actions {
@@ -4275,7 +4276,7 @@ img {
 
   .contact-dialog__header h2 {
     margin-top: 12px;
-    font-size: clamp(2.8rem, 14vw, 5rem);
+    font-size: clamp(2rem, 9vw, 3rem);
   }
 
   .contact-dialog__header p:last-child {
@@ -4304,7 +4305,7 @@ img {
   }
 
   .inner-page__hero h1 {
-    font-size: clamp(3rem, 13.5vw, 7.5rem);
+    font-size: clamp(2.25rem, 10vw, 3.5rem);
   }
 
   .inner-page__hero-media {

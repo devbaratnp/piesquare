@@ -127,8 +127,8 @@ test.describe('responsive foundation', () => {
       display: getComputedStyle(element).fontFamily,
       body: getComputedStyle(document.body).fontFamily,
     }));
-    expect(fontPair.display).toMatch(/Young Serif/);
-    expect(fontPair.body).toMatch(/Instrument Sans/);
+    expect(fontPair.display).toMatch(/Inter Tight/);
+    expect(fontPair.body).toMatch(/Inter/);
   });
 });
 
