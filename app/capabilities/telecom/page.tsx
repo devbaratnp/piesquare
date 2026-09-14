@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
 import { ServiceDetail } from '@/components/service-detail';
-import { serviceDetails } from '@/data/site';
+import { projects, serviceDetails } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'Telecom Infrastructure | Pie Square Technologies',
@@ -19,7 +19,15 @@ export default function TelecomCapabilityPage() {
       image={detail.image}
       imageAlt={detail.imageAlt}
     >
-      <ServiceDetail lifecycle={[...detail.lifecycle]} scope={[...detail.scope]} proof={detail.proof} image="/media/cinematic/T07-telecom-optimization.png" imageAlt="Field measurement during network optimization" />
+      <ServiceDetail
+        capabilities={[...detail.capabilities]}
+        lifecycle={[...detail.lifecycle]}
+        scope={[...detail.scope]}
+        proof={detail.proof}
+        relatedProjects={projects.filter((project) => detail.relatedProjectIds.includes(project.id))}
+        image="/media/cinematic/T07-telecom-optimization.png"
+        imageAlt="Field measurement during network optimization"
+      />
     </InnerPage>
   );
 }

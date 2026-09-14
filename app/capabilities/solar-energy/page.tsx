@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
 import { ServiceDetail } from '@/components/service-detail';
-import { serviceDetails } from '@/data/site';
+import { projects, serviceDetails } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'Solar & Energy Systems | Pie Square Technologies',
@@ -20,7 +20,13 @@ export default function SolarCapabilityPage() {
       imageAlt={detail.imageAlt}
       light
     >
-      <ServiceDetail lifecycle={[...detail.lifecycle]} scope={[...detail.scope]} proof={detail.proof} />
+      <ServiceDetail
+        capabilities={[...detail.capabilities]}
+        lifecycle={[...detail.lifecycle]}
+        scope={[...detail.scope]}
+        proof={detail.proof}
+        relatedProjects={projects.filter((project) => detail.relatedProjectIds.includes(project.id))}
+      />
     </InnerPage>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { InnerPage } from '@/components/inner-page';
-import { capabilityRoutes, deliveryFlow, serviceDetails } from '@/data/site';
+import { capabilityRoutes, impactStats, serviceDetails, serviceOverview } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'Capabilities | Pie Square Technologies',
@@ -11,24 +11,58 @@ export const metadata: Metadata = {
 export default function CapabilitiesPage() {
   return (
     <InnerPage
-      eyebrow="Capabilities / four pillars"
-      title="One partner, four capability layers"
-      lede="Telecom, optical fiber, solar and energy, and IT solutions — delivered through a single survey-to-maintenance operating model."
+      eyebrow="Capabilities / four divisions"
+      title="Built to Execute."
+      lede="People, equipment and systems sized for multi-site, multi-province delivery."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }]}
     >
-      <div className="inner-page__grid">
+      <p className="reference-kicker">Four Divisions. One Delivery Standard.</p>
+      <div className="service-overview-grid">
+        {serviceOverview.map((service) => (
+          <article className="service-overview-card" key={service.href}>
+            <span className="service-overview-card__number">{service.number}</span>
+            <h2>{service.title}</h2>
+            <p>{service.summary}</p>
+            <ul>
+              {service.scope.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+            <Link href={service.href}>Explore {service.title.replace(' Infrastructure', '').replace(' Networks', '')} ↗</Link>
+          </article>
+        ))}
+      </div>
+
+      <section className="capability-metrics" aria-label="Verified company capabilities">
+        <p className="inner-page__eyebrow">COMPANY CAPABILITIES</p>
+        <h2>Verified field metrics.</h2>
+        <div className="capability-metrics__grid">
+          {impactStats.map(([value, label]) => (
+            <article key={label}>
+              <strong>{value}</strong>
+              <span>{label}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="inner-page__card technical-workforce-card" aria-label="Technical workforce">
+        <p className="inner-page__eyebrow">TECHNICAL WORKFORCE</p>
+        <h2>People who know the field.</h2>
+        <div className="workforce-list">
+          {['Civil Engineers', 'Telecom Engineers', 'RF Engineers', 'Fiber Technicians', 'Solar Technicians', 'IT Engineers', 'Project Managers', 'Safety Personnel'].map((role) => (
+            <span key={role}>{role}</span>
+          ))}
+        </div>
+      </section>
+
+      <div className="inner-page__grid technical-resources-grid">
         {capabilityRoutes.map((route) => (
-          <section className="inner-page__card" key={route.slug} aria-label={route.label}>
-            <h2>{route.label}</h2>
-            <p>{serviceDetails[route.slug].intro}</p>
-            <p><Link href={route.href}>Explore {route.label} ↗</Link></p>
+          <section className="inner-page__card" key={route.slug} aria-label={`${route.label} technical resources`}>
+            <h2>{serviceDetails[route.slug].title}</h2>
+            <p>{serviceDetails[route.slug].scope.join(' · ')}</p>
+            <Link href={route.href}>View capability details ↗</Link>
           </section>
         ))}
       </div>
-      <section className="inner-page__card" aria-label="Delivery flow">
-        <h2>Delivery flow</h2>
-        <p>{deliveryFlow.join(' → ')}</p>
-      </section>
     </InnerPage>
   );
 }

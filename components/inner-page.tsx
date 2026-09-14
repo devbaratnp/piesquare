@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { SiteNav } from '@/components/site-nav';
 import { SignalLine } from '@/components/signal-line';
 import { DiscussProjectButton } from '@/components/discuss-project-button';
-import { primaryNav, siteContact } from '@/data/site';
+import { primaryNav, serviceNav, siteContact } from '@/data/site';
 
 type InnerPageProps = Readonly<{
   eyebrow: string;
@@ -16,7 +16,7 @@ type InnerPageProps = Readonly<{
   children: React.ReactNode;
 }>;
 
-export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt = '', light = false, children }: InnerPageProps) {
+export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt = '', light = true, children }: InnerPageProps) {
   return (
     <>
       <a className="skip-link" href="#inner-content">Skip to main content</a>
@@ -56,13 +56,36 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
         </div>
         <footer className="site-footer">
           <div className="page-wrap site-footer__inner">
-            <span>Pie Square Technologies / {siteContact.address}</span>
-            <nav aria-label="Footer navigation">
-              {primaryNav.map((item) => (
-                <Link key={item.href} href={item.href}>{item.label}</Link>
-              ))}
+            <div className="site-footer__descriptor">
+              <span>PIE SQUARE / INTEGRATED INFRASTRUCTURE &amp; TECHNOLOGY SOLUTIONS</span>
+              <p>End-to-end field engineering, deployment, installation, testing, commissioning and maintenance across telecom, fiber optic, solar energy and IT infrastructure in Nepal.</p>
+            </div>
+            <nav className="site-footer__routes" aria-label="Footer navigation">
+              <div>
+                <h2>SERVICES</h2>
+                {serviceNav.map((item) => (
+                  <Link key={item.href} href={item.href}>{item.label.replace(' Infrastructure', '').replace(' Networks', '')}</Link>
+                ))}
+              </div>
+              <div>
+                <h2>COMPANY</h2>
+                {primaryNav.filter((item) => ['About Us', 'Projects', 'Capabilities', 'Careers'].includes(item.label)).map((item) => (
+                  <Link key={item.href} href={item.href}>{item.label === 'About Us' ? 'About' : item.label}</Link>
+                ))}
+              </div>
+              <div>
+                <h2>RESOURCES</h2>
+                <Link href="/certifications">Certifications</Link>
+                <Link href="/contact">Contact</Link>
+              </div>
+              <div>
+                <h2>CONTACT</h2>
+                <span>{siteContact.address}</span>
+                <a href={siteContact.phoneHref}>{siteContact.phone}</a>
+                <a href={`mailto:${siteContact.email}`}>{siteContact.email}</a>
+              </div>
             </nav>
-            <span><a href={`mailto:${siteContact.email}`}>{siteContact.email}</a> / <a href={siteContact.phoneHref}>{siteContact.phone}</a></span>
+            <span className="site-footer__legal">© 2026 Pie Square Technologies / All Rights Reserved.</span>
           </div>
         </footer>
       </main>
