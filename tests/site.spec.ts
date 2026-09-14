@@ -29,7 +29,8 @@ test.describe('home experience', () => {
     await expect(page.locator('#top h1')).toHaveCount(1);
     await expect(page.locator('a[href="/contact"]:visible').first()).toBeVisible();
     await expect(page.locator('#company img[src*="nepal-telecom"], #company img[src*="ncell"], #company img[src*="cg-net"]')).toHaveCount(3);
-    await expect(page.locator('#clients img[src*="nepal-telecom"], #clients img[src*="ncell"], #clients img[src*="cg-net"]')).toHaveCount(3);
+    await expect(page.locator('#clients .clients-scene__names p')).toHaveCount(4);
+    await expect(page.locator('#clients .clients-scene__names')).toContainText('Nepal Telecom');
     await expect(page.locator('body')).toHaveCSS('overflow-x', 'hidden');
     const logoStage = page.locator('.logo-carousel__stage');
     await expect(logoStage.getByAltText('Nepal Telecom')).toBeAttached();

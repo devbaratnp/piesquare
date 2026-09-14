@@ -52,7 +52,7 @@ describe('home page shell', () => {
 
     // Supplied logo paths render (next/image rewrites src, so match the filename)
     const sources = Array.from(document.querySelectorAll('img')).map((img) => img.getAttribute('src') ?? '');
-    for (const file of ['nepal-telecom.jpg', 'ncell.png', 'cg-net.png']) {
+    for (const file of ['nepal-telecom-circle.png', 'ncell-circle.png', 'cg-net-circle.png']) {
       expect(sources.some((src) => src.includes(file))).toBe(true);
     }
 

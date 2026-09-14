@@ -83,11 +83,10 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
       </button>
 
       <div id="mobile-menu" className="mobile-menu" aria-hidden={!open}>
-        <p className="mono-label">Navigation / 00—09</p>
         <nav aria-label="Mobile navigation">
-          {primaryNav.slice(0, 2).map((item, index) => {
+          {primaryNav.slice(0, 2).map((item) => {
             const active = isActive(item.href);
-            return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={closeMenus}><span>0{index + 1}</span>{item.label}</Link>;
+            return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={closeMenus}>{item.label}</Link>;
           })}
           <div className="mobile-menu__services">
             <button
@@ -97,19 +96,19 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
               aria-controls="services-menu-mobile"
               onClick={() => setServicesOpen((value) => !value)}
             >
-              <span>03</span>Services <b aria-hidden="true">⌄</b>
+              Services <b aria-hidden="true">⌄</b>
             </button>
             <div id="services-menu-mobile" className="mobile-menu__services-list" hidden={!servicesOpen}>
-              {serviceNav.map((item, index) => (
-                <Link key={item.href} href={item.href} onClick={closeMenus}><span>0{index + 1}</span>{item.label}</Link>
+              {serviceNav.map((item) => (
+                <Link key={item.href} href={item.href} onClick={closeMenus}>{item.label}</Link>
               ))}
             </div>
           </div>
-          {primaryNav.slice(2).map((item, index) => {
+          {primaryNav.slice(2).map((item) => {
             const active = isActive(item.href);
-            return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={closeMenus}><span>0{index + 4}</span>{item.label}</Link>;
+            return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={closeMenus}>{item.label}</Link>;
           })}
-          <DiscussProjectButton className="mobile-menu__project" dataCursor="start" onOpen={closeMenus}><span>09</span>Request a Quote</DiscussProjectButton>
+          <DiscussProjectButton className="mobile-menu__project" dataCursor="start" onOpen={closeMenus}>Request a Quote</DiscussProjectButton>
         </nav>
       </div>
     </header>
