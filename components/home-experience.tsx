@@ -14,6 +14,7 @@ import { DiscussProjectButton } from '@/components/discuss-project-button';
 import {
   capabilities,
   capabilityRoutes,
+  clients,
   companyLogos,
   companyTimeline,
   digitalModules,
@@ -149,7 +150,6 @@ function CapabilitiesScene() {
         <SectionMarker number="02" label="One partner / four capability layers" light />
         <div className="capabilities-scene__intro">
           <div>
-            <p className="eyebrow">WHAT WE DELIVER</p>
             <p className="capabilities-scene__aside">Four engineering divisions, one accountable delivery partner — from survey to long-term maintenance.</p>
           </div>
           <h2 className="display-title">OUR CORE<br /><em>CAPABILITIES.</em></h2>
@@ -183,7 +183,7 @@ function TelecomScene() {
     const trigger = ScrollTrigger.create({
       trigger: scene,
       start: 'top top',
-      end: '+=300%',
+      end: '+=200%',
       pin: true,
       scrub: 0.8,
       onUpdate: (self) => setActive(Math.min(telecomFrames.length - 1, Math.floor(self.progress * telecomFrames.length))),
@@ -200,7 +200,6 @@ function TelecomScene() {
       <div className="page-wrap telecom-scene__layout">
         <div className="telecom-scene__copy">
           <SectionMarker number="03" label="From survey to signal" light />
-          <p className="eyebrow">Telecom lifecycle / seven phases</p>
           <h2 className="display-title">FROM SURVEY<br /><em>TO SIGNAL.</em></h2>
           <p>Survey. Foundation. Steel. Equipment. Power. Commissioning. Optimization. A network is a physical thing before it becomes an invisible one.</p>
           <div className="telecom-scene__phase">
@@ -270,9 +269,8 @@ function FiberScene() {
         <div className="fiber-scene__veil" />
       </div>
       <div className="page-wrap fiber-scene__layout">
-        <SectionMarker number="05" label="Optical fiber" />
+          <SectionMarker number="05" label="Optical fiber" />
         <div>
-          <p className="eyebrow eyebrow--dark">Connecting communities</p>
           <h2 className="fiber-number">2240<span>+ KM</span></h2>
           <h3 className="display-title">CONNECTING COMMUNITIES. KILOMETER BY <em>KILOMETER.</em></h3>
           <div className="fiber-steps">{fiberSteps.map((step) => <span key={step}>{step}</span>)}</div>
@@ -289,7 +287,6 @@ function EnergyScene() {
       <div className="page-wrap energy-scene__layout">
         <div className="energy-scene__copy">
           <SectionMarker number="06" label="Energy" />
-          <p className="eyebrow eyebrow--dark">Powering the infrastructure behind connectivity</p>
           <h2 className="display-title">POWERING THE INFRASTRUCTURE BEHIND <em>CONNECTIVITY.</em></h2>
           <p className="energy-scene__body">Hybrid power, off-grid systems, battery storage, load optimization, and maintenance for telecom and public infrastructure.</p>
           <ul className="energy-scene__points">
@@ -318,7 +315,6 @@ function DigitalScene() {
       </div>
       <div className="page-wrap digital-scene__layout">
         <SectionMarker number="07" label="IT / digital systems" light />
-        <p className="eyebrow eyebrow--red">The infrastructure behind the organization</p>
         <h2 className="display-title">INFRASTRUCTURE<br />DOESN&apos;T END<br /><em>AT THE TOWER.</em></h2>
         <div className="digital-scene__body">
           <p>Infrastructure, security, and software that keeps connected organizations moving after the field crew leaves site.</p>
@@ -359,7 +355,6 @@ function ProjectsScene() {
         <div className="projects-scene__head">
           <p className="projects-scene__eyebrow">PROJECT PORTFOLIO / OUR PROJECTS</p>
           <h2 className="display-title">BUILT IN THE FIELD.<br /><em>PROVEN IN THE NETWORK.</em></h2>
-          <span>REAL COMPANY DOCUMENTATION / PROOF OF WORK</span>
         </div>
         <div className="evidence-wall">
           {projects.slice(0, 6).map((project, index) => (
@@ -387,16 +382,12 @@ function ClientsScene() {
       <div className="page-wrap clients-scene__layout">
         <SectionMarker number="11" label="Trusted in the field" />
         <div>
-          <p className="eyebrow eyebrow--dark">Selected clients / supplied company profile</p>
           <h2 className="display-title">TRUSTED BY INDUSTRY.<br /><em>BUILT FOR LONG-TERM PARTNERSHIPS.</em></h2>
         </div>
         <div className="clients-scene__names">
-          {companyLogos.map((logo) => (
-            <figure key={logo.id}>
-              <Image src={logo.src} alt={logo.alt} fill sizes="(max-width: 640px) 80vw, 300px" />
-            </figure>
+          {clients.map((name) => (
+            <p key={name}>{name}</p>
           ))}
-          <span>Enterprise + public infrastructure</span>
         </div>
       </div>
     </section>

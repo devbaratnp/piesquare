@@ -82,9 +82,9 @@ export const serviceNav = [
 ] as const;
 
 export const companyLogos = [
-  { id: 'nepal-telecom', src: '/media/logos/nepal-telecom.jpg', alt: 'Nepal Telecom', rotation: -8 },
-  { id: 'ncell', src: '/media/logos/ncell.png', alt: 'Ncell', rotation: 6 },
-  { id: 'cg-net', src: '/media/logos/cg-net.png', alt: 'CG Net', rotation: 12 },
+  { id: 'nepal-telecom', src: '/media/logos/nepal-telecom-circle.png', alt: 'Nepal Telecom', rotation: -8 },
+  { id: 'ncell', src: '/media/logos/ncell-circle.png', alt: 'Ncell', rotation: 6 },
+  { id: 'cg-net', src: '/media/logos/cg-net-circle.png', alt: 'CG Net', rotation: 12 },
 ] as const;
 
 export const companyTimeline = [
