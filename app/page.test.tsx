@@ -83,9 +83,20 @@ describe('home page shell', () => {
     render(<Page />);
 
     const navigation = within(screen.getByRole('navigation', { name: /primary/i }));
-    for (const label of ['Home', 'Company', 'Capabilities', 'Projects', 'Clients', 'Contact']) {
+    for (const label of ['Home', 'About Us', 'Projects', 'Capabilities', 'Certifications', 'Careers', 'Contact']) {
       expect(navigation.getByRole('link', { name: new RegExp(`^${label}$`, 'i') })).toBeInTheDocument();
     }
-    expect(screen.getAllByRole('button', { name: /discuss a project/i }).length).toBeGreaterThan(0);
+    expect(navigation.getByRole('button', { name: /services/i })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /request a quote/i }).length).toBeGreaterThan(0);
+  });
+
+  it('opens directly on the first scene without the initializing screen', () => {
+    render(<Page />);
+
+    expect(document.querySelector('.loader')).not.toBeInTheDocument();
+    expect(screen.queryByText(/system initializing/i)).not.toBeInTheDocument();
+    expect(Array.from(document.querySelectorAll('main section[id]')).map((scene) => scene.id)).toEqual([
+      'top', 'company', 'expertise', 'telecom', 'rf', 'fiber', 'energy', 'digital', 'impact', 'projects', 'clients', 'why', 'contact',
+    ]);
   });
 });

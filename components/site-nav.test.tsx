@@ -16,6 +16,27 @@ describe('SiteNav', () => {
     expect(document.querySelector('#mobile-menu a[href="/capabilities"]')).toHaveAttribute('aria-current', 'page');
   });
 
+  it('exposes the reference navigation destinations and services menu', () => {
+    render(<SiteNav />);
+
+    for (const label of ['Home', 'About Us', 'Projects', 'Capabilities', 'Certifications', 'Careers', 'Contact']) {
+      expect(screen.getAllByRole('link', { name: new RegExp(`^${label}$`, 'i') }).length).toBeGreaterThan(0);
+    }
+    expect(screen.getAllByRole('button', { name: /services/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('button', { name: /request a quote/i }).length).toBeGreaterThan(0);
+  });
+
+  it('opens and closes the services menu with keyboard interaction', () => {
+    render(<SiteNav />);
+    const services = screen.getAllByRole('button', { name: /services/i })[0];
+
+    fireEvent.click(services);
+    expect(services).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getAllByRole('link', { name: /telecom/i }).length).toBeGreaterThan(0);
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(services).toHaveAttribute('aria-expanded', 'false');
+  });
+
   it('closes the mobile menu with Escape', () => {
     render(<SiteNav />);
     const button = screen.getByRole('button', { name: /menu/i });

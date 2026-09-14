@@ -9,7 +9,7 @@ test.describe('home experience', () => {
 
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(1_600);
-    await expect(page.locator('.loader')).toBeHidden();
+    await expect(page.locator('.loader')).toHaveCount(0);
     await expect(page).toHaveTitle(/Pie Square Technologies/);
     const desktopNavigation = page.getByRole('navigation', { name: /primary/i });
     const desktopNavigationVisible = await desktopNavigation.isVisible();
@@ -54,8 +54,7 @@ test.describe('home experience', () => {
 
   test('opens the project inquiry form without leaving the current page', async ({ page }) => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(1_600);
-    await expect(page.locator('.loader')).toBeHidden();
+    await expect(page.locator('.loader')).toHaveCount(0);
 
     const desktopDiscussButton = page.locator('.nav-project-link');
     if (await desktopDiscussButton.isVisible()) {
@@ -93,7 +92,18 @@ test.describe('home experience', () => {
 });
 
 test.describe('inner routes', () => {
-  const routes = ['/company', '/capabilities', '/projects', '/clients', '/contact'];
+  const routes = [
+    '/company',
+    '/capabilities',
+    '/capabilities/telecom',
+    '/capabilities/optical-fiber',
+    '/capabilities/solar-energy',
+    '/capabilities/it-solutions',
+    '/projects',
+    '/careers',
+    '/certifications',
+    '/contact',
+  ];
 
   for (const route of routes) {
     test(`renders ${route} with navigation, heading, and CTA`, async ({ page }) => {
@@ -132,12 +142,4 @@ test.describe('inner routes', () => {
     });
   }
 
-  test('renders capability detail routes', async ({ page }) => {
-    for (const route of ['/capabilities/telecom', '/capabilities/optical-fiber', '/capabilities/solar-energy', '/capabilities/it-solutions']) {
-      await page.goto(route, { waitUntil: 'domcontentloaded' });
-      await expect(page.locator('.desktop-nav a[href="/projects"]')).toHaveAttribute('href', '/projects');
-      await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
-      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-    }
-  });
 });
