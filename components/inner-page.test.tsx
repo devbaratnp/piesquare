@@ -5,7 +5,12 @@ import { InnerPage } from './inner-page';
 describe('InnerPage', () => {
   it('renders one h1, CTA buttons, and footer navigation', () => {
     render(
-      <InnerPage eyebrow="Test" title="Test page title" lede="Supporting copy.">
+      <InnerPage
+        eyebrow="Test"
+        title="Test page title"
+        lede="Supporting copy."
+        crumbs={[{ label: 'Home', href: '/' }, { label: 'Test', href: '/test' }]}
+      >
         <p>Body</p>
       </InnerPage>,
     );
@@ -14,6 +19,12 @@ describe('InnerPage', () => {
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(screen.getAllByRole('button', { name: /discuss a project/i }).length).toBeGreaterThan(0);
     expect(screen.getByRole('navigation', { name: /footer/i })).toBeInTheDocument();
+    expect(screen.getByRole('navigation', { name: /breadcrumb/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Test' })).toHaveAttribute('href', '/test');
+    expect(screen.getByRole('heading', { name: 'SERVICES' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'COMPANY' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'RESOURCES' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'CONTACT' })).toBeInTheDocument();
     expect(screen.getByText('Body')).toBeInTheDocument();
   });
 });

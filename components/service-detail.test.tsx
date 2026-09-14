@@ -6,18 +6,28 @@ afterEach(cleanup);
 
 describe('ServiceDetail', () => {
   it('renders lifecycle, scope, proof, and CTA button', () => {
-    render(<ServiceDetail lifecycle={['Survey', 'Deploy']} scope={['Fiber']} proof="Supported proof statement." />);
+    render(
+      <ServiceDetail
+        capabilities={[{ number: '01', title: 'Survey', copy: 'Field survey copy.' }]}
+        lifecycle={['Survey', 'Deploy']}
+        scope={['Fiber']}
+        proof="Supported proof statement."
+        relatedProjects={[]}
+      />,
+    );
 
-    expect(screen.getByText('Survey')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Survey' })).toBeInTheDocument();
+    expect(screen.getByText('Field survey copy.')).toBeInTheDocument();
     expect(screen.getByText('Fiber')).toBeInTheDocument();
     expect(screen.getByText('Supported proof statement.')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /discuss a project/i })).toBeInTheDocument();
   });
 
   it('does not render empty lifecycle or scope shells', () => {
-    render(<ServiceDetail lifecycle={[]} scope={[]} proof="Supported proof statement." />);
+    render(<ServiceDetail capabilities={[]} lifecycle={[]} scope={[]} proof="Supported proof statement." relatedProjects={[]} />);
 
     expect(screen.queryByRole('region', { name: /delivery lifecycle/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('region', { name: /technical scope/i })).not.toBeInTheDocument();
+    expect(screen.getByText(/no related projects are listed/i)).toBeInTheDocument();
   });
 });
