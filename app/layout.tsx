@@ -1,7 +1,18 @@
 import type { Metadata } from 'next';
+import { DM_Sans, Space_Grotesk } from 'next/font/google';
 import { siteContact } from '@/data/site';
 import { CustomCursor } from '@/components/custom-cursor';
 import './globals.css';
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-display',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-body',
+});
 
 export const metadata: Metadata = {
   title: "Pie Square Technologies | The signal that builds Nepal",
@@ -42,7 +53,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${spaceGrotesk.variable} ${dmSans.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <CustomCursor />

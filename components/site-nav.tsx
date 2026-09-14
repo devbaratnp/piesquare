@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { primaryNav } from '@/data/site';
+import { primaryNav, serviceNav } from '@/data/site';
 import { DiscussProjectButton } from '@/components/discuss-project-button';
 
 type SiteNavProps = Readonly<{
@@ -13,6 +13,7 @@ type SiteNavProps = Readonly<{
 export function SiteNav({ tone = 'dark' }: SiteNavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const pathname = usePathname() ?? '/';
 
   useEffect(() => {
@@ -23,15 +24,23 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
   }, []);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open && !servicesOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape') {
+        setOpen(false);
+        setServicesOpen(false);
+      }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [open]);
+  }, [open, servicesOpen]);
 
   const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
+  const serviceIsActive = serviceNav.some((item) => isActive(item.href));
+  const closeMenus = () => {
+    setOpen(false);
+    setServicesOpen(false);
+  };
 
   return (
     <header className={`site-nav-shell ${tone === 'paper' ? 'site-nav-shell--paper' : ''} ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
@@ -45,10 +54,26 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
           const active = isActive(item.href);
           return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} data-cursor="view">{item.label}</Link>;
         })}
+        <div className="nav-services">
+          <button
+            className={`nav-services__trigger ${serviceIsActive ? 'is-active' : ''}`}
+            type="button"
+            aria-expanded={servicesOpen}
+            aria-controls="services-menu-desktop"
+            onClick={() => setServicesOpen((value) => !value)}
+          >
+            Services <span aria-hidden="true">⌄</span>
+          </button>
+          <div id="services-menu-desktop" className={`nav-services__menu ${servicesOpen ? 'is-open' : ''}`} hidden={!servicesOpen}>
+            {serviceNav.map((item) => (
+              <Link key={item.href} href={item.href} onClick={() => setServicesOpen(false)}>{item.label}</Link>
+            ))}
+          </div>
+        </div>
       </nav>
 
       <DiscussProjectButton className="nav-project-link" dataCursor="start">
-        <span>Discuss a Project</span><b aria-hidden="true">↗</b>
+        <span>Request a Quote</span><b aria-hidden="true">↗</b>
       </DiscussProjectButton>
 
       <button className="menu-toggle" type="button" aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen((value) => !value)}>
@@ -60,9 +85,25 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
         <nav aria-label="Mobile navigation">
           {primaryNav.map((item, index) => {
             const active = isActive(item.href);
-            return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={() => setOpen(false)}><span>0{index + 1}</span>{item.label}</Link>;
+            return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={closeMenus}><span>0{index + 1}</span>{item.label}</Link>;
           })}
-          <DiscussProjectButton className="mobile-menu__project" dataCursor="start" onOpen={() => setOpen(false)}><span>07</span>Discuss a Project</DiscussProjectButton>
+          <div className="mobile-menu__services">
+            <button
+              className={`mobile-menu__services-trigger ${serviceIsActive ? 'is-active' : ''}`}
+              type="button"
+              aria-expanded={servicesOpen}
+              aria-controls="services-menu-mobile"
+              onClick={() => setServicesOpen((value) => !value)}
+            >
+              <span>08</span>Services <b aria-hidden="true">⌄</b>
+            </button>
+            <div id="services-menu-mobile" className="mobile-menu__services-list" hidden={!servicesOpen}>
+              {serviceNav.map((item, index) => (
+                <Link key={item.href} href={item.href} onClick={closeMenus}><span>0{index + 1}</span>{item.label}</Link>
+              ))}
+            </div>
+          </div>
+          <DiscussProjectButton className="mobile-menu__project" dataCursor="start" onOpen={closeMenus}><span>09</span>Request a Quote</DiscussProjectButton>
         </nav>
       </div>
     </header>
