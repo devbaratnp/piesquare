@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { primaryNav, serviceNav } from '@/data/site';
@@ -49,8 +50,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
   return (
     <header className={`site-nav-shell ${tone === 'paper' ? 'site-nav-shell--paper' : ''} ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
       <Link className="brand-lockup" href="/" aria-label="Pie Square Technologies home">
-        <span className="brand-lockup__mark" aria-hidden="true"><i /><i /><i /></span>
-        <span className="brand-lockup__type"><b>PIE SQUARE</b><small>TECHNOLOGIES</small></span>
+        <Image className="brand-lockup__logo" src="/media/logos/pie-square-logo.png" alt="Pie Square Technologies" width={208} height={44} priority />
       </Link>
 
       <nav className="desktop-nav" aria-label="Primary navigation">
