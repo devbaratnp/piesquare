@@ -2,18 +2,17 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { projectFilters, projects } from '@/data/site';
+import { projectFilters, projects, type ProjectCategory } from '@/data/site';
 
-function categoryOf(meta: string): string {
-  if (/RF|Radio|Telecom|Tower|Civil|Equipment/i.test(meta)) return 'Telecom';
-  if (/Fiber/i.test(meta)) return 'Fiber';
-  if (/Energy|Solar/i.test(meta)) return 'Energy';
-  return 'IT systems';
+function categoryForFilter(filter: (typeof projectFilters)[number]): ProjectCategory | null {
+  if (filter === 'All') return null;
+  return filter.toUpperCase() as ProjectCategory;
 }
 
 export function ProjectGrid() {
   const [filter, setFilter] = useState<(typeof projectFilters)[number]>('All');
-  const visible = projects.filter(([ , meta]) => filter === 'All' || categoryOf(meta) === filter);
+  const category = categoryForFilter(filter);
+  const visible = projects.filter((project) => category === null || project.category === category);
 
   return (
     <>
@@ -26,15 +25,18 @@ export function ProjectGrid() {
         <span className="filter-row__status" aria-live="polite">{visible.length} projects / {filter}</span>
       </div>
       <div className="project-grid">
-        {visible.map(([src, meta, title, copy]) => (
-          <article className="project-card" key={src}>
+        {visible.map((project) => (
+          <article className="project-card" key={project.id} data-category={project.category}>
             <div className="project-card__image">
-              <Image src={src} alt={title} fill sizes="(max-width: 640px) 100vw, 33vw" />
+              <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 640px) 100vw, 33vw" />
+              <span className={`project-card__status project-card__status--${project.status.toLowerCase()}`}>{project.status}</span>
             </div>
             <div className="project-card__copy">
-              <span>{meta}</span>
-              <h3>{title}</h3>
-              <p>{copy}</p>
+              <span className="project-card__category">{project.category}</span>
+              <h3>{project.title}</h3>
+              <p className="project-card__location">{project.location}</p>
+              <p className="project-card__scope">{project.scope.join(' • ')}</p>
+              <p>{project.description}</p>
             </div>
           </article>
         ))}

@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <InnerPage
-      eyebrow="Projects / field proof"
-      title="Built in the field, proven in the network"
-      lede="Real company documentation across RF testing, equipment installation, fiber deployment, civil works, solar power, and IT systems."
+      eyebrow="Project portfolio"
+      title="Our Projects"
+      lede="Field experience that speaks for itself — select any project for full technical detail."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }]}
       light
     >

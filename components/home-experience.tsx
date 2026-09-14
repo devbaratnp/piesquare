@@ -73,37 +73,6 @@ function SectionMarker({ number, label, light = false }: { number: string; label
   );
 }
 
-function Loader() {
-  const [visible, setVisible] = useState(false);
-  const reduced = useReducedMotion();
-
-  useEffect(() => {
-    const alreadyLoaded = window.sessionStorage.getItem('pie-square-loaded');
-    if (alreadyLoaded || reduced) return;
-    const frame = window.requestAnimationFrame(() => setVisible(true));
-    const timeout = window.setTimeout(() => {
-      window.sessionStorage.setItem('pie-square-loaded', '1');
-      setVisible(false);
-    }, 1400);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.clearTimeout(timeout);
-    };
-  }, [reduced]);
-
-  if (!visible) return null;
-
-  return (
-    <div className="loader" aria-label="Pie Square system initializing">
-      <div className="loader__inner">
-        <span>PIE SQUARE / SYSTEM INITIALIZING</span>
-        <b>0001&nbsp;&nbsp;0010&nbsp;&nbsp;0100</b>
-        <i />
-      </div>
-    </div>
-  );
-}
-
 function HeroScene() {
   return (
     <SceneShell id="top" state="HERO_TRANSMIT" className="hero-scene">
@@ -388,18 +357,18 @@ function ProjectsScene() {
         <SectionMarker number="10" label="Project evidence" />
         <div className="projects-scene__head">
           <h2 className="display-title">BUILT IN THE FIELD.<br /><em>PROVEN IN THE NETWORK.</em></h2>
-          <span>Real company documentation / proof of work</span>
+          <span>REAL COMPANY DOCUMENTATION / PROOF OF WORK</span>
         </div>
         <div className="evidence-wall">
-          {projects.map(([src, meta, title, copy], index) => (
-            <article className={'evidence-card evidence-card--' + (index + 1) + ' editorial-reveal'} key={src}>
+          {projects.slice(0, 6).map((project, index) => (
+            <article className={'evidence-card evidence-card--' + (index + 1) + ' editorial-reveal'} key={project.id}>
               <div className="evidence-card__image">
-                <Image src={src} alt={title} fill sizes="(max-width: 720px) 100vw, 33vw" />
+                <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 720px) 100vw, 33vw" />
               </div>
               <div className="evidence-card__copy">
-                <span>{meta}</span>
-                <h3>{title}</h3>
-                <p>{copy}</p>
+                <span>{project.status} / {project.category}</span>
+                <h3>{project.title}</h3>
+                <p>{project.location} / {project.scope.join(' • ')}</p>
               </div>
             </article>
           ))}
@@ -519,7 +488,6 @@ export function HomeExperience() {
   return (
     <LenisProvider>
       <a className="skip-link" href="#main-content">Skip to main content</a>
-      <Loader />
       <SiteNav />
       <SignalLine state={signalState} />
       <MotionBridge onState={setSignalState} />
