@@ -8,13 +8,14 @@
   --ink: #101214;
   --steel: #737a7d;
   --steel-light: #afb4b2;
+  --paper-muted: #4f585c;
   --signal: #db2b32;
   --line-light: rgba(16, 18, 20, .16);
   --line-dark: rgba(241, 238, 232, .18);
   --page-gutter: clamp(18px, 4vw, 72px);
   --page-max: 1440px;
-  --display: var(--font-display), "Space Grotesk", sans-serif;
-  --body: var(--font-body), "DM Sans", sans-serif;
+  --display: var(--font-display), "Young Serif", serif;
+  --body: var(--font-body), "Instrument Sans", sans-serif;
   --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
   --ease-heavy: cubic-bezier(.16, 1, .3, 1);
   --z-content: 1;
@@ -413,7 +414,7 @@ img {
 }
 
 .brand-lockup__type b {
-  font: 700 14px/1 var(--display);
+  font: 700 14px/1 var(--body);
   letter-spacing: .02em;
 }
 
@@ -635,11 +636,11 @@ img {
   display: grid;
   grid-template-columns: 34px 1fr;
   align-items: center;
-  min-height: 62px;
+  min-height: 54px;
   border-top: 1px solid var(--line-dark);
   color: var(--steel-light);
-  font: 700 clamp(2.5rem, 11vw, 5rem)/.9 var(--display);
-  letter-spacing: -.06em;
+  font: 600 clamp(1.4rem, 6vw, 2.1rem)/.95 var(--body);
+  letter-spacing: .01em;
   text-transform: uppercase;
   transition: color .2s ease, padding-left .3s var(--ease-heavy);
 }
@@ -666,14 +667,14 @@ img {
   width: 100%;
   grid-template-columns: 34px 1fr;
   align-items: center;
-  min-height: 62px;
+  min-height: 54px;
   padding: 0;
   border: 0;
   border-top: 1px solid var(--line-dark);
   background: transparent;
   color: var(--steel-light);
-  font: 700 clamp(2.5rem, 11vw, 5rem)/.9 var(--display);
-  letter-spacing: -.06em;
+  font: 600 clamp(1.4rem, 6vw, 2.1rem)/.95 var(--body);
+  letter-spacing: .01em;
   text-align: left;
   text-transform: uppercase;
   transition: color .2s ease, padding-left .3s var(--ease-heavy);
@@ -700,13 +701,13 @@ img {
   width: 100%;
   grid-template-columns: 34px 1fr auto;
   align-items: center;
-  min-height: 62px;
+  min-height: 54px;
   padding: 0;
   border: 0;
   background: transparent;
   color: var(--steel-light);
-  font: 700 clamp(2.5rem, 11vw, 5rem)/.9 var(--display);
-  letter-spacing: -.06em;
+  font: 600 clamp(1.4rem, 6vw, 2.1rem)/.95 var(--body);
+  letter-spacing: .01em;
   text-align: left;
   text-transform: uppercase;
   transition: color .2s ease, padding-left .3s var(--ease-heavy);
@@ -742,11 +743,11 @@ img {
 }
 
 .mobile-menu__services-list a {
-  min-height: 42px;
+  min-height: 40px;
   border-top: 0;
   color: var(--steel);
-  font-size: clamp(1.25rem, 5vw, 2.25rem);
-  letter-spacing: -.04em;
+  font-size: clamp(1rem, 4.8vw, 1.4rem);
+  letter-spacing: -.02em;
 }
 
 .mobile-menu__services-list a:hover,
@@ -2899,6 +2900,11 @@ img {
   gap: 24px;
 }
 
+.site-footer nav.site-footer__routes {
+  display: grid;
+  flex-wrap: initial;
+}
+
 .site-footer__routes > div {
   display: grid;
   align-content: start;
@@ -3049,8 +3055,8 @@ img {
 }
 
 .capability-metrics__grid strong {
-  font: 600 clamp(2.3rem, 4vw, 4.5rem)/.84 var(--display);
-  letter-spacing: -.06em;
+  font: 700 clamp(2.3rem, 4vw, 4.5rem)/.84 var(--body);
+  letter-spacing: -.04em;
 }
 
 .capability-metrics__grid span {
@@ -3578,6 +3584,86 @@ img {
   flex-wrap: wrap;
   gap: 12px 20px;
   margin-top: 24px;
+}
+
+.site-nav-shell--paper .brand-lockup__type small,
+.site-nav-shell--paper .desktop-nav a,
+.site-nav-shell--paper .nav-services__trigger,
+.site-nav-shell--paper .nav-services__menu a {
+  color: var(--paper-muted);
+}
+
+.site-nav-shell--paper .desktop-nav a:hover,
+.site-nav-shell--paper .desktop-nav a.is-active,
+.site-nav-shell--paper .desktop-nav a[aria-current="page"],
+.site-nav-shell--paper .nav-services__trigger:hover,
+.site-nav-shell--paper .nav-services__trigger.is-active,
+.site-nav-shell--paper .nav-services__trigger[aria-expanded="true"],
+.site-nav-shell--paper .nav-services__menu a:hover,
+.site-nav-shell--paper .nav-services__menu a:focus-visible {
+  color: var(--ink);
+}
+
+.inner-page--light .inner-page__hero-index,
+.inner-page--light .crumbs,
+.inner-page--light .inner-page__lede,
+.inner-page--light .inner-page__card p,
+.inner-page--light .inner-page__card li,
+.inner-page--light .service-overview-card p,
+.inner-page--light .service-overview-card li,
+.inner-page--light .capability-metrics__grid span,
+.inner-page--light .service-capability-grid p,
+.inner-page--light .related-projects__empty,
+.inner-page--light .career-role > p,
+.inner-page--light .career-role li,
+.inner-page--light .certification-card p,
+.inner-page--light .certification-card__status,
+.inner-page--light .about-intro__copy p,
+.inner-page--light .about-approach > p,
+.inner-page--light .about-team > p,
+.inner-page--light .about-coverage > p,
+.inner-page--light .about-values__grid p,
+.inner-page--light .about-approach li,
+.inner-page--light .about-team__note,
+.inner-page--light .about-coverage__coordinates,
+.inner-page--light .province-list span,
+.inner-page--light .contact-office dd,
+.inner-page--light .contact-form label,
+.inner-page--light .contact-form__note,
+.inner-page--light .contact-form__hint,
+.inner-page--light .contact-survey li,
+.inner-page--light .filter-row__status,
+.inner-page--light .site-footer__descriptor p,
+.inner-page--light .site-footer__routes a,
+.inner-page--light .site-footer__routes span,
+.inner-page--light .site-footer__legal {
+  color: var(--paper-muted);
+}
+
+.mobile-menu nav a,
+.mobile-menu nav .mobile-menu__project,
+.mobile-menu__services-trigger {
+  font-family: var(--body);
+}
+
+.telecom-scene__phase b,
+.rf-readout b,
+.fiber-number,
+.energy-scene__spec strong,
+.impact-stat strong,
+.capability-metric strong,
+.evidence-card__copy h3 {
+  font-family: var(--body);
+}
+
+.inner-page__card h3,
+.inner-page .project-card__copy h3,
+.related-project-card__copy h3,
+.career-role h3,
+.about-values__grid h3 {
+  font-family: var(--body);
+  font-weight: 700;
+  letter-spacing: .01em;
 }
 
 .projects-scene__eyebrow,

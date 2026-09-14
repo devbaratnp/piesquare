@@ -6,7 +6,7 @@ The approved reference was reviewed in the Codex in-app browser at `https://sola
 
 `C:\Users\Lenovo\.codex\visualizations\2026\09\14\01a09d4f-89a0-7e13-b844-08b7046761bd\reference-clean`
 
-The captured reference set covers Home, About Us, Services, Telecom, Fiber, Solar, IT, Projects, Capabilities, Certifications, Careers, and Contact. Its typography was matched with Space Grotesk for display headings and DM Sans for body copy.
+The captured reference set covers Home, About Us, Services, Telecom, Fiber, Solar, IT, Projects, Capabilities, Certifications, Careers, and Contact. Its typography informed the final contrast-led pairing: Young Serif for major display headings and Instrument Sans for body/UI text.
 
 ## Implemented route map
 

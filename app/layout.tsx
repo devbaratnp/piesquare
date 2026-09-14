@@ -1,17 +1,19 @@
 import type { Metadata } from 'next';
-import { DM_Sans, Space_Grotesk } from 'next/font/google';
+import { Instrument_Sans, Young_Serif } from 'next/font/google';
 import { siteContact } from '@/data/site';
 import { CustomCursor } from '@/components/custom-cursor';
 import './globals.css';
 
-const spaceGrotesk = Space_Grotesk({
+const youngSerif = Young_Serif({
   subsets: ['latin'],
   variable: '--font-display',
+  weight: '400',
 });
 
-const dmSans = DM_Sans({
+const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
   variable: '--font-body',
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -53,7 +55,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   };
 
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${youngSerif.variable} ${instrumentSans.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <CustomCursor />

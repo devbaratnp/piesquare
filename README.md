@@ -33,7 +33,7 @@ The reference-aligned site includes:
 
 ## Architecture
 
-`app/layout.tsx` owns metadata and the self-hosted Space Grotesk / DM Sans font pairing; `app/page.tsx` mounts `HomeExperience`. Homepage scenes are composed in `components/home-experience.tsx`, with shared `SceneShell`, navigation, cursor, signal line, Lenis, and reduced-motion utilities. `components/inner-page.tsx` provides the reference-style paper route shell, while service, project, careers, certifications, and contact components reuse the same editorial primitives. `data/site.ts` is the source of truth for business content and route records. `lib/motion.ts` defines the named signal states used by the global overlay.
+`app/layout.tsx` owns metadata and the self-hosted Young Serif / Instrument Sans font pairing; `app/page.tsx` mounts `HomeExperience`. Homepage scenes are composed in `components/home-experience.tsx`, with shared `SceneShell`, navigation, cursor, signal line, Lenis, and reduced-motion utilities. `components/inner-page.tsx` provides the reference-style paper route shell, while service, project, careers, certifications, and contact components reuse the same editorial primitives. `data/site.ts` is the source of truth for business content and route records. `lib/motion.ts` defines the named signal states used by the global overlay.
 
 The initializing screen has been removed so the first frame opens directly into the hero experience. The navigation mirrors the reference hierarchy with Home, About Us, a Services dropdown, Projects, Capabilities, Certifications, Careers, Contact, and Request a Quote.
 

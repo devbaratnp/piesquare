@@ -91,6 +91,47 @@ test.describe('home experience', () => {
   });
 });
 
+test.describe('responsive foundation', () => {
+  test('keeps the mobile menu compact, footer consistent, and paper copy readable', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/projects', { waitUntil: 'domcontentloaded' });
+    await page.locator('.menu-toggle').click({ force: true });
+
+    const menuStyle = await page.locator('.mobile-menu nav a').first().evaluate((element) => {
+      const computed = getComputedStyle(element);
+      return { fontSize: parseFloat(computed.fontSize), height: element.getBoundingClientRect().height };
+    });
+    expect(menuStyle.fontSize).toBeLessThanOrEqual(32);
+    expect(menuStyle.height).toBeLessThanOrEqual(56);
+
+    const footerStyle = await page.locator('.site-footer__routes').evaluate((element) => {
+      const computed = getComputedStyle(element);
+      return { display: computed.display, columns: computed.gridTemplateColumns.trim().split(/\s+/).length };
+    });
+    expect(footerStyle.display).toBe('grid');
+    expect(footerStyle.columns).toBe(1);
+
+    const contrast = await page.locator('.inner-page__lede').evaluate((element) => {
+      const channels = getComputedStyle(element).color.match(/\d+/g)?.map(Number) ?? [0, 0, 0];
+      const luminance = (channel: number) => {
+        const normalized = channel / 255;
+        return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+      };
+      const textLuminance = .2126 * luminance(channels[0]) + .7152 * luminance(channels[1]) + .0722 * luminance(channels[2]);
+      const paperLuminance = .2126 * luminance(241) + .7152 * luminance(238) + .0722 * luminance(232);
+      return (Math.max(textLuminance, paperLuminance) + .05) / (Math.min(textLuminance, paperLuminance) + .05);
+    });
+    expect(contrast).toBeGreaterThanOrEqual(4.5);
+
+    const fontPair = await page.locator('h1').first().evaluate((element) => ({
+      display: getComputedStyle(element).fontFamily,
+      body: getComputedStyle(document.body).fontFamily,
+    }));
+    expect(fontPair.display).toMatch(/Young Serif/);
+    expect(fontPair.body).toMatch(/Instrument Sans/);
+  });
+});
+
 test.describe('inner routes', () => {
   const routes = [
     '/company',

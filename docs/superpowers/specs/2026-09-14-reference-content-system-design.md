@@ -14,7 +14,7 @@ Clean viewport captures are stored outside the repository at:
 
 `C:\Users\Lenovo\.codex\visualizations\2026\09\14\01a09d4f-89a0-7e13-b844-08b7046761bd\reference-clean`
 
-The reference uses Space Grotesk Variable for headings, DM Sans Variable for body copy and navigation, a condensed mono treatment for red labels, a white canvas, charcoal text, and red action states. Service pages use a large calm hero followed by numbered capability rows and related projects. Projects use category filters and status/category/location/scope metadata. Careers uses structured role rows with requirement chips and Apply Now actions. Contact combines direct channels, office details, message intake, quote intake, and site-survey intake.
+The reference uses a serif display contrast for headings, a clean sans-serif for body copy and navigation, a condensed mono treatment for red labels, a white canvas, charcoal text, and red action states. The final PieSquare pairing uses Young Serif for major display headings and Instrument Sans for body/UI text. Service pages use a large calm hero followed by numbered capability rows and related projects. Projects use category filters and status/category/location/scope metadata. Careers uses structured role rows with requirement chips and Apply Now actions. Contact combines direct channels, office details, message intake, quote intake, and site-survey intake.
 
 ## Route architecture
 
@@ -53,7 +53,7 @@ The approved content set includes:
 
 ## Visual and motion system
 
-Use `next/font/google` in the root layout to self-host Space Grotesk Variable and DM Sans Variable. Set CSS variables so display headings and body/navigation match the reference surface while the existing mono signal labels remain part of the PieSquare identity. Keep the approved graphite cinematic scenes, red signal line, custom cursor, Lenis, and ScrollTrigger behavior on the homepage.
+Use `next/font/google` in the root layout to self-host Young Serif and Instrument Sans. Set CSS variables so major display headings use Young Serif while body/navigation use Instrument Sans; the existing mono signal labels remain part of the PieSquare identity. Keep the approved graphite cinematic scenes, red signal line, custom cursor, Lenis, and ScrollTrigger behavior on the homepage.
 
 Inner pages use a light paper background, charcoal text, soft gray rules, red eyebrow labels, red primary buttons, and grid-based cards. Images keep stable aspect-ratio boxes and use `next/image` with accurate alt text. Mobile layouts collapse to one column at 390px without horizontal overflow.
 

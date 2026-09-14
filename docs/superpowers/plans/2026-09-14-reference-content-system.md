@@ -13,7 +13,7 @@ Tech stack: Next.js 16.3.4 App Router, React 19, TypeScript, CSS, next/font/goog
 ## File map
 
 - Modify data/site.ts for rich projects, service rows, careers, certifications, and navigation data.
-- Modify app/layout.tsx for self-hosted Space Grotesk Variable and DM Sans Variable.
+- Modify app/layout.tsx for self-hosted Young Serif and Instrument Sans.
 - Modify app/globals.css for font variables, light editorial tokens, service rows, career rows, certification cards, and responsive rules.
 - Modify components/site-nav.tsx for the Services dropdown plus Careers and Certifications links.
 - Modify components/home-experience.tsx to remove Loader and align reference-sensitive copy without changing scene order.
@@ -176,12 +176,12 @@ const dmSans = DM_Sans({
 <html lang="en" className={spaceGrotesk.variable + ' ' + dmSans.variable}>
 ~~~
 
-- [x] Step 2: Change the CSS font variables to Space Grotesk for display and DM Sans for body/navigation while retaining the existing mono signal labels and cinematic tokens.
+- [x] Step 2: Change the CSS font variables to Young Serif for major display headings and Instrument Sans for body/navigation while retaining the existing mono signal labels and cinematic tokens.
 
 ~~~css
 :root {
-  --display: var(--font-display), "Space Grotesk", sans-serif;
-  --body: var(--font-body), "DM Sans", sans-serif;
+  --display: var(--font-display), "Young Serif", serif;
+  --body: var(--font-body), "Instrument Sans", sans-serif;
 }
 ~~~
 
@@ -370,7 +370,7 @@ npm run test:e2e
 
 Expected: desktop and mobile route smoke tests pass with no overflow, visible first-frame homepage content, working navigation, filters, Careers mailto links, and no uncaught console errors.
 
-- [x] Step 3: Use the Codex in-app browser on the local production server to inspect all twelve routes at 1440px and 390px. Verify Space Grotesk/DM Sans pairing, light inner-page surface, stable image crops, no initializing screen, visible focus states, and no clipped headings.
+- [x] Step 3: Use the Codex in-app browser on the local production server to inspect all twelve routes at 1440px and 390px. Verify Young Serif/Instrument Sans pairing, light inner-page surface, stable image crops, no initializing screen, visible focus states, and no clipped headings.
 
 - [x] Step 4: Update tests/visual-review.md with the passing commands, route list, viewport sizes, screenshot notes, and pending certificate/team-source constraints. Update README.md with new routes and the reference content source.
 
