@@ -8,10 +8,10 @@ describe('ContactForm', () => {
   it('renders all required inquiry fields', () => {
     render(<ContactForm />);
 
-    for (const label of ['Name', 'Company', 'Phone', 'Email', 'Service Required', 'Project Location', 'Message']) {
+    for (const label of ['Name', 'Company', 'Phone', 'Email', 'Project Type', 'Required Service', 'Project Location', 'Estimated Project Size', 'Expected Start Date', 'Project Documents', 'Message']) {
       expect(screen.getByLabelText(new RegExp(label, 'i'))).toBeInTheDocument();
     }
-    expect(screen.getByRole('button', { name: /send inquiry/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit request/i })).toBeInTheDocument();
     expect(screen.getByText(/no backend submission is connected/i)).toBeInTheDocument();
   });
 

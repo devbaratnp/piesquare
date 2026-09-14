@@ -247,10 +247,12 @@ export const projectFilters = ['All', 'Telecom', 'Fiber', 'Solar', 'IT'] as cons
 export const clients = ['Nepal Telecom', 'Ncell', 'CG Net', 'Enterprise + public infrastructure'] as const;
 
 export const whyPieSquare = [
-  { title: 'Field experience', copy: 'Crews that work from the Terai plains to high-hill environments.' },
-  { title: 'End-to-end delivery', copy: 'Survey, design, deployment, testing, optimization, and maintenance.' },
-  { title: 'Multi-disciplinary capability', copy: 'Telecom, fiber, energy, and IT systems under one roof.' },
-  { title: 'Ongoing support', copy: 'Operations and maintenance after handover, not just installation.' },
+  { title: 'End-to-End Execution', copy: 'From survey to installation, testing and maintenance — one accountable partner.' },
+  { title: 'Experienced Field Teams', copy: 'Skilled technical personnel capable of working in demanding field environments.' },
+  { title: 'Multi-Domain Expertise', copy: 'Telecom, fiber, solar and IT capabilities under one organization.' },
+  { title: 'Quality Focus', copy: 'Strong focus on workmanship, testing, documentation and project standards.' },
+  { title: 'Safety First', copy: 'Safety-focused field operations and compliance with applicable requirements.' },
+  { title: 'Rapid Mobilization', copy: 'Ability to deploy teams and resources efficiently for project requirements.' },
 ] as const;
 
 export const organizationLevels = [

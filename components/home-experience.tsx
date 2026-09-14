@@ -42,10 +42,10 @@ const stateOrder: SignalState[] = [
 ];
 
 const capabilitySummaries = [
-  'Tower systems, installation, testing, and optimization.',
-  'Backbone, access, splicing, and customer connectivity.',
-  'Hybrid power, batteries, and remote-site continuity.',
-  'Infrastructure, security, and software for organizations.',
+  'Civil works, tower installation, site deployment, RF drive testing, equipment installation and maintenance.',
+  'Route surveys, OFC deployment, fiber splicing, testing, commissioning and maintenance.',
+  'Site surveys, system design, installation, testing, commissioning and operation & maintenance.',
+  'Networking, structured cabling, server infrastructure, data center support, CCTV and ongoing IT maintenance.',
 ] as const;
 
 type MediaPlateProps = Readonly<{
@@ -85,15 +85,15 @@ function HeroScene() {
 
       <div className="page-wrap hero-scene__content">
         <div className="hero-editorial__copy">
-          <p className="eyebrow">Pie Square Technologies / infrastructure / Nepal</p>
+          <p className="eyebrow">INTEGRATED INFRASTRUCTURE &amp; TECHNOLOGY SOLUTIONS</p>
           <h1 className="display-title hero-scene__title">
             <span>BUILDING THE</span>
             <span>INFRASTRUCTURE</span>
-            <span>THAT CONNECTS <em>NEPAL.</em></span>
+            <span>THAT KEEPS THE <em>WORLD CONNECTED.</em></span>
           </h1>
-          <p className="hero-scene__disciplines">Telecom. Fiber. Energy. Technology.</p>
+          <p className="hero-scene__disciplines">Telecom. Fiber. Solar. IT.</p>
           <div className="hero-scene__footer">
-            <p>Telecom, fiber, energy, and technology solutions for the networks and digital infrastructure that keep businesses and communities connected.</p>
+            <p>End-to-end Telecom, Fiber Optic, Solar and IT infrastructure solutions delivered with engineering expertise, field capability and a commitment to quality.</p>
             <div className="hero-scene__meta">
               <span>Established 2019</span>
               <span>Kusunti-13, Lalitpur, Nepal</span>
@@ -117,9 +117,9 @@ function CompanyScene() {
       <div className="page-wrap company-scene__layout">
         <SectionMarker number="01" label="The company" />
         <ImageCarouselHero
-          title={<>INFRASTRUCTURE<br /><em>ENGINEERED FOR PROGRESS.</em></>}
-          subtitle="About Pie Square / connected field network"
-          description="Pie Square Technologies supports Nepal's evolving digital infrastructure through telecom network services, fiber deployment, renewable energy systems, and IT solutions. We work with telecom operators, ISPs, enterprises, and institutions to build reliable, sustainable, and future-ready infrastructure across the country."
+          title={<>INFRASTRUCTURE<br /><em>EXPERTISE. FIELD EXECUTION.<br />RELIABLE RESULTS.</em></>}
+          subtitle="Who we are / Nepal field operations"
+          description="Pie Square Technologies delivers integrated infrastructure services across telecom, fiber optic, solar energy and IT infrastructure. We serve telecom operators, ISPs, EPC contractors, technology companies, enterprises and government infrastructure projects — from first survey through installation, testing, commissioning and long-term maintenance."
           ctaText="Explore our network"
           onCtaClick={() => document.getElementById('expertise')?.scrollIntoView({ behavior: 'smooth' })}
           images={companyLogos}
@@ -149,10 +149,10 @@ function CapabilitiesScene() {
         <SectionMarker number="02" label="One partner / four capability layers" light />
         <div className="capabilities-scene__intro">
           <div>
-            <p className="eyebrow">What we build</p>
-            <p className="capabilities-scene__aside">One partner for the physical layer, the power layer, and the systems behind both.</p>
+            <p className="eyebrow">WHAT WE DELIVER</p>
+            <p className="capabilities-scene__aside">Four engineering divisions, one accountable delivery partner — from survey to long-term maintenance.</p>
           </div>
-          <h2 className="display-title">WHAT WE<br /><em>BUILD.</em></h2>
+          <h2 className="display-title">OUR CORE<br /><em>CAPABILITIES.</em></h2>
         </div>
         <div className="capability-list">
           {capabilities.map((item, index) => (
@@ -336,6 +336,7 @@ function ImpactScene() {
       <div className="page-wrap">
         <SectionMarker number="09" label="Impact in numbers" light />
         <div className="impact-scene__label">FIELD OUTPUT / COMPANY PROFILE REFERENCE</div>
+        <h2 className="display-title impact-scene__title">BUILT TO <em>EXECUTE.</em></h2>
         <div className="impact-stats">
           {impactStats.map(([value, label], index) => (
             <div key={label} className={'impact-stat ' + (index === 0 ? 'is-active' : '')}>
@@ -356,6 +357,7 @@ function ProjectsScene() {
       <div className="page-wrap">
         <SectionMarker number="10" label="Project evidence" />
         <div className="projects-scene__head">
+          <p className="projects-scene__eyebrow">PROJECT PORTFOLIO / OUR PROJECTS</p>
           <h2 className="display-title">BUILT IN THE FIELD.<br /><em>PROVEN IN THE NETWORK.</em></h2>
           <span>REAL COMPANY DOCUMENTATION / PROOF OF WORK</span>
         </div>
@@ -386,7 +388,7 @@ function ClientsScene() {
         <SectionMarker number="11" label="Trusted in the field" />
         <div>
           <p className="eyebrow eyebrow--dark">Selected clients / supplied company profile</p>
-          <h2 className="display-title">TRUSTED ACROSS<br /><em>CRITICAL INFRASTRUCTURE.</em></h2>
+          <h2 className="display-title">TRUSTED BY INDUSTRY.<br /><em>BUILT FOR LONG-TERM PARTNERSHIPS.</em></h2>
         </div>
         <div className="clients-scene__names">
           {companyLogos.map((logo) => (
@@ -406,7 +408,7 @@ function WhyScene() {
     <section id="why" className="why-scene light-scene" data-scene="why" data-signal-state="FINAL_CONVERGENCE" aria-label="Why Pie Square">
       <div className="page-wrap why-scene__layout">
         <SectionMarker number="12" label="Why Pie Square" />
-        <h2 className="display-title">WHY <em>PIE SQUARE.</em></h2>
+        <h2 className="display-title">ENGINEERING DISCIPLINE,<br /><em>FIELD-PROVEN.</em></h2>
         <div className="why-scene__grid">
           {whyPieSquare.map((item, index) => (
             <article key={item.title}><span>0{index + 1}</span><h3>{item.title}</h3><p>{item.copy}</p></article>

@@ -9,9 +9,9 @@ describe('home page shell', () => {
     render(<Page />);
 
     expect(screen.getByRole('main')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /building the infrastructure that connects nepal/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /what we build/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /trusted across critical infrastructure/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /building the infrastructure that keeps the world connected/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /our core capabilities/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /trusted by industry.*built for long-term partnerships/i })).toBeInTheDocument();
     expect(Array.from(document.querySelectorAll('main section[id]')).map((scene) => scene.id)).toEqual([
       'top', 'company', 'expertise', 'telecom', 'rf', 'fiber', 'energy', 'digital', 'impact', 'projects', 'clients', 'why', 'contact',
     ]);
@@ -26,7 +26,7 @@ describe('home page shell', () => {
     render(<Page />);
 
     // Spec-locked headings
-    expect(screen.getByRole('heading', { name: /infrastructure engineered for progress/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /infrastructure.*expertise\. field execution/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /from survey to signal/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /a network isn't finished when the tower goes live/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /connecting communities/i })).toBeInTheDocument();
@@ -34,7 +34,7 @@ describe('home page shell', () => {
     expect(screen.getByRole('heading', { name: /infrastructure doesn't end at the tower/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /one partner\. multiple infrastructure layers/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /build the next connection with us/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /why pie square/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /engineering discipline.*field-proven/i })).toBeInTheDocument();
 
     // Four capability labels with sequence counters
     for (const label of ['Telecom', 'Optical Fiber', 'Solar & Energy', 'IT & Digital']) {
