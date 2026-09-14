@@ -11,16 +11,16 @@ describe('ProjectGrid', () => {
     expect(screen.getByRole('group', { name: /filter projects/i })).toBeInTheDocument();
     expect(screen.getAllByRole('article')).toHaveLength(8);
     for (const filter of ['All', 'Telecom', 'Fiber', 'Solar', 'IT']) {
-      expect(screen.getByRole('button', { name: filter, exact: true })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: filter })).toBeInTheDocument();
     }
   });
 
   it('filters reference project records by category', async () => {
     const { getByRole, getAllByRole } = render(<ProjectGrid />);
 
-    fireEvent.click(getByRole('button', { name: 'Fiber', exact: true }));
+    fireEvent.click(getByRole('button', { name: 'Fiber' }));
     expect(getAllByRole('article')).toHaveLength(2);
-    fireEvent.click(getByRole('button', { name: 'IT', exact: true }));
+    fireEvent.click(getByRole('button', { name: 'IT' }));
     expect(getAllByRole('article')).toHaveLength(2);
   });
 

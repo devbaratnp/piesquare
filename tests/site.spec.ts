@@ -22,7 +22,7 @@ test.describe('home experience', () => {
       await expect(menuToggle).toHaveAttribute('aria-expanded', 'true');
       await expect(page.getByRole('navigation', { name: /mobile/i })).toBeVisible();
     }
-    await expect(page.getByRole('heading', { name: /building the infrastructure that connects nepal/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /building the infrastructure that keeps the world connected/i })).toBeVisible();
     await expect(page.getByRole('heading', { name: /from survey to signal/i })).toBeVisible();
     await expect(page.getByRole('heading', { name: /build the next connection with us/i })).toBeVisible();
     await expect(page.locator('main#main-content')).toBeVisible();

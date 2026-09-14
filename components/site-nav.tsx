@@ -41,6 +41,10 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
     setOpen(false);
     setServicesOpen(false);
   };
+  const renderPrimaryLink = (item: (typeof primaryNav)[number]) => {
+    const active = isActive(item.href);
+    return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} data-cursor="view">{item.label}</Link>;
+  };
 
   return (
     <header className={`site-nav-shell ${tone === 'paper' ? 'site-nav-shell--paper' : ''} ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
@@ -50,10 +54,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
       </Link>
 
       <nav className="desktop-nav" aria-label="Primary navigation">
-        {primaryNav.map((item) => {
-          const active = isActive(item.href);
-          return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} data-cursor="view">{item.label}</Link>;
-        })}
+        {primaryNav.slice(0, 2).map(renderPrimaryLink)}
         <div className="nav-services">
           <button
             className={`nav-services__trigger ${serviceIsActive ? 'is-active' : ''}`}
@@ -70,6 +71,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
             ))}
           </div>
         </div>
+        {primaryNav.slice(2).map(renderPrimaryLink)}
       </nav>
 
       <DiscussProjectButton className="nav-project-link" dataCursor="start">
@@ -81,9 +83,9 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
       </button>
 
       <div id="mobile-menu" className="mobile-menu" aria-hidden={!open}>
-        <p className="mono-label">Navigation / 00—06</p>
+        <p className="mono-label">Navigation / 00—09</p>
         <nav aria-label="Mobile navigation">
-          {primaryNav.map((item, index) => {
+          {primaryNav.slice(0, 2).map((item, index) => {
             const active = isActive(item.href);
             return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={closeMenus}><span>0{index + 1}</span>{item.label}</Link>;
           })}
@@ -95,7 +97,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
               aria-controls="services-menu-mobile"
               onClick={() => setServicesOpen((value) => !value)}
             >
-              <span>08</span>Services <b aria-hidden="true">⌄</b>
+              <span>03</span>Services <b aria-hidden="true">⌄</b>
             </button>
             <div id="services-menu-mobile" className="mobile-menu__services-list" hidden={!servicesOpen}>
               {serviceNav.map((item, index) => (
@@ -103,6 +105,10 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
               ))}
             </div>
           </div>
+          {primaryNav.slice(2).map((item, index) => {
+            const active = isActive(item.href);
+            return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={closeMenus}><span>0{index + 4}</span>{item.label}</Link>;
+          })}
           <DiscussProjectButton className="mobile-menu__project" dataCursor="start" onOpen={closeMenus}><span>09</span>Request a Quote</DiscussProjectButton>
         </nav>
       </div>
