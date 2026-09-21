@@ -53,6 +53,31 @@ test.describe('home experience', () => {
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
   });
 
+  test('keeps the impact stats inside a narrow mobile viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 844 });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    const boxes = await page.locator('.impact-stat').evaluateAll((elements) => {
+      const viewport = document.documentElement.clientWidth;
+      return elements.map((element) => ({
+        right: element.getBoundingClientRect().right,
+        viewport,
+      }));
+    });
+
+    expect(boxes).toHaveLength(5);
+    expect(Math.max(...boxes.map(({ right }) => right))).toBeLessThanOrEqual(boxes[0].viewport + 1);
+  });
+
+  test('wraps direct contact actions inside a narrow mobile viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 844 });
+    await page.goto('/contact', { waitUntil: 'domcontentloaded' });
+
+    const box = await page.locator('.contact-direct__actions').boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.x + box!.width).toBeLessThanOrEqual(321);
+  });
+
   test('takes the quote CTA to the contact quote form', async ({ page }) => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.loader')).toHaveCount(0);
