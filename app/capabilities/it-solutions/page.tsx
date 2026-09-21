@@ -6,6 +6,7 @@ import { projects, serviceDetails } from '@/data/site';
 export const metadata: Metadata = {
   title: 'IT & Digital Solutions | Pie Square Technologies',
   description: 'Infrastructure, security, and software for connected organizations.',
+  alternates: { canonical: '/capabilities/it-solutions' },
 };
 
 export default function ITSolutionsPage() {

@@ -6,6 +6,7 @@ import { projects, serviceDetails } from '@/data/site';
 export const metadata: Metadata = {
   title: 'Optical Fiber Networks | Pie Square Technologies',
   description: 'Route survey to customer connection for fiber networks.',
+  alternates: { canonical: '/capabilities/optical-fiber' },
 };
 
 export default function FiberCapabilityPage() {

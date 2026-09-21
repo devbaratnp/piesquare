@@ -26,16 +26,15 @@ The reference-aligned site includes:
 - `/company` — company story, values, approach, workforce, coverage, and industries.
 - `/capabilities` — four service divisions and delivery standard.
 - `/capabilities/telecom`, `/capabilities/optical-fiber`, `/capabilities/solar-energy`, `/capabilities/it-solutions` — detailed capability rows and related projects.
-- `/projects` — filterable portfolio of eight project records.
-- `/careers` — six current role templates with application links.
-- `/certifications` — certification and compliance records with transparent pending-verification states.
+- `/projects` — filterable portfolio of twelve project records with detail pages.
+- `/careers` — three current role templates plus a general CV application.
 - `/contact` — direct contact details and project/message/site-survey forms.
 
 ## Architecture
 
-`app/layout.tsx` owns metadata and the self-hosted Young Serif / Instrument Sans font pairing; `app/page.tsx` mounts `HomeExperience`. Homepage scenes are composed in `components/home-experience.tsx`, with shared `SceneShell`, navigation, cursor, signal line, Lenis, and reduced-motion utilities. `components/inner-page.tsx` provides the reference-style paper route shell, while service, project, careers, certifications, and contact components reuse the same editorial primitives. `data/site.ts` is the source of truth for business content and route records. `lib/motion.ts` defines the named signal states used by the global overlay.
+`app/layout.tsx` owns metadata and the self-hosted Young Serif / Instrument Sans font pairing; `app/page.tsx` mounts `HomeExperience`. Homepage scenes are composed in `components/home-experience.tsx`, with shared `SceneShell`, navigation, cursor, signal line, Lenis, and reduced-motion utilities. `components/inner-page.tsx` provides the reference-style paper route shell, while service, project, careers, and contact components reuse the same editorial primitives. `data/site.ts` is the source of truth for business content and route records. `lib/motion.ts` defines the named signal states used by the global overlay.
 
-The initializing screen has been removed so the first frame opens directly into the hero experience. The navigation mirrors the reference hierarchy with Home, About Us, a Services dropdown, Projects, Capabilities, Certifications, Careers, Contact, and Request a Quote.
+The initializing screen has been removed so the first frame opens directly into the hero experience. The navigation mirrors the reference hierarchy with Home, About Us, a Services dropdown, Projects, Capabilities, Careers, Contact, and Request a Quote.
 
 ## Media
 

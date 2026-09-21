@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { SiteNav } from '@/components/site-nav';
 import { SignalLine } from '@/components/signal-line';
-import { DiscussProjectButton } from '@/components/discuss-project-button';
+import { FloatingContact } from '@/components/floating-contact';
 import { primaryNav, serviceNav, siteContact } from '@/data/site';
 
 type InnerPageProps = Readonly<{
@@ -21,6 +21,7 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
     <>
       <a className="skip-link" href="#inner-content">Skip to main content</a>
       <SiteNav tone={light ? 'paper' : 'dark'} />
+      <FloatingContact />
       <SignalLine state="MAP_ROUTE" />
       <main id="inner-content" className={`inner-page ${light ? 'inner-page--light' : ''}`} aria-labelledby="inner-page-title">
         <div className="page-wrap">
@@ -43,7 +44,7 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
             <h1 id="inner-page-title">{title}</h1>
             <p className="inner-page__lede">{lede}</p>
             <div className="inner-page__actions">
-              <DiscussProjectButton className="button button--primary">Discuss a Project ↗</DiscussProjectButton>
+              <Link className="button button--primary" href="/contact#quote">Request a Quote ↗</Link>
               <Link className="button button--ghost" href="/capabilities">Explore capabilities ↗</Link>
             </div>
             {image && (
@@ -75,7 +76,6 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
               </div>
               <div>
                 <h2>RESOURCES</h2>
-                <Link href="/certifications">Certifications</Link>
                 <Link href="/contact">Contact</Link>
               </div>
               <div>
@@ -83,6 +83,7 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
                 <span>{siteContact.address}</span>
                 <a href={siteContact.phoneHref}>{siteContact.phone}</a>
                 <a href={`mailto:${siteContact.email}`}>{siteContact.email}</a>
+                <a href={siteContact.mapUrl}>Google Maps ↗</a>
               </div>
             </nav>
             <span className="site-footer__legal">© 2026 Pie Square Technologies / All Rights Reserved.</span>

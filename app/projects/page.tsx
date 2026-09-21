@@ -6,6 +6,7 @@ import { impactStats } from '@/data/site';
 export const metadata: Metadata = {
   title: 'Projects | Pie Square Technologies',
   description: 'Field proof from telecom, fiber, energy, and IT delivery across Nepal.',
+  alternates: { canonical: '/projects' },
 };
 
 export default function ProjectsPage() {

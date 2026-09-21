@@ -22,20 +22,20 @@ test.describe('home experience', () => {
       await expect(menuToggle).toHaveAttribute('aria-expanded', 'true');
       await expect(page.getByRole('navigation', { name: /mobile/i })).toBeVisible();
     }
-    await expect(page.getByRole('heading', { name: /building the infrastructure that keeps the world connected/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /building the infrastructure that keeps nepal connected/i })).toBeVisible();
     await expect(page.getByRole('heading', { name: /from survey to signal/i })).toBeVisible();
     await expect(page.getByRole('heading', { name: /build the next connection with us/i })).toBeVisible();
     await expect(page.locator('main#main-content')).toBeVisible();
     await expect(page.locator('#top h1')).toHaveCount(1);
     await expect(page.locator('a[href="/contact"]:visible').first()).toBeVisible();
-    await expect(page.locator('#company img[src*="nepal-telecom"], #company img[src*="ncell"], #company img[src*="cg-net"]')).toHaveCount(3);
-    await expect(page.locator('#clients .clients-scene__names p')).toHaveCount(4);
+    await expect(page.locator('#company .logo-carousel__stage')).toHaveCount(0);
+    await expect(page.locator('#clients .clients-scene__logos img')).toHaveCount(3);
+    await expect(page.locator('#clients .clients-scene__names > p')).toHaveCount(7);
     await expect(page.locator('#clients .clients-scene__names')).toContainText('Nepal Telecom');
+    await expect(page.locator('#clients .clients-scene__names')).toContainText('Surya Nepal');
+    await expect(page.locator('#clients .clients-scene__names')).toContainText('ZTE Nepal');
+    await expect(page.locator('#clients .clients-scene__names')).toContainText('CCS Nepal');
     await expect(page.locator('body')).toHaveCSS('overflow-x', 'hidden');
-    const logoStage = page.locator('.logo-carousel__stage');
-    await expect(logoStage.getByAltText('Nepal Telecom')).toBeAttached();
-    await expect(logoStage.getByAltText('Ncell')).toBeAttached();
-    await expect(logoStage.getByAltText('CG Net')).toBeAttached();
     await expect(page.locator('[data-signal-state="FINAL_CONVERGENCE"]').first()).toBeAttached();
 
     const projectsLink = page.locator('a[href="/projects"]:visible').first();
@@ -53,23 +53,20 @@ test.describe('home experience', () => {
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
   });
 
-  test('opens the project inquiry form without leaving the current page', async ({ page }) => {
+  test('takes the quote CTA to the contact quote form', async ({ page }) => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.loader')).toHaveCount(0);
 
-    const desktopDiscussButton = page.locator('.nav-project-link');
-    if (await desktopDiscussButton.isVisible()) {
-      await desktopDiscussButton.click();
+    const desktopQuoteLink = page.locator('.nav-project-link');
+    if (await desktopQuoteLink.isVisible()) {
+      await desktopQuoteLink.click();
     } else {
       await page.locator('.menu-toggle').click({ force: true });
       await page.locator('.mobile-menu__project').click();
     }
 
-    await expect(page).toHaveURL(/\/$/);
-    await expect(page.getByRole('dialog', { name: /discuss a project/i })).toBeVisible();
-    await expect(page.getByRole('form', { name: /project inquiry/i })).toBeVisible();
-    await page.getByRole('button', { name: /close project inquiry/i }).click();
-    await expect(page.getByRole('dialog', { name: /discuss a project/i })).toHaveCount(0);
+    await expect(page).toHaveURL(/\/contact#quote$/);
+    await expect(page.getByRole('heading', { name: /let's build your next project/i })).toBeVisible();
   });
 
   test('keeps the full story available with reduced motion', async ({ browser }) => {
@@ -143,7 +140,6 @@ test.describe('inner routes', () => {
     '/capabilities/it-solutions',
     '/projects',
     '/careers',
-    '/certifications',
     '/contact',
   ];
 
@@ -183,5 +179,19 @@ test.describe('inner routes', () => {
       expect(consoleErrors).toEqual([]);
     });
   }
+
+  test('renders a linked project detail page from the approved portfolio', async ({ page }) => {
+    await page.goto('/projects/rf-drive-test-network-optimization', { waitUntil: 'domcontentloaded' });
+    await expect(page.getByRole('heading', { level: 1, name: /rf drive test & network optimization/i })).toBeVisible();
+    await expect(page.getByText(/1,214/i).first()).toBeVisible();
+    await expect(page.locator('.inner-page__actions a[href="/contact#quote"]').first()).toBeVisible();
+  });
+
+  test('renders a branded 404 for unpublished routes', async ({ page }) => {
+    const response = await page.goto('/not-a-published-route', { waitUntil: 'domcontentloaded' });
+    expect(response?.status()).toBe(404);
+    await expect(page.getByRole('heading', { level: 1, name: /page not found/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /back to home/i })).toHaveAttribute('href', '/');
+  });
 
 });

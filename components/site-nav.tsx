@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { primaryNav, serviceNav } from '@/data/site';
-import { DiscussProjectButton } from '@/components/discuss-project-button';
 
 type SiteNavProps = Readonly<{
   tone?: 'dark' | 'paper';
@@ -74,9 +73,9 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
         {primaryNav.slice(2).map(renderPrimaryLink)}
       </nav>
 
-      <DiscussProjectButton className="nav-project-link" dataCursor="start">
+      <Link className="nav-project-link" href="/contact#quote" data-cursor="start">
         <span>Request a Quote</span><b aria-hidden="true">↗</b>
-      </DiscussProjectButton>
+      </Link>
 
       <button className="menu-toggle" type="button" aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen((value) => !value)}>
         <span>{open ? 'Close' : 'Menu'}</span><i aria-hidden="true" />
@@ -108,7 +107,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
             const active = isActive(item.href);
             return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={closeMenus}>{item.label}</Link>;
           })}
-          <DiscussProjectButton className="mobile-menu__project" dataCursor="start" onOpen={closeMenus}>Request a Quote</DiscussProjectButton>
+          <Link className="mobile-menu__project" href="/contact#quote" data-cursor="start" onClick={closeMenus}>Request a Quote</Link>
         </nav>
       </div>
     </header>

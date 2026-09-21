@@ -7,6 +7,7 @@ import { capabilityRoutes, siteContact } from '@/data/site';
 export const metadata: Metadata = {
   title: 'Contact | Pie Square Technologies',
   description: 'Talk to the Pie Square Technologies engineering team.',
+  alternates: { canonical: '/contact' },
 };
 
 export default function ContactPage() {
@@ -20,7 +21,7 @@ export default function ContactPage() {
       <section className="contact-direct" aria-label="Direct contact">
         <div className="contact-direct__actions">
           <a className="button button--primary" href={siteContact.phoneHref}>Call ↗</a>
-          <a className="button button--ghost" href="https://wa.me/9779715000715">WhatsApp ↗</a>
+          <a className="button button--ghost" href={`https://wa.me/${siteContact.phone.replace(/\D/g, '')}`}>WhatsApp ↗</a>
           <a className="button button--ghost" href={`mailto:${siteContact.email}`}>Email ↗</a>
         </div>
         <div className="contact-office">
@@ -30,6 +31,7 @@ export default function ContactPage() {
             <div><dt>Phone</dt><dd><a href={siteContact.phoneHref}>{siteContact.phone}</a></dd></div>
             <div><dt>Email</dt><dd><a href={`mailto:${siteContact.email}`}>{siteContact.email}</a></dd></div>
             <div><dt>Business hours</dt><dd>Sunday – Friday, 9:00 – 18:00</dd></div>
+            <div><dt>Location</dt><dd><a href={siteContact.mapUrl}>Google Maps ↗</a></dd></div>
           </dl>
         </div>
       </section>

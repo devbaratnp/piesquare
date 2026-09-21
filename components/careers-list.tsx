@@ -1,4 +1,4 @@
-import { siteContact, careerRoles } from '@/data/site';
+import { careerRoles, generalCareerApplication, siteContact } from '@/data/site';
 
 export function CareersList() {
   return (
@@ -29,6 +29,18 @@ export function CareersList() {
           </article>
         ))}
       </div>
+      <section className="career-general-application" aria-label="General application">
+        <p className="inner-page__eyebrow">GENERAL APPLICATION</p>
+        <h2>{generalCareerApplication.title}</h2>
+        <p>{generalCareerApplication.description}</p>
+        <form action={`mailto:${siteContact.email}`} method="get" encType="text/plain" aria-label="General career application">
+          <label>Name<input name="name" required /></label>
+          <label>Email<input name="email" type="email" required /></label>
+          <label>Desired position<input name="desiredPosition" required /></label>
+          <label>CV<input name="cv" type="file" /></label>
+          <button className="button button--primary" type="submit">Send Your CV ↗</button>
+        </form>
+      </section>
     </section>
   );
 }

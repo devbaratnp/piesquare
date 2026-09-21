@@ -9,8 +9,8 @@ describe('home page shell', () => {
     render(<Page />);
 
     expect(screen.getByRole('main')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /building the infrastructure that keeps the world connected/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /our core capabilities/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /building the infrastructure that keeps nepal connected/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /what we deliver/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /trusted by industry.*built for long-term partnerships/i })).toBeInTheDocument();
     expect(Array.from(document.querySelectorAll('main section[id]')).map((scene) => scene.id)).toEqual([
       'top', 'company', 'expertise', 'telecom', 'rf', 'fiber', 'energy', 'digital', 'impact', 'projects', 'clients', 'why', 'contact',
@@ -37,7 +37,7 @@ describe('home page shell', () => {
     expect(screen.getByRole('heading', { name: /engineering discipline.*field-proven/i })).toBeInTheDocument();
 
     // Four capability labels with sequence counters
-    for (const label of ['Telecom', 'Optical Fiber', 'Solar & Energy', 'IT & Digital']) {
+    for (const label of ['Telecom', 'Fiber', 'Solar & Electrical', 'IT Solutions']) {
       expect(screen.getAllByText(label).length).toBeGreaterThan(0);
     }
     expect(document.body.textContent).toMatch(/01 \/ 04/);
@@ -50,9 +50,11 @@ describe('home page shell', () => {
       expect(inText || inAlt).toBe(true);
     }
 
+    expect(screen.getByRole('heading', { name: /how we deliver/i })).toBeInTheDocument();
+
     // Supplied logo paths render (next/image rewrites src, so match the filename)
     const sources = Array.from(document.querySelectorAll('img')).map((img) => img.getAttribute('src') ?? '');
-    for (const file of ['nepal-telecom-circle.png', 'ncell-circle.png', 'cg-net-circle.png']) {
+    for (const file of ['nepal-telecom.jpg', 'ncell.png', 'cg-net.png']) {
       expect(sources.some((src) => src.includes(file))).toBe(true);
     }
 
@@ -74,7 +76,7 @@ describe('home page shell', () => {
       expect(document.querySelector(`a[href="${href}"]`)).toBeTruthy();
     }
 
-    for (const value of ['3500+', '115', '2240+ KM', '400 kW']) {
+    for (const value of ['3500+', '115', '2,240+ KM', '400 kW']) {
       expect(document.body.textContent).toContain(value);
     }
   });
@@ -83,11 +85,12 @@ describe('home page shell', () => {
     render(<Page />);
 
     const navigation = within(screen.getByRole('navigation', { name: /primary/i }));
-    for (const label of ['Home', 'About Us', 'Projects', 'Capabilities', 'Certifications', 'Careers', 'Contact']) {
+    for (const label of ['Home', 'About Us', 'Projects', 'Capabilities', 'Careers', 'Contact']) {
       expect(navigation.getByRole('link', { name: new RegExp(`^${label}$`, 'i') })).toBeInTheDocument();
     }
+    expect(navigation.queryByRole('link', { name: /^certifications$/i })).not.toBeInTheDocument();
     expect(navigation.getByRole('button', { name: /services/i })).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /request a quote/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('link', { name: /request a quote/i }).length).toBeGreaterThan(0);
   });
 
   it('opens directly on the first scene without the initializing screen', () => {

@@ -10,13 +10,13 @@ import { useReducedMotion } from '@/components/motion/reduced-motion';
 import { SceneShell } from '@/components/scene-shell';
 import { SignalLine } from '@/components/signal-line';
 import { SiteNav } from '@/components/site-nav';
-import { DiscussProjectButton } from '@/components/discuss-project-button';
+import { FloatingContact } from '@/components/floating-contact';
 import {
   capabilities,
   capabilityRoutes,
   clients,
-  companyLogos,
   companyTimeline,
+  deliveryFlow,
   digitalModules,
   energyPoints,
   fiberSteps,
@@ -24,6 +24,7 @@ import {
   projects,
   siteContact,
   telecomFrames,
+  trustedClientLogoFiles,
   whyPieSquare,
 } from '@/data/site';
 import { ImageCarouselHero } from '@/components/ui/ai-image-generator-hero';
@@ -90,20 +91,19 @@ function HeroScene() {
           <h1 className="display-title hero-scene__title">
             <span>BUILDING THE</span>
             <span>INFRASTRUCTURE</span>
-            <span>THAT KEEPS THE <em>WORLD CONNECTED.</em></span>
+            <span>THAT KEEPS <em>NEPAL CONNECTED.</em></span>
           </h1>
           <p className="hero-scene__disciplines">Telecom. Fiber. Solar. IT.</p>
           <div className="hero-scene__footer">
             <p>End-to-end Telecom, Fiber Optic, Solar and IT infrastructure solutions delivered with engineering expertise, field capability and a commitment to quality.</p>
             <div className="hero-scene__meta">
               <span>Established 2019</span>
-              <span>Kusunti-13, Lalitpur, Nepal</span>
+              <span>Lalitpur, Nepal</span>
             </div>
           </div>
           <div className="hero-scene__actions">
             <a className="button button--primary" href="#projects" data-cursor="view">View our work ↗</a>
-            <a className="button button--ghost" href="#expertise" data-cursor="view">Explore capabilities ↗</a>
-            <span className="scroll-cue"><i /> Scroll to transmit</span>
+            <a className="button button--ghost" href="#expertise" data-cursor="view">Explore our services ↗</a>
           </div>
         </div>
       </div>
@@ -116,18 +116,19 @@ function CompanyScene() {
     <SceneShell id="company" state="MAP_ROUTE" className="company-scene light-scene">
       <div className="topo-grid" aria-hidden="true"><span /><span /><span /><span /><span /><span /></div>
       <div className="page-wrap company-scene__layout">
-        <SectionMarker number="01" label="The company" />
+        <SectionMarker number="01" label="WHO WE ARE" />
         <ImageCarouselHero
           title={<>INFRASTRUCTURE<br /><em>EXPERTISE. FIELD EXECUTION.<br />RELIABLE RESULTS.</em></>}
-          subtitle="Who we are / Nepal field operations"
-          description="Pie Square Technologies delivers integrated infrastructure services across telecom, fiber optic, solar energy and IT infrastructure. We serve telecom operators, ISPs, EPC contractors, technology companies, enterprises and government infrastructure projects — from first survey through installation, testing, commissioning and long-term maintenance."
-          ctaText="Explore our network"
-          onCtaClick={() => document.getElementById('expertise')?.scrollIntoView({ behavior: 'smooth' })}
-          images={companyLogos}
+          subtitle="WHO WE ARE / NEPAL FIELD OPERATIONS"
+          description="Our strength lies in bringing multi-disciplinary expertise in Telecom, Fiber Optics, Solar Energy and IT Infrastructure under one roof, with responsible execution and EHS compliance enabling clients to manage diverse infrastructure requirements through a single, dependable partner."
+          ctaText="Learn more about us"
+          ctaHref="/company"
+          images={[]}
+          showOrbit={false}
           features={[
-            { title: '2019 / ESTABLISHED', description: 'Field systems since 2019' },
-            { title: 'TELECOM / FIBER', description: 'Infrastructure built close to the ground' },
-            { title: 'ENERGY / DIGITAL', description: 'One infrastructure partner' },
+            { title: '2019 / ESTABLISHED', description: 'Engineering solutions since 2019' },
+            { title: 'TELECOM / FIBER', description: 'Deployment, testing and maintenance' },
+            { title: 'SOLAR / IT', description: 'One integrated infrastructure partner' },
           ]}
         />
         <ol className="company-timeline" aria-label="Company timeline from 2019 to today">
@@ -147,12 +148,12 @@ function CapabilitiesScene() {
   return (
     <SceneShell id="expertise" state="MAP_ROUTE" className="capabilities-scene">
       <div className="page-wrap">
-        <SectionMarker number="02" label="One partner / four capability layers" light />
+        <SectionMarker number="02" label="WHAT WE DELIVER" light />
         <div className="capabilities-scene__intro">
           <div>
-            <p className="capabilities-scene__aside">Four engineering divisions, one accountable delivery partner — from survey to long-term maintenance.</p>
+            <p className="capabilities-scene__aside">Four divisions. One delivery standard. From survey to long-term maintenance.</p>
           </div>
-          <h2 className="display-title">OUR CORE<br /><em>CAPABILITIES.</em></h2>
+          <h2 className="display-title">WHAT WE<br /><em>DELIVER.</em></h2>
         </div>
         <div className="capability-list">
           {capabilities.map((item, index) => (
@@ -167,6 +168,15 @@ function CapabilitiesScene() {
             </Link>
           ))}
         </div>
+        <section className="delivery-flow" aria-label="How we deliver">
+          <div>
+            <p className="eyebrow eyebrow--red">DELIVERY STANDARD</p>
+            <h3 className="display-title">HOW WE <em>DELIVER.</em></h3>
+          </div>
+          <ol>
+            {deliveryFlow.map((step, index) => <li key={step}><span>0{index + 1}</span><strong>{step}</strong></li>)}
+          </ol>
+        </section>
       </div>
     </SceneShell>
   );
@@ -271,7 +281,7 @@ function FiberScene() {
       <div className="page-wrap fiber-scene__layout">
           <SectionMarker number="05" label="Optical fiber" />
         <div>
-          <h2 className="fiber-number">2240<span>+ KM</span></h2>
+          <h2 className="fiber-number">2,240<span>+ KM</span></h2>
           <h3 className="display-title">CONNECTING COMMUNITIES. KILOMETER BY <em>KILOMETER.</em></h3>
           <div className="fiber-steps">{fiberSteps.map((step) => <span key={step}>{step}</span>)}</div>
           <MediaPlate className="fiber-scene__submedia" src="/media/cinematic/F02-fiber-field-deployment.png" alt="Field team deploying optical fiber in Nepal" />
@@ -358,16 +368,16 @@ function ProjectsScene() {
         </div>
         <div className="evidence-wall">
           {projects.slice(0, 6).map((project, index) => (
-            <article className={'evidence-card evidence-card--' + (index + 1) + ' editorial-reveal'} key={project.id}>
+            <Link href={`/projects/${project.id}`} className={'evidence-card evidence-card--' + (index + 1) + ' editorial-reveal'} key={project.id}>
               <div className="evidence-card__image">
                 <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 720px) 100vw, 33vw" />
               </div>
               <div className="evidence-card__copy">
-                <span>{project.status} / {project.category}</span>
+                <span>{project.status} / {project.categoryLabel}</span>
                 <h3>{project.title}</h3>
-                <p>{project.location} / {project.scope.join(' • ')}</p>
+                <p>{project.location} / {project.duration}</p>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
         <Link className="button button--dark projects-scene__cta" href="/projects">View All Projects ↗</Link>
@@ -385,9 +395,12 @@ function ClientsScene() {
           <h2 className="display-title">TRUSTED BY INDUSTRY.<br /><em>BUILT FOR LONG-TERM PARTNERSHIPS.</em></h2>
         </div>
         <div className="clients-scene__names">
-          {clients.map((name) => (
-            <p key={name}>{name}</p>
-          ))}
+          <div className="clients-scene__logos" aria-label="Trusted client logos">
+            {trustedClientLogoFiles.map((logo) => <Image key={logo.name} src={logo.src} alt={logo.alt} width={160} height={64} />)}
+            <span>Surya Nepal</span><span>ZTE Nepal</span><span>CCS Nepal</span>
+          </div>
+          {clients.map((name) => <p key={name}>{name}</p>)}
+          <p className="clients-scene__support">Delivering reliable infrastructure and technology solutions across Nepal through trusted partnerships and proven field execution.</p>
         </div>
       </div>
     </section>
@@ -420,7 +433,7 @@ function FinalScene() {
         <h2 className="display-title">ONE PARTNER. MULTIPLE INFRASTRUCTURE <em>LAYERS.</em></h2>
         <h3 className="display-title display-title--secondary">BUILD THE NEXT CONNECTION <em>WITH US.</em></h3>
         <div className="final-scene__actions">
-          <DiscussProjectButton className="button button--primary" dataCursor="start">Discuss a Project ↗</DiscussProjectButton>
+          <a className="button button--primary" href={`https://wa.me/${siteContact.phone.replace(/\D/g, '')}`} data-cursor="contact">WhatsApp ↗</a>
           <a className="button button--ghost" href={'mailto:' + siteContact.email} data-cursor="contact">{siteContact.email}</a>
           <a className="button button--ghost" href={siteContact.phoneHref} data-cursor="contact">{siteContact.phone}</a>
         </div>
@@ -482,6 +495,7 @@ export function HomeExperience() {
     <LenisProvider>
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <SiteNav />
+      <FloatingContact />
       <SignalLine state={signalState} />
       <MotionBridge onState={setSignalState} />
       <main id="main-content" className="experience">

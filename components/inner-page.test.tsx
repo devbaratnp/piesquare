@@ -17,7 +17,7 @@ describe('InnerPage', () => {
 
     expect(screen.getByRole('heading', { level: 1, name: 'Test page title' })).toBeInTheDocument();
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
-    expect(screen.getAllByRole('button', { name: /discuss a project/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('link', { name: /request a quote/i }).some((link) => link.getAttribute('href') === '/contact#quote')).toBe(true);
     expect(screen.getByRole('navigation', { name: /footer/i })).toBeInTheDocument();
     expect(screen.getByRole('navigation', { name: /breadcrumb/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Test' })).toHaveAttribute('href', '/test');

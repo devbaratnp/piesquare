@@ -6,6 +6,7 @@ import { projects, serviceDetails } from '@/data/site';
 export const metadata: Metadata = {
   title: 'Telecom Infrastructure | Pie Square Technologies',
   description: 'Site survey through optimization for mobile network infrastructure.',
+  alternates: { canonical: '/capabilities/telecom' },
 };
 
 export default function TelecomCapabilityPage() {

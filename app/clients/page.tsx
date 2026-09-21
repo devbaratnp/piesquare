@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { InnerPage } from '@/components/inner-page';
-import { clients, companyLogos } from '@/data/site';
+import { clients, trustedClientLogoFiles } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'Clients | Pie Square Technologies',
@@ -18,16 +18,16 @@ export default function ClientsPage() {
       light
     >
       <div className="inner-page__grid">
-        {companyLogos.map((logo) => (
-          <figure className="inner-page__card" key={logo.id}>
+        {trustedClientLogoFiles.map((logo) => (
+          <figure className="inner-page__card" key={logo.name}>
             <span style={{ position: 'relative', display: 'block', height: 90 }}>
               <Image src={logo.src} alt={logo.alt} fill sizes="300px" style={{ objectFit: 'contain' }} />
             </span>
-            <figcaption>{logo.alt}</figcaption>
+            <figcaption>{logo.name}</figcaption>
           </figure>
         ))}
         {clients
-          .filter((client) => !companyLogos.some((logo) => logo.alt === client))
+          .filter((client) => !trustedClientLogoFiles.some((logo) => logo.name === client))
           .map((client) => (
             <section className="inner-page__card" key={client} aria-label={client}>
               <h2>{client}</h2>

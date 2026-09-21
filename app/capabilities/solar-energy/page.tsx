@@ -6,6 +6,7 @@ import { projects, serviceDetails } from '@/data/site';
 export const metadata: Metadata = {
   title: 'Solar & Energy Systems | Pie Square Technologies',
   description: 'Hybrid and off-grid power for connectivity infrastructure.',
+  alternates: { canonical: '/capabilities/solar-energy' },
 };
 
 export default function SolarCapabilityPage() {

@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { DiscussProjectButton } from '@/components/discuss-project-button';
 import type { ProjectRecord, ServiceCapability } from '@/data/site';
 
 type ServiceDetailProps = Readonly<{
@@ -104,7 +103,7 @@ export function ServiceDetail({ capabilities = [], lifecycle, scope, proof, rela
 
       <p className="inner-page__proof">{proof}</p>
       <div className="inner-page__actions">
-        <DiscussProjectButton className="button button--primary">Discuss a Project ↗</DiscussProjectButton>
+        <Link className="button button--primary" href="/contact#quote">Request a Quote ↗</Link>
         <Link className="button button--ghost" href="/contact#survey">Request a Site Survey ↗</Link>
       </div>
     </>

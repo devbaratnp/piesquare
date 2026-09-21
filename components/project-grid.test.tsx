@@ -9,7 +9,7 @@ describe('ProjectGrid', () => {
     render(<ProjectGrid />);
 
     expect(screen.getByRole('group', { name: /filter projects/i })).toBeInTheDocument();
-    expect(screen.getAllByRole('article')).toHaveLength(8);
+    expect(screen.getAllByRole('article')).toHaveLength(12);
     for (const filter of ['All', 'Telecom', 'Fiber', 'Solar', 'IT']) {
       expect(screen.getByRole('button', { name: filter })).toBeInTheDocument();
     }
@@ -19,15 +19,15 @@ describe('ProjectGrid', () => {
     const { getByRole, getAllByRole } = render(<ProjectGrid />);
 
     fireEvent.click(getByRole('button', { name: 'Fiber' }));
-    expect(getAllByRole('article')).toHaveLength(2);
+    expect(getAllByRole('article')).toHaveLength(3);
     fireEvent.click(getByRole('button', { name: 'IT' }));
-    expect(getAllByRole('article')).toHaveLength(2);
+    expect(getAllByRole('article')).toHaveLength(3);
   });
 
   it('renders project proof fields for every visible record', () => {
     render(<ProjectGrid />);
 
-    for (const label of ['COMPLETED', 'ONGOING', 'FIBER', 'TELECOM', 'SOLAR', 'IT', 'National Backbone Fiber Deployment']) {
+    for (const label of ['COMPLETED', 'ONGOING', 'FIBER', 'TELECOM', 'SOLAR', 'IT', 'Fiber Network Deployment & ODN Implementation']) {
       expect(document.body.textContent).toContain(label);
     }
     expect(document.body.textContent).toContain('Route Survey');

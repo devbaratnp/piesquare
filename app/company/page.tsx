@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
-import { companyApproach, companyValuesDetailed, industries, technicalWorkforce } from '@/data/site';
+import { companyApproach, companyValuesDetailed, industryDetails, teamDepartments } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'About Us | Pie Square Technologies',
   description: 'The field force behind critical infrastructure in Nepal.',
+  alternates: { canonical: '/company' },
 };
 
 const provinces = ['Koshi Province', 'Madhesh Province', 'Bagmati Province', 'Gandaki Province', 'Lumbini Province', 'Karnali Province', 'Sudurpashchim Province'];
@@ -23,21 +24,21 @@ export default function CompanyPage() {
         <p className="inner-page__eyebrow">WHO WE ARE</p>
         <h2>An Engineering Company Built for the Field.</h2>
         <div className="about-intro__copy">
-          <p>Pie Square Technologies is an integrated infrastructure and technology solutions company based in Nepal. We provide field engineering, infrastructure deployment, installation, testing, commissioning and maintenance services to telecom operators, ISPs, EPC contractors, technology companies, enterprises and government projects.</p>
-          <p>Our teams work where infrastructure actually gets built — on towers, along fiber routes, on rooftops and inside data centers — with the equipment, training and discipline that mission-critical networks demand.</p>
+          <p>Our strength lies in bringing multi-disciplinary expertise in Telecom, Fiber Optics, Solar Energy, and IT Infrastructure under one roof, with responsible execution, and EHS compliance enabling clients to manage diverse infrastructure requirements through a single, dependable partner.</p>
+          <p>From field-level execution to project coordination and management, our teams work with a practical, solution-oriented approach to meet demanding project requirements. We continuously focus on operational efficiency, technical accuracy, adaptability, and long-term client relationships, helping build infrastructure that is reliable, scalable, and ready for the future.</p>
         </div>
       </section>
 
       <div className="inner-page__grid about-vision-grid">
         <section className="inner-page__card" aria-label="Our Vision">
           <p className="inner-page__eyebrow">OUR VISION</p>
-          <h2>Trusted infrastructure, built to last.</h2>
-          <p>The company vision statement is being finalized with leadership and will be published here once approved.</p>
+          <h2>Building the infrastructure that connects, powers and enables Nepal.</h2>
+          <p>To create reliable infrastructure that strengthens connectivity, supports sustainable energy, and enables communities and businesses to move forward through technology.</p>
         </section>
         <section className="inner-page__card" aria-label="Our Mission">
           <p className="inner-page__eyebrow">OUR MISSION</p>
-          <h2>Safe, measured delivery.</h2>
-          <p>Deliver high-quality infrastructure projects that connect and power communities, with safety, evidence and accountability built into every handover.</p>
+          <h2>Integrated solutions. Reliable delivery.</h2>
+          <p>To deliver integrated infrastructure and technology solutions with quality, safety and accountability, combining engineering expertise, field execution and dependable project delivery across Nepal.</p>
         </section>
       </div>
 
@@ -67,8 +68,8 @@ export default function CompanyPage() {
         <p className="inner-page__eyebrow">OUR TEAM</p>
         <h2>Management &amp; Technical Workforce</h2>
         <p className="about-team__note">Named team profiles will be added once approved personnel records are provided.</p>
-        <div className="workforce-list">
-          {technicalWorkforce.map((role) => <span key={role}>{role}</span>)}
+          <div className="workforce-list">
+            {teamDepartments.map((department) => <span key={department.title}><strong>{department.title}</strong>{department.copy}</span>)}
         </div>
       </section>
 
@@ -85,8 +86,8 @@ export default function CompanyPage() {
       <section className="inner-page__card about-industries" aria-label="Industries we support">
         <p className="inner-page__eyebrow">INDUSTRIES</p>
         <h2>Industries We Support</h2>
-        <div className="workforce-list">
-          {industries.map((industry) => <span key={industry}>{industry}</span>)}
+        <div className="industry-detail-list">
+          {industryDetails.map((industry) => <article key={industry.title}><h3>{industry.title}</h3><p>{industry.copy}</p></article>)}
         </div>
       </section>
     </InnerPage>

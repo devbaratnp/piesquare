@@ -19,11 +19,11 @@ describe('SiteNav', () => {
   it('exposes the reference navigation destinations and services menu', () => {
     render(<SiteNav />);
 
-    for (const label of ['Home', 'About Us', 'Projects', 'Capabilities', 'Certifications', 'Careers', 'Contact']) {
+    for (const label of ['Home', 'About Us', 'Projects', 'Capabilities', 'Careers', 'Contact']) {
       expect(screen.getAllByRole('link', { name: new RegExp(`^${label}$`, 'i') }).length).toBeGreaterThan(0);
     }
     expect(screen.getAllByRole('button', { name: /services/i }).length).toBeGreaterThan(0);
-    expect(screen.getAllByRole('button', { name: /request a quote/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('link', { name: /request a quote/i }).length).toBeGreaterThan(0);
   });
 
   it('opens and closes the services menu with keyboard interaction', () => {
@@ -47,21 +47,9 @@ describe('SiteNav', () => {
     expect(button).toHaveAttribute('aria-expanded', 'false');
   });
 
-  it('opens the project inquiry form in an in-page dialog', () => {
+  it('links the quote CTA to the presentation-only quote form', () => {
     render(<SiteNav />);
 
-    fireEvent.click(screen.getByRole('button', { name: /request a quote/i }));
-
-    expect(screen.getByRole('dialog', { name: /discuss a project/i })).toBeInTheDocument();
-    expect(screen.getByRole('form', { name: /project inquiry/i })).toBeInTheDocument();
-  });
-
-  it('closes the project inquiry dialog with Escape', () => {
-    render(<SiteNav />);
-
-    fireEvent.click(screen.getByRole('button', { name: /request a quote/i }));
-    fireEvent.keyDown(window, { key: 'Escape' });
-
-    expect(screen.queryByRole('dialog', { name: /discuss a project/i })).not.toBeInTheDocument();
+    expect(screen.getAllByRole('link', { name: /request a quote/i })[0]).toHaveAttribute('href', '/contact#quote');
   });
 });

@@ -20,7 +20,7 @@ describe('ServiceDetail', () => {
     expect(screen.getByText('Field survey copy.')).toBeInTheDocument();
     expect(screen.getByText('Fiber')).toBeInTheDocument();
     expect(screen.getByText('Supported proof statement.')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /discuss a project/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /request a quote/i })).toHaveAttribute('href', '/contact#quote');
   });
 
   it('does not render empty lifecycle or scope shells', () => {

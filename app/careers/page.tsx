@@ -5,6 +5,7 @@ import { InnerPage } from '@/components/inner-page';
 export const metadata: Metadata = {
   title: 'Careers | Pie Square Technologies',
   description: 'Engineering, technical, field and project-management roles across Nepal.',
+  alternates: { canonical: '/careers' },
 };
 
 export default function CareersPage() {

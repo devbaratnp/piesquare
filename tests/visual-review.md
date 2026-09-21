@@ -6,7 +6,7 @@ The approved reference was reviewed in the Codex in-app browser at `https://sola
 
 `C:\Users\Lenovo\.codex\visualizations\2026\09\14\01a09d4f-89a0-7e13-b844-08b7046761bd\reference-clean`
 
-The captured reference set covers Home, About Us, Services, Telecom, Fiber, Solar, IT, Projects, Capabilities, Certifications, Careers, and Contact. Its typography informed the final contrast-led pairing: Young Serif for major display headings and Instrument Sans for body/UI text.
+The captured reference set covers Home, About Us, Services, Telecom, Fiber, Solar, IT, Projects, Capabilities, Careers, and Contact. Its typography informed the final contrast-led pairing: Young Serif for major display headings and Instrument Sans for body/UI text.
 
 ## Implemented route map
 
@@ -14,22 +14,20 @@ The captured reference set covers Home, About Us, Services, Telecom, Fiber, Sola
 - `/company` — field-led company story, values, delivery approach, workforce, coverage, and industries.
 - `/capabilities` — four service divisions, verified metrics, workforce summary, and resource links.
 - `/capabilities/telecom`, `/capabilities/optical-fiber`, `/capabilities/solar-energy`, `/capabilities/it-solutions` — complete capability lists, delivery lifecycle, scope, and related projects.
-- `/projects` — eight reference-style project records with category filters, status, location, scope, and local proof imagery.
-- `/careers` — six roles with requirements and mailto application links.
-- `/certifications` — certification/compliance records with explicit verification-pending states where source documentation is not available.
-- `/contact` — direct phone, WhatsApp, email, office details, project inquiry, message, and site-survey forms.
+- `/projects` — twelve reference project records with category filters, status, location, scope, detail pages, and local proof imagery.
+- `/careers` — three roles plus a general CV application with a desired-position field.
+- `/contact` — direct phone, WhatsApp, email, Google Maps, message, quote, and site-survey forms.
 
 The legacy `/clients` route remains build-safe but is intentionally not part of the primary navigation; the reference groups client proof into the homepage story and project portfolio.
 
 ## Automated checks
 
-Verified on 2026-09-14 from the repository root:
+Verified on 2026-09-21 from the repository root:
 
-- `npm test -- --run --no-file-parallelism --maxWorkers=1` — 16 Vitest files, 32 tests passed.
+- `npm test -- --run --no-file-parallelism --maxWorkers=1` — 17 Vitest files, 32 tests passed.
 - `npm run lint` — passed with no ESLint errors.
-- `npm run build` — production build passed, type-check passed, and 15 static pages were generated. The build is configured for one worker in this constrained environment.
-- `npx playwright test tests/site.spec.ts --project=mobile` — 14 mobile checks passed after the overflow fix.
-- `npm run test:e2e` — 28 Playwright checks passed across Chromium desktop and Pixel 5 mobile profiles.
+- `npm run build` — production build passed, type-check passed, and the twelve project detail paths were statically generated. The build is configured for one worker in this constrained environment.
+- `npm run test:e2e` — 32 Playwright checks passed across Chromium desktop and Pixel 5 mobile profiles.
 
 The Playwright checks cover the page title, desktop/mobile navigation, the Services menu, anchor navigation to `/projects`, absence of the initializing loader, complete homepage signal-state DOM presence, one visible heading per inner route, broken image responses, console errors, reduced motion, and horizontal overflow at desktop/mobile widths.
 

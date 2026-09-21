@@ -14,6 +14,8 @@ describe('contact page', () => {
     expect(screen.getByRole('heading', { name: /let's build your next project/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /need a site survey/i })).toBeInTheDocument();
     expect(screen.getByText(/sunday – friday, 9:00 – 18:00/i)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /whatsapp/i })).toHaveAttribute('href', expect.stringContaining('wa.me'));
+    expect(screen.getAllByRole('link', { name: /whatsapp/i }).some((link) => link.getAttribute('href')?.includes('wa.me'))).toBe(true);
+    expect(screen.getAllByRole('link', { name: /google maps/i }).some((link) => link.getAttribute('href')?.includes('maps.app.goo.gl'))).toBe(true);
+    expect(screen.queryByRole('button', { name: /discuss a project/i })).not.toBeInTheDocument();
   });
 });

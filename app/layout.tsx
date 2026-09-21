@@ -26,7 +26,6 @@ export const metadata: Metadata = {
   title: "Pie Square Technologies | The signal that builds Nepal",
   description: 'Telecom infrastructure, optical fiber, renewable energy, and digital systems across Nepal.',
   metadataBase: new URL('https://piesquaretechnologies.com'),
-  alternates: { canonical: '/' },
   icons: { icon: '/favicon.svg' },
   openGraph: {
     title: 'Pie Square Technologies | The signal that builds Nepal',
@@ -54,7 +53,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     telephone: siteContact.phone,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Kusunti-13',
       addressLocality: 'Lalitpur',
       addressCountry: 'NP',
     },

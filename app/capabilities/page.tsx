@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { InnerPage } from '@/components/inner-page';
-import { capabilityRoutes, impactStats, serviceDetails, serviceOverview } from '@/data/site';
+import { capabilityRoutes, deliveryCapabilities, impactStats, serviceDetails, serviceOverview } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'Capabilities | Pie Square Technologies',
   description: 'Telecom, optical fiber, solar and energy, and IT solutions — one infrastructure partner.',
+  alternates: { canonical: '/capabilities' },
 };
 
 export default function CapabilitiesPage() {
@@ -50,6 +51,19 @@ export default function CapabilitiesPage() {
         <div className="workforce-list">
           {['Civil Engineers', 'Telecom Engineers', 'RF Engineers', 'Fiber Technicians', 'Solar Technicians', 'IT Engineers', 'Project Managers', 'Safety Personnel'].map((role) => (
             <span key={role}>{role}</span>
+          ))}
+        </div>
+      </section>
+
+      <section className="delivery-capabilities" aria-label="Delivery capabilities">
+        <p className="inner-page__eyebrow">DELIVERY CAPABILITIES</p>
+        <h2>Delivery capabilities</h2>
+        <div className="delivery-capabilities__grid">
+          {deliveryCapabilities.map((capability) => (
+            <article className="delivery-capability-card" key={capability.title}>
+              <h3>{capability.title}</h3>
+              <p>{capability.copy}</p>
+            </article>
           ))}
         </div>
       </section>

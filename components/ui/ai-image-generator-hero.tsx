@@ -3,6 +3,7 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { useReducedMotion } from '@/components/motion/reduced-motion';
 
@@ -18,9 +19,11 @@ interface ImageCarouselHeroProps {
   subtitle: string;
   description: string;
   ctaText: string;
+  ctaHref?: string;
   onCtaClick?: () => void;
   images: ReadonlyArray<ImageCard>;
   features?: Array<{ title: string; description: string }>;
+  showOrbit?: boolean;
 }
 
 export function ImageCarouselHero({
@@ -28,9 +31,11 @@ export function ImageCarouselHero({
   subtitle,
   description,
   ctaText,
+  ctaHref,
   onCtaClick,
   images,
   features = [],
+  showOrbit = true,
 }: ImageCarouselHeroProps) {
   const reduced = useReducedMotion();
   const [rotation, setRotation] = useState(0);
@@ -74,20 +79,28 @@ export function ImageCarouselHero({
         <p className="eyebrow eyebrow--dark">{subtitle}</p>
         <h2 className="display-title">{title}</h2>
         <p className="logo-carousel__description">{description}</p>
-        <button className="button button--dark logo-carousel__cta" type="button" onClick={onCtaClick}>
-          {ctaText}
-          <ArrowRight aria-hidden="true" size={16} strokeWidth={1.5} />
-        </button>
+        {ctaHref ? (
+          <Link className="button button--dark logo-carousel__cta" href={ctaHref}>
+            {ctaText}
+            <ArrowRight aria-hidden="true" size={16} strokeWidth={1.5} />
+          </Link>
+        ) : (
+          <button className="button button--dark logo-carousel__cta" type="button" onClick={onCtaClick}>
+            {ctaText}
+            <ArrowRight aria-hidden="true" size={16} strokeWidth={1.5} />
+          </button>
+        )}
       </div>
 
-      <div className="logo-carousel__stage" aria-label="Selected company and network logos">
-        <div className="logo-carousel__orbit" aria-hidden="true" />
-        <div className="logo-carousel__core">
-          <span>PIE / SQUARE</span>
-          <b>FIELD NETWORK</b>
-          <i />
-        </div>
-        {images.map((image, index) => {
+      {showOrbit && (
+        <div className="logo-carousel__stage" aria-label="Selected company and network logos">
+          <div className="logo-carousel__orbit" aria-hidden="true" />
+          <div className="logo-carousel__core">
+            <span>PIE / SQUARE</span>
+            <b>FIELD NETWORK</b>
+            <i />
+          </div>
+          {images.map((image, index) => {
           const angle = (rotation + (index * 360) / images.length) * (Math.PI / 180);
           const radiusX = compact ? 110 : 175;
           const radiusY = compact ? 82 : 112;
@@ -96,22 +109,23 @@ export function ImageCarouselHero({
           const perspectiveX = (mousePosition.x - 0.5) * 12;
           const perspectiveY = (mousePosition.y - 0.5) * -12;
 
-          return (
-            <figure
-              className="logo-carousel__card"
-              key={image.id}
-              style={{
-                transform: `translate3d(${x}px, ${y}px, 0) rotateX(${perspectiveY}deg) rotateY(${perspectiveX}deg) rotateZ(${image.rotation}deg)`,
-                zIndex: Math.round(100 + y),
-              }}
-            >
-              <Image src={image.src} alt={image.alt} fill sizes="(max-width: 640px) 38vw, 180px" />
-              <figcaption>{image.alt}</figcaption>
-            </figure>
-          );
-        })}
-        <span className="logo-carousel__signal" aria-hidden="true" />
-      </div>
+            return (
+              <figure
+                className="logo-carousel__card"
+                key={image.id}
+                style={{
+                  transform: `translate3d(${x}px, ${y}px, 0) rotateX(${perspectiveY}deg) rotateY(${perspectiveX}deg) rotateZ(${image.rotation}deg)`,
+                  zIndex: Math.round(100 + y),
+                }}
+              >
+                <Image src={image.src} alt={image.alt} fill sizes="(max-width: 640px) 38vw, 180px" />
+                <figcaption>{image.alt}</figcaption>
+              </figure>
+            );
+          })}
+          <span className="logo-carousel__signal" aria-hidden="true" />
+        </div>
+      )}
 
       {features.length > 0 && (
         <div className="logo-carousel__features">
