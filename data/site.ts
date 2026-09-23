@@ -4,6 +4,7 @@ export const siteContact = {
   phoneHref: 'tel:+9779715000715',
   address: 'Lalitpur, Nepal',
   mapUrl: 'https://maps.app.goo.gl/c1qiB9XLx6HiBsWu9?g_st=ic',
+  facebook: 'https://www.facebook.com/share/14rqRmyzjqT/?mibextid=wwXIfr',
   website: 'piesquaretechnologies.com',
 } as const;
 
@@ -31,7 +32,10 @@ export type ProjectRecord = Readonly<{
   client?: string;
   operator?: string;
   projectName?: string;
+  endClient?: string;
+  projectDate?: string;
   coverage?: string;
+  coverageDetails?: ReadonlyArray<string>;
   metrics?: ReadonlyArray<ProjectMetric>;
   overview?: ReadonlyArray<string>;
   scopeGroups?: ReadonlyArray<ProjectScopeGroup>;
@@ -48,6 +52,7 @@ export type CareerRole = Readonly<{
   location: string;
   discipline: string;
   description: string;
+  responsibilities: ReadonlyArray<string>;
   requirements: ReadonlyArray<string>;
   applicationSubject: string;
 }>;
@@ -80,7 +85,7 @@ export const companyTimeline = [
   { marker: 'Telecom', title: 'Telecom', copy: 'Telecom infrastructure, testing and commissioning.' },
   { marker: 'Fiber', title: 'Fiber', copy: 'Fiber deployment, operations and maintenance.' },
   { marker: 'Energy', title: 'Solar & Electrical', copy: 'Solar, electrical installation and O&M.' },
-  { marker: 'IT', title: 'IT Solutions', copy: 'Digital infrastructure, security and software.' },
+  { marker: 'IT', title: 'IT & Digital', copy: 'Digital infrastructure, security and software.' },
   { marker: 'Today', title: 'One integrated partner', copy: 'One integrated infrastructure partner.' },
 ] as const;
 
@@ -105,11 +110,11 @@ export const digitalModules = ['IT consulting & infrastructure', 'Networking & c
 export const deliveryFlow = ['Survey', 'Design', 'Deploy', 'Test', 'Optimize', 'Maintain'] as const;
 
 export const impactStats = [
-  ['3500+', 'RF sites tested'],
-  ['115', 'Telecom sites installed'],
-  ['4', 'New telecom tower sites'],
-  ['2,240+ KM', 'Fiber network delivery'],
-  ['400 kW', 'Solar O&M under management'],
+  ['3500+', 'RF sites tested', 'SSV & Cluster Drive Testing'],
+  ['115', 'Telecom sites installed', 'Equipment Installation & Commissioning'],
+  ['4', 'New telecom tower sites', 'Foundation • Erection • Power • Grounding • Fencing'],
+  ['2,240+ KM', 'Fiber network delivery', 'Installation • Survey • Managed Service & LMC'],
+  ['400 kW', 'Solar O&M under management', 'Annual Maintenance & Operations'],
 ] as const;
 
 const fiberOperations: ProjectRecord = {
@@ -118,7 +123,7 @@ const fiberOperations: ProjectRecord = {
   status: 'ONGOING',
   category: 'FIBER',
   categoryLabel: 'FIBER',
-  location: 'Eastern Nepal',
+  location: 'Eastern Nepal · Biratnagar · Itahari · Duhabi · Dharan · Lahan',
   duration: 'April 2024 - Present',
   scope: ['Network Maintenance', 'End user Support', 'Customer Connectivity', 'POP Support'],
   description: 'Managed Fiber Network Delivery & Field Operations',
@@ -126,6 +131,7 @@ const fiberOperations: ProjectRecord = {
   imageAlt: 'Field team supporting a fiber network in Eastern Nepal',
   client: 'CG Communications Limited (CGNET)',
   coverage: '1,166.731 km Network · 16 POPs · 5 Locations',
+  coverageDetails: ['1,166.731 km network', '16 POPs / network sites', 'Biratnagar, Itahari, Duhabi, Dharan and Lahan'],
   metrics: [
     { value: '1,166.731 KM', label: 'Fiber Network' },
     { value: '16', label: 'POPs / Network Sites' },
@@ -141,11 +147,13 @@ const fiberOperations: ProjectRecord = {
     { title: 'Network expansion & modification', items: ['ADB / CDB additions and modifications', 'Fiber network expansion', 'Network re-routing', 'Customer support-related network modifications', 'Implementation of approved route changes'] },
     { title: 'Customer connectivity', items: ['ONT installation', 'IPTV installation', 'Drop-cable installation', 'Customer connection support', 'CDB port mapping and network updates'] },
     { title: 'POP & network support', items: ['SFP replacement and maintenance', 'Aggregation and access-link support', 'OLT-related maintenance', 'Power and battery support', 'Network documentation and reporting'] },
+    { title: 'Additional fiber works', items: ['ADSS / Figure-8 OFC works', 'Splicing and termination', 'DB box and enclosure installation', 'ODF installation', 'Expansion and rerouting works'] },
   ],
   role: 'Field execution, network maintenance, fault response, network modification, customer connectivity support and associated technical reporting.',
   deliveryFocus: [
     { value: 'Network availability', label: 'Operational fiber infrastructure and service continuity.' },
     { value: 'Field execution', label: 'Maintenance, restoration and approved modifications.' },
+    { value: 'Quality & documentation', label: 'Measured work, network records and clear reporting.' },
     { value: 'Customer service', label: 'Timely installation, restoration and connectivity support.' },
   ],
 };
@@ -165,6 +173,7 @@ const fiberDeployment: ProjectRecord = {
   client: 'C.C.S. Nepal Private Limited',
   operator: 'CGNET',
   coverage: '218 KM Fiber Network',
+  coverageDetails: ['218 km fiber network', 'Kathmandu Valley'],
   metrics: [{ value: '218 KM', label: 'Fiber network' }, { value: 'Completed', label: 'November 2021 - June 2023' }],
   overview: ['Deployment and installation of fiber optic network infrastructure for broadband connectivity, covering fiber cable pulling, ODN installation, splicing, distribution, testing and commissioning across project sites within Kathmandu Valley.'],
   scopeGroups: [
@@ -192,6 +201,7 @@ const rfDriveTest: ProjectRecord = {
   operator: 'Nepal Telecom',
   projectName: 'NT 4G LTE Project',
   coverage: '1,214 Sites',
+  coverageDetails: ['Terai: 423 sites', 'Mid-Hill: 442 sites', 'High-Hill: 24 sites', 'Kathmandu: 325 sites'],
   metrics: [{ value: '1,214 Sites', label: 'Total coverage' }, { value: '4G LTE', label: 'Network project' }, { value: '4 Regions', label: 'Field execution' }],
   overview: ['Pie Square Technologies conducted site-level RF Drive Test, network verification, physical parameter verification, optimization and technical reporting across designated locations in Nepal.'],
   scopeGroups: [{ title: 'RF testing & optimization', items: ['Single-Site Verification', 'Drive Test execution', 'KPI analysis', 'Physical RF parameter verification', 'Approved optimization recommendations', 'Pre-drive and post-drive reporting'] }],
@@ -214,6 +224,7 @@ const clusterOptimization: ProjectRecord = {
   operator: 'Nepal Telecom',
   projectName: 'NT 4G LTE Project',
   coverage: '62 Clusters · 1,659 Sites',
+  coverageDetails: ['Terai: 1,068 sites', 'Mid-Hill: 544 sites', 'High-Hill: 47 sites', '62 clusters'],
   metrics: [{ value: '62 Clusters', label: 'Cluster-level RF testing' }, { value: '1,659 Sites', label: 'Commissioned 4G LTE sites' }, { value: '3 Regions', label: 'Terai · Mid-Hill · High-Hill' }],
   overview: ['Pie Square Technologies completed cluster-level RF Drive Test and Optimization across commissioned base stations and designated routes, including trunk roads and expressways within the assigned areas.'],
   scopeGroups: [{ title: 'Cluster testing & optimization', items: ['Pre-drive log analysis', 'Cluster Drive Test', 'KPI and optimization analysis', 'Physical RF verification', 'Pre- and post-optimization comparison', 'Technical reporting'] }],
@@ -235,6 +246,7 @@ const ncellVerification: ProjectRecord = {
   client: 'ZTE Nepal Pvt. Ltd.',
   operator: 'Ncell',
   coverage: '381 Sites · GSM · UMTS · LTE',
+  coverageDetails: ['381 sites', 'Madhesh, Koshi and Lumbini Provinces', 'GSM, UMTS, LTE, L900, L2100, 4T4R, multisector and POC categories'],
   metrics: [{ value: '381 Sites', label: 'SSV drive tested' }, { value: '3 Provinces', label: 'Madhesh · Koshi · Lumbini' }, { value: '3 Technologies', label: 'GSM · UMTS · LTE' }],
   overview: ['Pie Square Technologies completed SSV drive testing and network verification for 381 Ncell sites across Madhesh, Koshi and Lumbini Provinces under the ZTE project.'],
   scopeGroups: [{ title: 'Site and technology verification', items: ['SSV drive testing', 'GSM, UMTS and LTE verification', 'L900 and L2100 testing', '4T4R and multisector verification', 'KPI analysis and reporting'] }],
@@ -255,11 +267,12 @@ const solarOandM: ProjectRecord = {
   imageAlt: 'Ground-mounted solar power plant in Simar, Bara',
   client: 'Surya Nepal Private Limited',
   coverage: '400 kWp Solar PV Plant',
-  metrics: [{ value: '400 kWp', label: 'Plant capacity' }, { value: 'Ground-mount', label: 'Solar PV plant type' }, { value: 'Ongoing', label: 'Operation & maintenance' }],
+  coverageDetails: ['400 kWp ground-mounted Solar PV plant', 'Simar Cigarette Factory, Simar, Bara, Nepal'],
+  metrics: [{ value: '400 kWp', label: 'Plant capacity' }, { value: '100%', label: 'Target plant availability' }, { value: '48 hours', label: 'Target fault response' }],
   overview: ['Pie Square Technologies provides comprehensive operation and maintenance services for a 400 kWp ground-mounted solar PV plant at Surya Nepal Private Limited.'],
-  scopeGroups: [{ title: 'Solar PV plant maintenance', items: ['Routine inspection', 'Preventive and corrective maintenance', 'Inverter inspection', 'Breakdown response and fault rectification', 'Performance monitoring', 'Technical reporting'] }],
+  scopeGroups: [{ title: 'Solar PV plant maintenance', items: ['Routine inspection', 'Preventive and corrective maintenance', 'Inverter inspection', 'Breakdown response and fault rectification', 'Performance monitoring', 'Technical reporting'] }, { title: 'Electrical systems & compliance', items: ['Electrical system support', 'Safety-controlled field work', 'Maintenance records and reporting', 'Availability and response tracking'] }],
   role: 'Solar PV operation and maintenance, electrical maintenance, performance monitoring, preventive and corrective maintenance, fault response and technical reporting.',
-  deliveryFocus: [{ value: 'Plant availability', label: 'Routine inspection and timely fault response.' }, { value: 'Performance & reliability', label: 'Generation and equipment monitoring.' }, { value: 'Safety & documentation', label: 'Safe work practices and operational records.' }],
+  deliveryFocus: [{ value: 'Plant availability', label: 'Target availability of 100% through planned maintenance.' }, { value: 'Performance & reliability', label: 'Generation and equipment monitoring.' }, { value: 'Fault response', label: 'Target response within 48 hours.' }, { value: 'Safety & documentation', label: 'Safe work practices and operational records.' }],
 };
 
 const popSurvey: ProjectRecord = {
@@ -277,6 +290,7 @@ const popSurvey: ProjectRecord = {
   client: 'C.C.S. Nepal Private Limited',
   operator: 'CGNET',
   coverage: '864 KM Network Route Survey',
+  coverageDetails: ['864 km ODN ring route survey', 'Palpa, Kawasoti, Pragatinagar, Nawalpur, Bharatpur, Ratnanagar and Hetauda'],
   metrics: [{ value: '864 KM', label: 'ODN ring route survey' }, { value: '7', label: 'Project locations' }, { value: '2 Months', label: 'Survey & planning period' }],
   overview: ['Pie Square Technologies conducted field surveys and route planning for POP locations and ODN ring networks to support FTTH network deployment across multiple project areas in Nepal.'],
   scopeGroups: [{ title: 'Survey and reporting', items: ['POP location identification and verification', 'ODN ring route survey', 'Pole and duct route verification', 'GPS data collection', 'Route mapping and technical documentation'] }],
@@ -296,8 +310,11 @@ const electricalDistribution: ProjectRecord = {
   image: '/media/projects/solar.jpg',
   imageAlt: 'Electrical distribution infrastructure installation',
   client: 'Teleconstruct Developers Pvt. Ltd.',
+  endClient: 'Nabrajpur Rural Municipality',
   projectName: 'Nabrajpur Rural Municipality electrical infrastructure',
+  projectDate: 'June 2025 - July 2025',
   coverage: 'Transformer installation · LT distribution · PSC pole erection',
+  coverageDetails: ['Transformer installation', 'LT distribution', 'PSC pole erection'],
   metrics: [{ value: 'Transformer', label: 'Installation & commissioning' }, { value: 'LT network', label: 'Distribution line construction' }, { value: 'Completed', label: 'June - July 2025' }],
   overview: ['Pie Square Technologies, as a subcontractor to Teleconstruct Developers Pvt. Ltd., executed electrical distribution infrastructure works for Nabrajpur Rural Municipality in Siraha, Madhesh Province.'],
   scopeGroups: [{ title: 'Electrical infrastructure', items: ['Transformer installation and commissioning', 'PSC pole erection', 'LT distribution line construction', 'Conductor stringing', 'Earthing and protection', 'Electrical testing and handover'] }],
@@ -318,6 +335,7 @@ const websiteContent: ProjectRecord = {
   imageAlt: 'Digital content and website management project',
   client: 'Provincial and Local Infrastructure Development Project',
   coverage: 'Institutional website content and page management',
+  coverageDetails: ['Website content management', 'Page updates and information organization', 'DoIT template customization'],
   metrics: [{ value: 'Website', label: 'Content development' }, { value: 'DoIT', label: 'Template customization' }],
   overview: ['Website content development, page updates and information management within the existing government-provided website template.'],
   scopeGroups: [{ title: 'Digital content', items: ['Content development', 'Page-wise updates', 'Information organization', 'Template customization'] }],
@@ -337,6 +355,7 @@ const websiteManagement: ProjectRecord = {
   image: '/media/projects/rack.jpg',
   imageAlt: 'Website content management and digital systems work',
   client: 'Purbanchal Bikas Nirdeshanalaya',
+  coverageDetails: ['Website content development and management', 'DoIT template customization', 'Staff training'],
   metrics: [{ value: 'Website', label: 'Content management' }, { value: 'DoIT', label: 'Template customization' }, { value: 'Training', label: 'Client enablement' }],
   overview: ['Website content management, page updates, information organization and client enablement for routine website administration.'],
   scopeGroups: [{ title: 'Client enablement', items: ['Page updates', 'Content organization', 'Template customization', 'Staff training and technical guidance'] }],
@@ -356,6 +375,8 @@ const digitalPromotion: ProjectRecord = {
   image: '/media/projects/clients.jpg',
   imageAlt: 'Digital media and online promotion work',
   client: 'National Reconstruction Authority (NRA)',
+  projectDate: 'July 2021',
+  coverageDetails: ['Digital content', 'Social media', 'Online promotion', 'SEO'],
   metrics: [{ value: 'Digital', label: 'Content and media' }, { value: 'SEO', label: 'Online promotion' }],
   overview: ['Digital content, social media management, online promotion and SEO services supporting institutional communication and online visibility.'],
   scopeGroups: [{ title: 'Digital communication', items: ['Digital content', 'Social media management', 'Online promotion', 'SEO', 'Performance monitoring'] }],
@@ -389,9 +410,12 @@ export const projectFilters = ['All', 'Telecom', 'Fiber', 'Solar', 'IT'] as cons
 export const clients = ['Nepal Telecom', 'Ncell', 'CGNET', 'Surya Nepal', 'ZTE Nepal', 'CCS Nepal'] as const;
 
 export const trustedClientLogoFiles = [
-  { name: 'Nepal Telecom', src: '/media/logos/nepal-telecom.jpg', alt: 'Nepal Telecom' },
-  { name: 'Ncell', src: '/media/logos/ncell.png', alt: 'Ncell' },
-  { name: 'CGNET', src: '/media/logos/cg-net.png', alt: 'CGNET' },
+  { name: 'Nepal Telecom', src: '/media/logos/nepal-telecom-final.jpeg', alt: 'Nepal Telecom' },
+  { name: 'Ncell', src: '/media/logos/ncell-final.jpeg', alt: 'Ncell' },
+  { name: 'CGNET', src: '/media/logos/cgnet-final.jpeg', alt: 'CGNET' },
+  { name: 'Surya Nepal', src: '/media/logos/surya-nepal-final.jpeg', alt: 'Surya Nepal' },
+  { name: 'ZTE Nepal', src: '/media/logos/zte-final.jpeg', alt: 'ZTE Nepal' },
+  { name: 'CCS Nepal', src: '/media/logos/china-comservice-final.jpeg', alt: 'CCS Nepal' },
 ] as const;
 
 export const whyPieSquare = [
@@ -403,6 +427,10 @@ export const whyPieSquare = [
   { title: 'Built for Partnerships', copy: 'Responsive coordination, dependable support and a long-term approach to every client relationship.' },
 ] as const;
 
+export const companyIntro = 'Pie Square Technologies delivers integrated infrastructure solutions across telecom, fiber optics, solar & renewable energy and IT. With experienced technical teams, specialized equipment, and a field-focused approach, we work with telecom operators, ISPs, EPC contractors, technology companies, enterprises and government agencies, supporting infrastructure projects from survey, installation, testing, commissioning and long-term maintenance. Our focus is simple: quality execution, safe operations, timely delivery, and dependable long-term service.' as const;
+export const companyTeamIntro = 'Our multidisciplinary workforce brings together engineering, technical and field expertise to deliver infrastructure projects safely, efficiently and reliably across Nepal.' as const;
+export const companyApproachIntro = 'Every project follows a structured process, from site survey and planning to safe execution, testing, documentation and handover. We combine engineering discipline with practical field execution to deliver reliable, measurable results.' as const;
+
 export const organizationLevels = [
   { title: 'Leadership', copy: 'Direction, partnerships and delivery accountability.' },
   { title: 'Engineering', copy: 'Telecom, fiber, energy and IT delivery teams.' },
@@ -411,10 +439,10 @@ export const organizationLevels = [
 ] as const;
 
 export const serviceOverview: ReadonlyArray<ServiceOverview> = [
-  { number: '01', title: 'Telecom', summary: 'Complete Telecom site delivery covering civil works, tower installation, equipment deployment, RF drive testing, site integration, maintenance and field support.', scope: ['CIVIL WORKS', 'TOWER INSTALLATION', 'RF TESTING'], href: '/capabilities/telecom' },
-  { number: '02', title: 'Fiber', summary: 'Reliable connectivity from route surveying and planning to fiber deployment, precision splicing, testing, fault restoration and maintenance.', scope: ['ROUTE SURVEY', 'FIBER DEPLOYMENT', 'O&M'], href: '/capabilities/optical-fiber' },
-  { number: '03', title: 'Solar & Electrical', summary: "Solar and Electrical systems engineered for Nepal's terrain and grid conditions, from assessment and design through installation, commissioning and O&M.", scope: ['SOLAR PV', 'ELECTRICAL INSTALLATION', 'O&M'], href: '/capabilities/solar-energy' },
-  { number: '04', title: 'IT Solutions', summary: 'Reliable IT consulting, network and cloud infrastructure, CCTV and security systems, and customized software and web solutions.', scope: ['IT CONSULTING & INFRASTRUCTURE', 'NETWORKING & CLOUD', 'CCTV & SECURITY', 'SOFTWARE & WEB'], href: '/capabilities/it-solutions' },
+  { number: '01', title: 'Telecom', summary: 'Telecom Infrastructure — complete site delivery covering civil works, tower installation, equipment deployment, RF drive testing, commissioning, maintenance and field support.', scope: ['CIVIL WORKS', 'TOWER INSTALLATION', 'EQUIPMENT DEPLOYMENT', 'RF TESTING', 'COMMISSIONING', 'MAINTENANCE'], href: '/capabilities/telecom' },
+  { number: '02', title: 'Fiber', summary: 'Fiber Optic Networks — reliable connectivity from route surveying and planning to fiber deployment, precision splicing, testing, fault restoration and network maintenance.', scope: ['ROUTE SURVEY', 'OFC INSTALLATION', 'SPLICING', 'TESTING', 'FAULT RESTORATION', 'NETWORK MAINTENANCE'], href: '/capabilities/optical-fiber' },
+  { number: '03', title: 'Solar & Electrical', summary: "Solar and Electrical systems engineered for Nepal's terrain and grid conditions, from assessment and design through installation, commissioning and O&M.", scope: ['SOLAR PV', 'SYSTEM DESIGN', 'INSTALLATION', 'BATTERY INTEGRATION', 'TRANSFORMER INSTALLATION', 'ELECTRICAL INSTALLATION', 'O&M'], href: '/capabilities/solar-energy' },
+  { number: '04', title: 'IT Solutions', summary: 'Delivering reliable IT consulting, network and cloud infrastructure, CCTV and security systems, and customized software and web solutions to support secure, efficient, and connected business operations.', scope: ['IT CONSULTING & INFRASTRUCTURE', 'NETWORKING & CLOUD', 'CCTV & SECURITY', 'SOFTWARE & WEB SOLUTIONS'], href: '/capabilities/it-solutions' },
 ] as const;
 
 const fiberCapabilities: ReadonlyArray<ServiceCapability> = [
@@ -533,11 +561,11 @@ export const industryDetails = [
 export const companyApproach = ['Survey-Based Engineering - Field data and site assessments inform practical, build-ready solutions.', 'Quality Testing & Documentation - Inspection, testing and documentation provide clear evidence of completed work.', 'Safety-Controlled Execution - Method statements, toolbox briefings and site procedures support safe project delivery.', 'Dedicated Project Coordination - Clear communication, reporting and coordination keep every project aligned from survey to handover.'] as const;
 export const companyValuesDetailed = [
   { title: 'Integrity', copy: 'We work transparently, keep our commitments and make decisions that stand up to scrutiny and field realities.' },
-  { title: 'Safety', copy: 'We promote a proactive safety culture through risk assessment, proper PPE, safe work practices, trained personnel and continuous EHS awareness.' },
+  { title: 'Safety', copy: 'We promote a proactive safety culture through risk assessment, proper PPE, safe work practices, trained personnel, and continuous EHS awareness, ensuring our people, clients, communities, and the environment are protected.' },
   { title: 'Quality', copy: 'We combine disciplined workmanship, measured testing and clear documentation to deliver reliable results.' },
   { title: 'Accountability', copy: 'We take ownership of communication, coordination and delivery, from survey and execution to handover and support.' },
   { title: 'Innovation', copy: 'We adopt practical technologies, tools and methods that improve efficiency, reliability and field performance.' },
-  { title: 'Customer Focus', copy: 'We listen closely, communicate clearly and deliver solutions aligned with our clients’ needs and objectives.' },
+  { title: 'Customer Focus', copy: "We listen closely, communicate clearly and deliver solutions aligned with our clients' needs and objectives." },
 ] as const;
 
 export const deliveryCapabilities = [
@@ -550,9 +578,9 @@ export const deliveryCapabilities = [
 ] as const;
 
 export const careerRoles: ReadonlyArray<CareerRole> = [
-  { id: 'rf-drive-test-engineer', title: 'RF Drive Test Engineer', type: 'Full-time', location: 'Field-Based / Project Locations', discipline: 'Telecom', description: 'RF drive testing, network data collection, post-processing and optimization reporting for mobile networks.', requirements: ['Experience with RF drive-test tools such as TEMS.', 'Understanding of GSM, UMTS and LTE KPIs.', 'Basic knowledge of RF/network optimization.', 'Ability to work in field environments and travel extensively across Nepal.', 'Good reporting and communication skills.'], applicationSubject: 'Application: RF Drive Test Engineer - Pie Square Technologies' },
-  { id: 'rf-data-analyst', title: 'RF Data Analyst', type: 'Full-time', location: 'Office-Based', discipline: 'Telecom', description: 'RF data post-processing and technical reporting based on drive-test logs, SSV, cluster testing and customer complaint data.', requirements: ['Practical experience with Actix and RF data analysis.', 'Good understanding of GSM / UMTS / LTE KPIs.', 'Experience in SSV and cluster report preparation.', 'Proficiency in Microsoft Excel, Google Earth and MS Word.', 'Knowledge of mobile network RF performance and optimization.'], applicationSubject: 'Application: RF Data Analyst - Pie Square Technologies' },
-  { id: 'rf-technician-rigger', title: 'RF Technician / Rigger', type: 'Full-time', location: 'Field-Based', discipline: 'Telecom', description: 'RF field technician responsible for tower climbing, antenna installation and adjustment, azimuth optimization and MT optimization.', requirements: ['RF field and tower-climbing experience.', 'Knowledge of antennas, azimuth and tilt.', 'Experience in azimuth and MT optimization.', 'Willingness to travel to project sites.', 'Safety awareness for work at height.'], applicationSubject: 'Application: RF Technician / Rigger - Pie Square Technologies' },
+  { id: 'rf-drive-test-engineer', title: 'RF Drive Test Engineer', type: 'Full-time', location: 'Field-Based / Project Locations', discipline: 'Telecom', description: 'RF drive testing, network data collection, post-processing and optimization reporting for mobile networks.', responsibilities: ['Conduct RF drive tests and collect network performance data.', 'Perform post-processing and prepare drive-test reports.', 'Analyze key network performance indicators and identify coverage or quality issues.', 'Support network optimization activities and field verification.', 'Coordinate with field and technical teams during testing activities.'], requirements: ['Experience with RF drive-test tools such as TEMS.', 'Understanding of GSM, UMTS and LTE KPIs.', 'Basic knowledge of RF/network optimization.', 'Ability to work in field environments and travel extensively across Nepal.', 'Good reporting and communication skills.'], applicationSubject: 'Application: RF Drive Test Engineer - Pie Square Technologies' },
+  { id: 'rf-data-analyst', title: 'RF Data Analyst', type: 'Full-time', location: 'Office-Based', discipline: 'Telecom', description: 'RF data post-processing and technical reporting based on drive-test logs, SSV, cluster testing and customer complaint data.', responsibilities: ['Post-process RF drive-test logs using Actix.', 'Prepare SSV and cluster analysis reports.', 'Analyze GSM, UMTS and LTE KPIs.', 'Prepare customer complaint analysis reports.', 'Identify coverage and quality issues from RF data.', 'Prepare clear technical reports, charts and KPI summaries.'], requirements: ['Practical experience with Actix and RF data analysis.', 'Good understanding of GSM / UMTS / LTE KPIs.', 'Experience in SSV and cluster report preparation.', 'Proficiency in Microsoft Excel, Google Earth and MS Word.', 'Knowledge of mobile network RF performance and optimization.'], applicationSubject: 'Application: RF Data Analyst - Pie Square Technologies' },
+  { id: 'rf-technician-rigger', title: 'RF Technician / Rigger', type: 'Full-time', location: 'Field-Based', discipline: 'Telecom', description: 'RF field technician responsible for tower climbing, antenna installation and adjustment, azimuth optimization and MT optimization.', responsibilities: [], requirements: ['RF field and tower-climbing experience.', 'Knowledge of antennas, azimuth and tilt.', 'Experience in azimuth and MT optimization.', 'Willingness to travel to project sites.', 'Safety awareness for work at height.'], applicationSubject: 'Application: RF Technician / Rigger - Pie Square Technologies' },
 ] as const;
 export const generalCareerApplication = { title: 'General Application', description: 'Send your CV for future engineering, technical, field, project coordination, support or internship opportunities.', applicationSubject: 'General Application - Pie Square Technologies' } as const;
 

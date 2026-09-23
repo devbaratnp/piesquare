@@ -15,14 +15,15 @@ export default function ContactPage() {
     <InnerPage
       eyebrow="Contact"
       title="Talk to Our Engineering Team."
-      lede="Reach us directly, request a quotation, or book a site survey — whichever moves your project forward fastest."
+      lede="Call, WhatsApp or email us directly, visit our Lalitpur office, request a quotation, or book a site survey."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact', href: '/contact' }]}
     >
       <section className="contact-direct" aria-label="Direct contact">
         <div className="contact-direct__actions">
-          <a className="button button--primary" href={siteContact.phoneHref}>Call ↗</a>
+          <a className="button button--primary" href={siteContact.phoneHref}>Call Pie Square ↗</a>
           <a className="button button--ghost" href={`https://wa.me/${siteContact.phone.replace(/\D/g, '')}`}>WhatsApp ↗</a>
           <a className="button button--ghost" href={`mailto:${siteContact.email}`}>Email ↗</a>
+          <a className="button button--ghost" href={siteContact.mapUrl}>Lalitpur office ↗</a>
         </div>
         <div className="contact-office">
           <h2>HEAD OFFICE</h2>

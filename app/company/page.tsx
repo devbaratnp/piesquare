@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
-import { companyApproach, companyValuesDetailed, industryDetails, teamDepartments } from '@/data/site';
+import { companyApproach, companyApproachIntro, companyIntro, companyTeamIntro, companyValuesDetailed, industryDetails, teamDepartments } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'About Us | Pie Square Technologies',
@@ -24,8 +24,7 @@ export default function CompanyPage() {
         <p className="inner-page__eyebrow">WHO WE ARE</p>
         <h2>An Engineering Company Built for the Field.</h2>
         <div className="about-intro__copy">
-          <p>Our strength lies in bringing multi-disciplinary expertise in Telecom, Fiber Optics, Solar Energy, and IT Infrastructure under one roof, with responsible execution, and EHS compliance enabling clients to manage diverse infrastructure requirements through a single, dependable partner.</p>
-          <p>From field-level execution to project coordination and management, our teams work with a practical, solution-oriented approach to meet demanding project requirements. We continuously focus on operational efficiency, technical accuracy, adaptability, and long-term client relationships, helping build infrastructure that is reliable, scalable, and ready for the future.</p>
+          <p>{companyIntro}</p>
         </div>
       </section>
 
@@ -57,17 +56,17 @@ export default function CompanyPage() {
 
       <section className="about-approach" aria-label="Our approach">
         <p className="inner-page__eyebrow">OUR APPROACH</p>
-        <h2>Methodical Engineering. Disciplined Execution.</h2>
-        <p>Every project follows the same backbone: rigorous survey, engineered planning, safety-controlled installation, certified testing and structured handover. We document as we build — so operators and procurement teams receive evidence, not promises.</p>
+        <h2>Engineered with Precision. Delivered with Discipline.</h2>
+        <p>{companyApproachIntro}</p>
         <ul>
           {companyApproach.map((item) => <li key={item}>{item}</li>)}
         </ul>
       </section>
 
-      <section className="about-team" aria-label="Management and technical workforce">
+      <section className="about-team" aria-label="Technical workforce">
         <p className="inner-page__eyebrow">OUR TEAM</p>
-        <h2>Management &amp; Technical Workforce</h2>
-        <p className="about-team__note">Named team profiles will be added once approved personnel records are provided.</p>
+        <h2>Multidisciplinary Expertise. Experienced Delivery Team.</h2>
+        <p className="about-team__intro">{companyTeamIntro}</p>
           <div className="workforce-list">
             {teamDepartments.map((department) => <span key={department.title}><strong>{department.title}</strong>{department.copy}</span>)}
         </div>

@@ -24,7 +24,7 @@ export function ContactForm({ variant = 'quote' }: ContactFormProps) {
     >
       <label>Name *<input name="name" autoComplete="name" required /></label>
       {!isMessage && <label>Company<input name="company" autoComplete="organization" /></label>}
-      <label>Phone{!isMessage && ' *'}<input name="phone" type="tel" autoComplete="tel" required={!isMessage} /></label>
+      <label>Phone *<input name="phone" type="tel" autoComplete="tel" required /></label>
       <label>Email *<input name="email" type="email" autoComplete="email" required /></label>
 
       {isMessage && <label className="full">Message *<textarea name="message" rows={5} required /></label>}

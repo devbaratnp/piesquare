@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { careerRoles, clients, impactStats, projects, serviceDetails, siteContact, telecomFrames } from './site';
+import { careerRoles, clients, impactStats, projects, serviceDetails, siteContact, telecomFrames, trustedClientLogoFiles } from './site';
 
 describe('site content', () => {
   it('keeps production contact details in one source of truth', () => {
@@ -34,6 +34,17 @@ describe('site content', () => {
       'RF Data Analyst',
       'RF Technician / Rigger',
     ]);
+    expect(careerRoles[0].responsibilities).toHaveLength(5);
+    expect(careerRoles[1].responsibilities).toContain('Post-process RF drive-test logs using Actix.');
     expect(clients).toEqual(['Nepal Telecom', 'Ncell', 'CGNET', 'Surya Nepal', 'ZTE Nepal', 'CCS Nepal']);
+    expect(trustedClientLogoFiles).toHaveLength(6);
+    expect(trustedClientLogoFiles.map((logo) => logo.name)).toEqual([
+      'Nepal Telecom',
+      'Ncell',
+      'CGNET',
+      'Surya Nepal',
+      'ZTE Nepal',
+      'CCS Nepal',
+    ]);
   });
 });

@@ -16,6 +16,7 @@ import {
   capabilityRoutes,
   clients,
   companyTimeline,
+  companyIntro,
   deliveryFlow,
   digitalModules,
   energyPoints,
@@ -23,6 +24,7 @@ import {
   impactStats,
   projects,
   siteContact,
+  serviceOverview,
   telecomFrames,
   trustedClientLogoFiles,
   whyPieSquare,
@@ -42,13 +44,6 @@ const stateOrder: SignalState[] = [
   'DIGITAL_NETWORK',
   'FINAL_CONVERGENCE',
 ];
-
-const capabilitySummaries = [
-  'Civil works, tower installation, site deployment, RF drive testing, equipment installation and maintenance.',
-  'Route surveys, OFC deployment, fiber splicing, testing, commissioning and maintenance.',
-  'Site surveys, system design, installation, testing, commissioning and operation & maintenance.',
-  'Networking, structured cabling, server infrastructure, data center support, CCTV and ongoing IT maintenance.',
-] as const;
 
 type MediaPlateProps = Readonly<{
   src: string;
@@ -95,7 +90,6 @@ function HeroScene() {
           </h1>
           <p className="hero-scene__disciplines">Telecom. Fiber. Solar. IT.</p>
           <div className="hero-scene__footer">
-            <p>End-to-end Telecom, Fiber Optic, Solar and IT infrastructure solutions delivered with engineering expertise, field capability and a commitment to quality.</p>
             <div className="hero-scene__meta">
               <span>Established 2019</span>
               <span>Lalitpur, Nepal</span>
@@ -120,15 +114,14 @@ function CompanyScene() {
         <ImageCarouselHero
           title={<>INFRASTRUCTURE<br /><em>EXPERTISE. FIELD EXECUTION.<br />RELIABLE RESULTS.</em></>}
           subtitle="WHO WE ARE / NEPAL FIELD OPERATIONS"
-          description="Our strength lies in bringing multi-disciplinary expertise in Telecom, Fiber Optics, Solar Energy and IT Infrastructure under one roof, with responsible execution and EHS compliance enabling clients to manage diverse infrastructure requirements through a single, dependable partner."
+          description={companyIntro}
           ctaText="Learn more about us"
           ctaHref="/company"
           images={[]}
           showOrbit={false}
           features={[
-            { title: '2019 / ESTABLISHED', description: 'Engineering solutions since 2019' },
-            { title: 'TELECOM / FIBER', description: 'Deployment, testing and maintenance' },
-            { title: 'SOLAR / IT', description: 'One integrated infrastructure partner' },
+            { title: 'PIE SQUARE — FIELD DELIVERY NETWORK', description: 'TELECOM | FIBER | SOLAR & ELECTRICAL | IT' },
+            { title: 'ENGINEERING • DEPLOYMENT • COMMISSIONING • O&M', description: 'One integrated infrastructure partner' },
           ]}
         />
         <ol className="company-timeline" aria-label="Company timeline from 2019 to today">
@@ -151,7 +144,7 @@ function CapabilitiesScene() {
         <SectionMarker number="02" label="WHAT WE DELIVER" light />
         <div className="capabilities-scene__intro">
           <div>
-            <p className="capabilities-scene__aside">Four divisions. One delivery standard. From survey to long-term maintenance.</p>
+            <p className="capabilities-scene__aside">Four divisions. One delivery standard. Engineering, deployment, commissioning, O&amp;M.</p>
           </div>
           <h2 className="display-title">WHAT WE<br /><em>DELIVER.</em></h2>
         </div>
@@ -161,7 +154,10 @@ function CapabilitiesScene() {
               <span>0{index + 1}</span>
               <strong>{item}</strong>
               <span className="capability-row__meta">
-                <small>{capabilitySummaries[index]}</small>
+                <small>{serviceOverview[index].summary}</small>
+                <span className="capability-row__scope" aria-label={`${item} scope`}>
+                  {serviceOverview[index].scope.map((scope) => <span key={scope}>{scope}</span>)}
+                </span>
                 <b aria-label={`Capability ${index + 1} of 4`}>0{index + 1} / 04</b>
               </span>
               <i aria-hidden="true">↗</i>
@@ -344,10 +340,11 @@ function ImpactScene() {
         <div className="impact-scene__label">FIELD OUTPUT / COMPANY PROFILE REFERENCE</div>
         <h2 className="display-title impact-scene__title">BUILT TO <em>EXECUTE.</em></h2>
         <div className="impact-stats">
-          {impactStats.map(([value, label], index) => (
+          {impactStats.map(([value, label, detail], index) => (
             <div key={label} className={'impact-stat ' + (index === 0 ? 'is-active' : '')}>
               <strong>{value}</strong>
               <span>{label}</span>
+              <small>{detail}</small>
             </div>
           ))}
         </div>
@@ -376,6 +373,7 @@ function ProjectsScene() {
                 <span>{project.status} / {project.categoryLabel}</span>
                 <h3>{project.title}</h3>
                 <p>{project.location} / {project.duration}</p>
+                <span className="evidence-card__link">View Project ↗</span>
               </div>
             </Link>
           ))}
@@ -397,7 +395,6 @@ function ClientsScene() {
         <div className="clients-scene__names">
           <div className="clients-scene__logos" aria-label="Trusted client logos">
             {trustedClientLogoFiles.map((logo) => <Image key={logo.name} src={logo.src} alt={logo.alt} width={160} height={64} />)}
-            <span>Surya Nepal</span><span>ZTE Nepal</span><span>CCS Nepal</span>
           </div>
           {clients.map((name) => <p key={name}>{name}</p>)}
           <p className="clients-scene__support">Delivering reliable infrastructure and technology solutions across Nepal through trusted partnerships and proven field execution.</p>

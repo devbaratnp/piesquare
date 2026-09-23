@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { InnerPage } from '@/components/inner-page';
-import { capabilityRoutes, deliveryCapabilities, impactStats, serviceDetails, serviceOverview } from '@/data/site';
+import { capabilityRoutes, deliveryCapabilities, impactStats, serviceDetails, serviceOverview, technicalWorkforce } from '@/data/site';
 
 export const metadata: Metadata = {
   title: 'Capabilities | Pie Square Technologies',
@@ -14,7 +14,7 @@ export default function CapabilitiesPage() {
     <InnerPage
       eyebrow="Capabilities / four divisions"
       title="Built to Execute."
-      lede="People, equipment and systems sized for multi-site, multi-province delivery."
+      lede="People, equipment and systems organized for multi-site, multi-location project delivery."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }]}
     >
       <p className="reference-kicker">Four Divisions. One Delivery Standard.</p>
@@ -36,10 +36,11 @@ export default function CapabilitiesPage() {
         <p className="inner-page__eyebrow">COMPANY CAPABILITIES</p>
         <h2>Verified field metrics.</h2>
         <div className="capability-metrics__grid">
-          {impactStats.map(([value, label]) => (
+          {impactStats.map(([value, label, detail]) => (
             <article key={label}>
               <strong>{value}</strong>
               <span>{label}</span>
+              <small>{detail}</small>
             </article>
           ))}
         </div>
@@ -47,9 +48,9 @@ export default function CapabilitiesPage() {
 
       <section className="inner-page__card technical-workforce-card" aria-label="Technical workforce">
         <p className="inner-page__eyebrow">TECHNICAL WORKFORCE</p>
-        <h2>People who know the field.</h2>
+        <h2>Trained. Field-Ready.</h2>
         <div className="workforce-list">
-          {['Civil Engineers', 'Telecom Engineers', 'RF Engineers', 'Fiber Technicians', 'Solar Technicians', 'IT Engineers', 'Project Managers', 'Safety Personnel'].map((role) => (
+          {technicalWorkforce.map((role) => (
             <span key={role}>{role}</span>
           ))}
         </div>

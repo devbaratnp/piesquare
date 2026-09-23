@@ -29,7 +29,7 @@ test.describe('home experience', () => {
     await expect(page.locator('#top h1')).toHaveCount(1);
     await expect(page.locator('a[href="/contact"]:visible').first()).toBeVisible();
     await expect(page.locator('#company .logo-carousel__stage')).toHaveCount(0);
-    await expect(page.locator('#clients .clients-scene__logos img')).toHaveCount(3);
+    await expect(page.locator('#clients .clients-scene__logos img')).toHaveCount(6);
     await expect(page.locator('#clients .clients-scene__names > p')).toHaveCount(7);
     await expect(page.locator('#clients .clients-scene__names')).toContainText('Nepal Telecom');
     await expect(page.locator('#clients .clients-scene__names')).toContainText('Surya Nepal');

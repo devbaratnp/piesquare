@@ -54,9 +54,12 @@ describe('home page shell', () => {
 
     // Supplied logo paths render (next/image rewrites src, so match the filename)
     const sources = Array.from(document.querySelectorAll('img')).map((img) => img.getAttribute('src') ?? '');
-    for (const file of ['nepal-telecom.jpg', 'ncell.png', 'cg-net.png']) {
+    for (const file of ['nepal-telecom-final.jpeg', 'ncell-final.jpeg', 'cgnet-final.jpeg', 'surya-nepal-final.jpeg', 'zte-final.jpeg', 'china-comservice-final.jpeg']) {
       expect(sources.some((src) => src.includes(file))).toBe(true);
     }
+
+    expect(screen.getByText(/engineering, deployment, commissioning, o&m/i)).toBeInTheDocument();
+    expect(screen.queryByText(/scroll to transmit/i)).not.toBeInTheDocument();
 
     // RF readouts labeled visualization-only with all four metrics
     expect(screen.getByText(/visualization only/i)).toBeInTheDocument();

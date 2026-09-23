@@ -13,7 +13,7 @@ export default function CareersPage() {
     <InnerPage
       eyebrow="Careers"
       title="Build Your Career With Us."
-      lede="Engineering, technical, field and project-management roles across Nepal — plus internships for the next generation of infrastructure professionals."
+      lede="Join a growing team delivering infrastructure, connectivity, energy and technology projects across Nepal."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Careers', href: '/careers' }]}
     >
       <CareersList />

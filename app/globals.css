@@ -1356,6 +1356,17 @@ img {
   border-top: 1px solid var(--line-dark);
 }
 
+@media (min-width: 1000px) {
+  .capability-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .capability-row:nth-child(odd) {
+    border-right: 1px solid var(--line-dark);
+  }
+}
+
 .capability-row {
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr) minmax(200px, .5fr) 26px;
@@ -1399,6 +1410,21 @@ img {
   font: 12px/1.35 var(--body);
   letter-spacing: 0;
   text-align: right;
+}
+
+.capability-row__scope {
+  display: flex;
+  max-width: 250px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px 8px;
+}
+
+.capability-row__scope span {
+  color: var(--paper-muted);
+  font: 8px/1.3 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 
 .capability-row__meta b {
@@ -2613,6 +2639,22 @@ img {
   color: var(--paper);
 }
 
+.evidence-card__link,
+.project-card__link {
+  margin-top: 10px;
+  color: var(--signal);
+  font: 10px/1.2 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.impact-stat small {
+  max-width: 170px;
+  color: var(--paper-muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
 .project-card__article {
   display: contents;
 }
@@ -3237,6 +3279,24 @@ img {
   color: var(--steel);
   font-size: 13px;
   line-height: 1.6;
+}
+
+.inner-page .project-card__link {
+  color: var(--signal);
+}
+
+.career-role__responsibilities h4 {
+  margin: 22px 0 0;
+  color: var(--ink);
+  font: 700 10px/1.2 var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.capability-metrics__grid small {
+  color: var(--paper-muted);
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 .career-role ul {
@@ -3866,6 +3926,10 @@ img {
   }
 
   .capability-row small {
+    display: none;
+  }
+
+  .capability-row__scope {
     display: none;
   }
 

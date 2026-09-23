@@ -23,4 +23,11 @@ describe('ContactForm', () => {
     expect(screen.getByRole('status')).toHaveTextContent(/nothing was sent/i);
     expect(screen.queryByText(/thank you/i)).not.toBeInTheDocument();
   });
+
+  it('requires phone details on general messages', () => {
+    render(<ContactForm variant="message" />);
+
+    expect(screen.getByLabelText(/^phone/i)).toBeRequired();
+    expect(screen.getByLabelText(/^email/i)).toBeRequired();
+  });
 });

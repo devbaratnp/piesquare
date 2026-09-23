@@ -36,8 +36,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <section className="project-detail-meta" aria-label="Project information">
         <dl>
           {project.client && <div><dt>Client</dt><dd>{project.client}</dd></div>}
+          {project.endClient && <div><dt>End client / owner</dt><dd>{project.endClient}</dd></div>}
           {project.operator && <div><dt>Operator</dt><dd>{project.operator}</dd></div>}
           {project.projectName && <div><dt>Project</dt><dd>{project.projectName}</dd></div>}
+          {project.projectDate && <div><dt>Project date</dt><dd>{project.projectDate}</dd></div>}
           <div><dt>Location</dt><dd>{project.location}</dd></div>
           <div><dt>Duration</dt><dd>{project.duration}</dd></div>
           {project.coverage && <div><dt>Coverage</dt><dd>{project.coverage}</dd></div>}
@@ -72,6 +74,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <section className="project-detail-focus" aria-label="Delivery focus">
           <p className="inner-page__eyebrow">DELIVERY FOCUS</p>
           <div>{project.deliveryFocus.map((item) => <article key={item.value}><h2>{item.value}</h2><p>{item.label}</p></article>)}</div>
+        </section>
+      )}
+
+      {project.coverageDetails && (
+        <section className="project-detail-copy" aria-label="Project coverage">
+          <p className="inner-page__eyebrow">PROJECT COVERAGE</p>
+          <ul className="project-detail-coverage">{project.coverageDetails.map((item) => <li key={item}>{item}</li>)}</ul>
         </section>
       )}
 

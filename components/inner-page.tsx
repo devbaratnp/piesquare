@@ -83,6 +83,7 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
                 <span>{siteContact.address}</span>
                 <a href={siteContact.phoneHref}>{siteContact.phone}</a>
                 <a href={`mailto:${siteContact.email}`}>{siteContact.email}</a>
+                <a href={siteContact.facebook}>Facebook ↗</a>
                 <a href={siteContact.mapUrl}>Google Maps ↗</a>
               </div>
             </nav>

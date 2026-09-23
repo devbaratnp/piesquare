@@ -14,6 +14,8 @@ describe('capabilities page', () => {
     }
     expect(screen.getByText('3500+')).toBeInTheDocument();
     expect(screen.getByText('400 kW')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /trained\. field-ready/i })).toBeInTheDocument();
+    expect(screen.queryByText(/^certifications$/i)).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /delivery capabilities/i })).toBeInTheDocument();
     expect(document.querySelectorAll('.delivery-capability-card')).toHaveLength(6);
   });

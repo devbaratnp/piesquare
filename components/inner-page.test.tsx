@@ -25,6 +25,7 @@ describe('InnerPage', () => {
     expect(screen.getByRole('heading', { name: 'COMPANY' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'RESOURCES' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'CONTACT' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /facebook/i })).toHaveAttribute('href', expect.stringContaining('facebook.com/share'));
     expect(screen.getByText('Body')).toBeInTheDocument();
   });
 });

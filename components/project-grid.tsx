@@ -40,6 +40,7 @@ export function ProjectGrid() {
                 <p className="project-card__location">{project.duration}</p>
                 <p className="project-card__scope">{project.scope.join(' • ')}</p>
                 <p>{project.description}</p>
+                <span className="project-card__link">View Project ↗</span>
               </div>
             </article>
           </Link>

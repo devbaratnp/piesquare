@@ -17,6 +17,14 @@ export function CareersList() {
             </div>
             <h3>{role.title}</h3>
             <p>{role.description}</p>
+            {role.responsibilities.length > 0 && (
+              <div className="career-role__responsibilities">
+                <h4>Key responsibilities</h4>
+                <ul>
+                  {role.responsibilities.map((responsibility) => <li key={responsibility}>{responsibility}</li>)}
+                </ul>
+              </div>
+            )}
             <ul>
               {role.requirements.map((requirement) => <li key={requirement}>{requirement}</li>)}
             </ul>
@@ -35,6 +43,7 @@ export function CareersList() {
         <p>{generalCareerApplication.description}</p>
         <form action={`mailto:${siteContact.email}`} method="get" encType="text/plain" aria-label="General career application">
           <label>Name<input name="name" required /></label>
+          <label>Phone<input name="phone" type="tel" autoComplete="tel" required /></label>
           <label>Email<input name="email" type="email" required /></label>
           <label>Desired position<input name="desiredPosition" required /></label>
           <label>CV<input name="cv" type="file" /></label>
