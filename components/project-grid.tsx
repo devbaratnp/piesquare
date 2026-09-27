@@ -3,14 +3,14 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { projectFilters, projects, type ProjectCategory } from '@/data/site';
+import { projectFilters, projects as fallbackProjects, type ProjectCategory, type ProjectRecord } from '@/data/site';
 
 function categoryForFilter(filter: (typeof projectFilters)[number]): ProjectCategory | null {
   if (filter === 'All') return null;
   return filter.toUpperCase() as ProjectCategory;
 }
 
-export function ProjectGrid() {
+export function ProjectGrid({ projects = fallbackProjects }: { projects?: ReadonlyArray<ProjectRecord> } = {}) {
   const [filter, setFilter] = useState<(typeof projectFilters)[number]>('All');
   const category = categoryForFilter(filter);
   const visible = projects.filter((project) => category === null || project.category === category);

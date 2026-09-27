@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { InnerPage } from '@/components/inner-page';
-import { capabilityRoutes, deliveryCapabilities, impactStats, serviceDetails, serviceOverview, technicalWorkforce } from '@/data/site';
+import { capabilityRoutes, deliveryCapabilities, impactStats, serviceDetails, technicalWorkforce } from '@/data/site';
+import { getPublicContent } from '@/server/content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Capabilities | Pie Square Technologies',
@@ -9,19 +12,20 @@ export const metadata: Metadata = {
   alternates: { canonical: '/capabilities' },
 };
 
-export default function CapabilitiesPage() {
+export default async function CapabilitiesPage() {
+  const content = await getPublicContent();
   return (
     <InnerPage
       eyebrow="Capabilities / four divisions"
       title="Built to Execute."
       lede="People, equipment and systems organized for multi-site, multi-location project delivery."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }]}
+      contact={content.contact}
     >
       <p className="reference-kicker">Four Divisions. One Delivery Standard.</p>
       <div className="service-overview-grid">
-        {serviceOverview.map((service) => (
+        {content.services.map((service) => (
           <article className="service-overview-card" key={service.href}>
-            <span className="service-overview-card__number">{service.number}</span>
             <h2>{service.title}</h2>
             <p>{service.summary}</p>
             <ul>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { IBM_Plex_Mono, Inter, Inter_Tight } from 'next/font/google';
-import { siteContact } from '@/data/site';
 import { CustomCursor } from '@/components/custom-cursor';
+import { getPublicContent } from '@/server/content';
 import './globals.css';
 
 const interTight = Inter_Tight({
@@ -43,14 +43,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export const dynamic = 'force-dynamic';
+
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const content = await getPublicContent();
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Pie Square Technologies',
     url: 'https://piesquaretechnologies.com',
-    email: siteContact.email,
-    telephone: siteContact.phone,
+    email: content.contact.email,
+    telephone: content.contact.phone,
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Lalitpur',

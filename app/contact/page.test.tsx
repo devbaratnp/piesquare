@@ -5,8 +5,8 @@ import Page from './page';
 afterEach(() => cleanup());
 
 describe('contact page', () => {
-  it('organizes direct contact, quote, and site-survey paths', () => {
-    render(<Page />);
+  it('organizes direct contact, quote, and site-survey paths', async () => {
+    render(await Page());
 
     expect(screen.getByRole('heading', { level: 1, name: /talk to our engineering team/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /head office/i })).toBeInTheDocument();

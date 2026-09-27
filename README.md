@@ -44,4 +44,17 @@ Supplied project proof is under `public/media/projects/`, and the supplied compa
 
 Keep effects reversible, preserve reduced-motion behavior, use optimized `next/image` assets, and test anchors, image loading, mobile overflow, keyboard access, and console errors before opening a pull request. See `AGENTS.md` for detailed contributor guidance.
 
-The project inquiry and contact forms are intentionally presentation-only until a backend is connected; direct email, phone, and WhatsApp links remain available on the contact route.
+The project inquiry and contact forms remain presentation-only by design; direct email, phone, and WhatsApp links remain available on the contact route.
+
+## CMS and MySQL setup
+
+The public site has a safe static fallback, while homepage hero content, contact settings, published services, published projects, and media can be managed through the Node.js/MySQL admin layer.
+
+1. Copy `.env.example` to `.env.local` and set `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, and a long random `SESSION_SECRET`.
+2. Run `server/schema.sql` against the MySQL database, then run `server/seed.sql` to migrate the verified contact, hero, about, service, and project content.
+3. Create the first administrator with `npm run admin:create -- admin@example.com "a-long-password" "Administrator name"`.
+4. Run `npm run dev` and open `/admin/login`.
+
+Admin routes are protected with an HttpOnly, SameSite cookie containing an HMAC-signed session. Passwords are bcrypt-hashed. The API uses parameterized MySQL statements, validates slugs/statuses, archives services and projects instead of deleting them, validates image uploads, and returns the static public content when the database is unavailable. The dashboard includes Homepage, Services, Projects, and Media modules.
+
+Client-supplied imagery is stored under `public/media/client/` and is used for fiber deployment, fiber testing, solar plant, transformer, and digital operations surfaces. The original legacy prototype files at the repository root remain untouched.

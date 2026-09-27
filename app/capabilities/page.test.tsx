@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 import Page from './page';
 
 describe('capabilities page', () => {
-  it('organizes the four service divisions and verified metrics', () => {
-    render(<Page />);
+  it('organizes the four service divisions and verified metrics', async () => {
+    render(await Page());
 
     expect(screen.getByRole('heading', { level: 1, name: /built to execute/i })).toBeInTheDocument();
     expect(screen.getByText(/four divisions\. one delivery standard/i)).toBeInTheDocument();

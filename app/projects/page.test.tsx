@@ -5,8 +5,8 @@ import Page from './page';
 afterEach(() => cleanup());
 
 describe('projects page', () => {
-  it('presents the reference portfolio structure and verified proof metrics', () => {
-    render(<Page />);
+  it('presents the reference portfolio structure and verified proof metrics', async () => {
+    render(await Page());
 
     expect(screen.getByRole('heading', { level: 1, name: 'Our Projects' })).toBeInTheDocument();
     expect(screen.getByText(/field experience that speaks for itself/i)).toBeInTheDocument();

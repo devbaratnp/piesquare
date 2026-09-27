@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { InnerPage } from '@/components/inner-page';
 import { projects } from '@/data/site';
+import { getPublicContent } from '@/server/content';
+
+export const dynamic = 'force-dynamic';
 
 type ProjectPageProps = Readonly<{ params: Promise<{ slug: string }> }>;
 
@@ -13,7 +16,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects.find((item) => item.id === slug);
+  const project = (await getPublicContent()).projects.find((item) => item.id === slug);
   return project
     ? { title: `${project.title} | Pie Square Technologies`, description: project.description, alternates: { canonical: `/projects/${project.id}` } }
     : { title: 'Project not found | Pie Square Technologies' };
@@ -21,7 +24,8 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const project = projects.find((item) => item.id === slug);
+  const content = await getPublicContent();
+  const project = content.projects.find((item) => item.id === slug);
   if (!project) notFound();
 
   return (
@@ -30,6 +34,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       title={project.title}
       lede={project.description}
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }, { label: project.title, href: `/projects/${project.id}` }]}
+      contact={content.contact}
       image={project.image}
       imageAlt={project.imageAlt}
     >

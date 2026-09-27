@@ -1,5 +1,37 @@
 # Requirements vs Execution Audit
 
+## 2026-09-27 revision update
+
+This update covers the direct client revision brief and supersedes the older frontend-only notes below where they conflict.
+
+### Current implementation status
+
+| Area | Status | Evidence |
+|---|---|---|
+| Warm cream public theme | PASS | `app/globals.css` theme layer; desktop/mobile Playwright checks |
+| Decorative section numbering | PASS | Section marker output removed; capability, telecom, delivery, and reason-card counters no longer render |
+| Redundant “Who We Are” label | PASS | Removed from the public About scene and route body |
+| Supplied imagery | PASS | Five client files copied to `public/media/client/` and mapped to fiber, solar, transformer, and digital scenes |
+| Public dynamic content | PASS | Hero, about, contact settings, published services, and published projects read from MySQL with verified TypeScript fallback; project index/detail routes use published database records when available |
+| MySQL schema | PASS | `server/schema.sql` includes admins, settings, hero, services, projects, project images, capabilities, certifications, testimonials, contact, social, media, and SEO tables |
+| Admin authentication | PASS | bcrypt password hashes, HMAC session tokens, HttpOnly/SameSite cookie, protected admin page and API routes |
+| Admin dashboard | PASS | `/admin/login`, `/admin`, homepage/about/contact editor, service and project create/edit/archive controls, publish/order fields, and validated media upload/removal |
+| Database integration | NOT TESTED | No client MySQL instance/credentials were present in this workspace; setup is documented in README |
+
+### Fresh verification
+
+- `npm test -- --run --no-file-parallelism --maxWorkers=1` — PASS: 18 files, 35 tests.
+- `npm run lint` — PASS.
+- `npm run build` — PASS with `next build --webpack`.
+- `npm run test:e2e` — PASS: 36 desktop/mobile Chromium checks, including reduced motion, overflow, images, navigation, inner routes, project details, and 404.
+- Browser console check on `/` and `/admin/login` — no warnings or errors observed.
+
+### Remaining launch conditions
+
+- Configure a real MySQL database and run `server/schema.sql`, `server/seed.sql`, and `npm run admin:create` before enabling CMS editing in production.
+- Complete a live CRUD smoke test against that database; it cannot be truthfully marked PASS without database credentials.
+- The inquiry forms remain presentation-only, as required by `AGENTS.md`; email, phone, and WhatsApp are the live contact paths.
+
 Project: Pie Square Technologies marketing website  
 Audit date: 2026-09-21  
 Requirements: `D:\Gym\st xaviers\1.Homepage.docx` through `6.Other pages.docx`  

@@ -5,8 +5,8 @@ import Page from './page';
 afterEach(() => cleanup());
 
 describe('home page shell', () => {
-  it('renders the main content and primary navigation', () => {
-    render(<Page />);
+  it('renders the main content and primary navigation', async () => {
+    render(await Page());
 
     expect(screen.getByRole('main')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /building the infrastructure that keeps nepal connected/i })).toBeInTheDocument();
@@ -22,8 +22,8 @@ describe('home page shell', () => {
     expect(navigation.getByRole('link', { name: /^contact$/i })).toBeInTheDocument();
   });
 
-  it('locks the specified homepage hierarchy and copy', () => {
-    render(<Page />);
+  it('locks the specified homepage hierarchy and copy', async () => {
+    render(await Page());
 
     // Spec-locked headings
     expect(screen.getByRole('heading', { name: /infrastructure.*expertise\. field execution/i })).toBeInTheDocument();
@@ -36,11 +36,13 @@ describe('home page shell', () => {
     expect(screen.getByRole('heading', { name: /build the next connection with us/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /engineering discipline.*field-proven/i })).toBeInTheDocument();
 
-    // Four capability labels with sequence counters
+    // Four capability labels remain visible without decorative sequence counters
     for (const label of ['Telecom', 'Fiber', 'Solar & Electrical', 'IT Solutions']) {
       expect(screen.getAllByText(label).length).toBeGreaterThan(0);
     }
-    expect(document.body.textContent).toMatch(/01 \/ 04/);
+    expect(document.body.textContent).not.toMatch(/01 \/ 04/);
+    expect(document.querySelectorAll('.section-marker span')).toHaveLength(0);
+    expect(document.body.textContent).not.toMatch(/WHO WE ARE/i);
 
     // Seven telecom phases (active phase in text, all phases in frame alt text)
     const altTexts = Array.from(document.querySelectorAll('img')).map((img) => img.getAttribute('alt') ?? '');
@@ -84,8 +86,8 @@ describe('home page shell', () => {
     }
   });
 
-  it('keeps the global navigation and conversion CTA', () => {
-    render(<Page />);
+  it('keeps the global navigation and conversion CTA', async () => {
+    render(await Page());
 
     const navigation = within(screen.getByRole('navigation', { name: /primary/i }));
     for (const label of ['Home', 'About Us', 'Projects', 'Capabilities', 'Careers', 'Contact']) {
@@ -96,8 +98,8 @@ describe('home page shell', () => {
     expect(screen.getAllByRole('link', { name: /request a quote/i }).length).toBeGreaterThan(0);
   });
 
-  it('opens directly on the first scene without the initializing screen', () => {
-    render(<Page />);
+  it('opens directly on the first scene without the initializing screen', async () => {
+    render(await Page());
 
     expect(document.querySelector('.loader')).not.toBeInTheDocument();
     expect(screen.queryByText(/system initializing/i)).not.toBeInTheDocument();

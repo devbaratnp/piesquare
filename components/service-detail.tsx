@@ -44,7 +44,6 @@ export function ServiceDetail({ capabilities = [], lifecycle, scope, proof, rela
           <ol className="service-capability-grid">
             {capabilities.map((item) => (
               <li key={item.number}>
-                <span>{item.number}</span>
                 <h2>{item.title}</h2>
                 <p>{item.copy}</p>
               </li>

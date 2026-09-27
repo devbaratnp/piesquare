@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import { HomeExperience } from '@/components/home-experience';
+import { getPublicContent } from '@/server/content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Pie Square Technologies | Building the Infrastructure That Keeps Nepal Connected',
@@ -7,6 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 };
 
-export default function Page() {
-  return <HomeExperience />;
+export default async function Page() {
+  const content = await getPublicContent();
+  return <HomeExperience hero={content.hero} contact={content.contact} services={content.services} projects={content.projects} />;
 }

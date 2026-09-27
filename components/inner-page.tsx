@@ -13,17 +13,20 @@ type InnerPageProps = Readonly<{
   image?: string;
   imageAlt?: string;
   light?: boolean;
+  variant?: 'default' | 'contact';
+  hideActions?: boolean;
+  contact?: Readonly<{ email: string; phone: string; phoneHref: string; address: string; mapUrl: string; facebook: string; website: string }>;
   children: React.ReactNode;
 }>;
 
-export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt = '', light = true, children }: InnerPageProps) {
+export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt = '', light = true, variant = 'default', hideActions = false, contact = siteContact, children }: InnerPageProps) {
   return (
     <>
       <a className="skip-link" href="#inner-content">Skip to main content</a>
       <SiteNav tone={light ? 'paper' : 'dark'} />
-      <FloatingContact />
+      <FloatingContact contact={contact} />
       <SignalLine state="MAP_ROUTE" />
-      <main id="inner-content" className={`inner-page ${light ? 'inner-page--light' : ''}`} aria-labelledby="inner-page-title">
+      <main id="inner-content" className={`inner-page ${light ? 'inner-page--light' : ''} ${variant === 'contact' ? 'inner-page--contact' : ''}`} aria-labelledby="inner-page-title">
         <div className="page-wrap">
           <div className="inner-page__hero">
             <div className="inner-page__hero-index" aria-hidden="true">
@@ -43,10 +46,10 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
             <p className="inner-page__eyebrow">{eyebrow}</p>
             <h1 id="inner-page-title">{title}</h1>
             <p className="inner-page__lede">{lede}</p>
-            <div className="inner-page__actions">
+            {!hideActions && <div className="inner-page__actions">
               <Link className="button button--primary" href="/contact#quote">Request a Quote ↗</Link>
               <Link className="button button--ghost" href="/capabilities">Explore capabilities ↗</Link>
-            </div>
+            </div>}
             {image && (
               <div className="inner-page__hero-media">
                 <Image src={image} alt={imageAlt} fill sizes="100vw" priority />
@@ -80,11 +83,11 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
               </div>
               <div>
                 <h2>CONTACT</h2>
-                <span>{siteContact.address}</span>
-                <a href={siteContact.phoneHref}>{siteContact.phone}</a>
-                <a href={`mailto:${siteContact.email}`}>{siteContact.email}</a>
-                <a href={siteContact.facebook}>Facebook ↗</a>
-                <a href={siteContact.mapUrl}>Google Maps ↗</a>
+                <span>{contact.address}</span>
+                <a href={contact.phoneHref}>{contact.phone}</a>
+                <a href={`mailto:${contact.email}`}>{contact.email}</a>
+                <a href={contact.facebook}>Facebook ↗</a>
+                <a href={contact.mapUrl}>Google Maps ↗</a>
               </div>
             </nav>
             <span className="site-footer__legal">© 2026 Pie Square Technologies / All Rights Reserved.</span>

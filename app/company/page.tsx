@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
 import { companyApproach, companyApproachIntro, companyIntro, companyTeamIntro, companyValuesDetailed, industryDetails, teamDepartments } from '@/data/site';
+import { getPublicContent } from '@/server/content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'About Us | Pie Square Technologies',
@@ -10,7 +13,8 @@ export const metadata: Metadata = {
 
 const provinces = ['Koshi Province', 'Madhesh Province', 'Bagmati Province', 'Gandaki Province', 'Lumbini Province', 'Karnali Province', 'Sudurpashchim Province'];
 
-export default function CompanyPage() {
+export default async function CompanyPage() {
+  const content = await getPublicContent();
   return (
     <InnerPage
       eyebrow="About Us"
@@ -19,25 +23,25 @@ export default function CompanyPage() {
       crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us', href: '/company' }]}
       image="/media/cinematic/C01-company-infrastructure-landscape.png"
       imageAlt="Infrastructure landscape supporting telecom networks across Nepal"
+      contact={content.contact}
     >
       <section className="about-intro" aria-label="Who we are">
-        <p className="inner-page__eyebrow">WHO WE ARE</p>
-        <h2>An Engineering Company Built for the Field.</h2>
+        <h2>{content.about.title}</h2>
         <div className="about-intro__copy">
-          <p>{companyIntro}</p>
+          <p>{content.about.intro || companyIntro}</p>
         </div>
       </section>
 
       <div className="inner-page__grid about-vision-grid">
         <section className="inner-page__card" aria-label="Our Vision">
           <p className="inner-page__eyebrow">OUR VISION</p>
-          <h2>Building the infrastructure that connects, powers and enables Nepal.</h2>
+          <h2>{content.about.vision}</h2>
           <p>To create reliable infrastructure that strengthens connectivity, supports sustainable energy, and enables communities and businesses to move forward through technology.</p>
         </section>
         <section className="inner-page__card" aria-label="Our Mission">
           <p className="inner-page__eyebrow">OUR MISSION</p>
           <h2>Integrated solutions. Reliable delivery.</h2>
-          <p>To deliver integrated infrastructure and technology solutions with quality, safety and accountability, combining engineering expertise, field execution and dependable project delivery across Nepal.</p>
+          <p>{content.about.mission}</p>
         </section>
       </div>
 

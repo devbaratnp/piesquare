@@ -1,6 +1,6 @@
 import { careerRoles, generalCareerApplication, siteContact } from '@/data/site';
 
-export function CareersList() {
+export function CareersList({ email = siteContact.email }: { email?: string } = {}) {
   return (
     <section className="careers-list" aria-label="Open roles">
       <div className="careers-list__intro">
@@ -30,7 +30,7 @@ export function CareersList() {
             </ul>
             <a
               className="button button--primary career-role__apply"
-              href={`mailto:${siteContact.email}?subject=${encodeURIComponent(role.applicationSubject)}`}
+              href={`mailto:${email}?subject=${encodeURIComponent(role.applicationSubject)}`}
             >
               Apply Now
             </a>
@@ -41,7 +41,7 @@ export function CareersList() {
         <p className="inner-page__eyebrow">GENERAL APPLICATION</p>
         <h2>{generalCareerApplication.title}</h2>
         <p>{generalCareerApplication.description}</p>
-        <form action={`mailto:${siteContact.email}`} method="get" encType="text/plain" aria-label="General career application">
+        <form action={`mailto:${email}`} method="get" encType="text/plain" aria-label="General career application">
           <label>Name<input name="name" required /></label>
           <label>Phone<input name="phone" type="tel" autoComplete="tel" required /></label>
           <label>Email<input name="email" type="email" required /></label>

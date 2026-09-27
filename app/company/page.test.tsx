@@ -5,8 +5,8 @@ import Page from './page';
 afterEach(() => cleanup());
 
 describe('company page', () => {
-  it('explains the field organization and delivery approach', () => {
-    render(<Page />);
+  it('explains the field organization and delivery approach', async () => {
+    render(await Page());
 
     expect(screen.getByRole('heading', { level: 1, name: /the field force behind critical infrastructure/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /an engineering company built for the field/i })).toBeInTheDocument();

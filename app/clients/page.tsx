@@ -2,19 +2,24 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { InnerPage } from '@/components/inner-page';
 import { clients, trustedClientLogoFiles } from '@/data/site';
+import { getPublicContent } from '@/server/content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Clients | Pie Square Technologies',
   description: 'Trusted across critical infrastructure in Nepal.',
 };
 
-export default function ClientsPage() {
+export default async function ClientsPage() {
+  const content = await getPublicContent();
   return (
     <InnerPage
       eyebrow="Clients / supplied company profile"
       title="Trusted across critical infrastructure"
       lede="Client relationships shown here use only supplied logos and names supported by repository and profile material."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Clients', href: '/clients' }]}
+      contact={content.contact}
       light
     >
       <div className="inner-page__grid">

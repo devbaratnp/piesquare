@@ -76,7 +76,7 @@ export function ImageCarouselHero({
       }}
     >
       <div className="logo-carousel__content">
-        <p className="eyebrow eyebrow--dark">{subtitle}</p>
+        {subtitle && <p className="eyebrow eyebrow--dark">{subtitle}</p>}
         <h2 className="display-title">{title}</h2>
         <p className="logo-carousel__description">{description}</p>
         {ctaHref ? (
