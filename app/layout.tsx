@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
-import { IBM_Plex_Mono, Inter, Inter_Tight } from 'next/font/google';
+import { Cormorant_Garamond, IBM_Plex_Mono, Inter } from 'next/font/google';
 import { CustomCursor } from '@/components/custom-cursor';
 import { getPublicContent } from '@/server/content';
 import './globals.css';
 
-const interTight = Inter_Tight({
+const displaySerif = Cormorant_Garamond({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: ['700', '800', '900'],
+  weight: ['400', '500', '600'],
 });
 
 const inter = Inter({
@@ -62,7 +62,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   };
 
   return (
-    <html lang="en" className={`${interTight.variable} ${inter.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${displaySerif.variable} ${inter.variable} ${plexMono.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <CustomCursor />

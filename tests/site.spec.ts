@@ -141,7 +141,7 @@ test.describe('responsive foundation', () => {
         return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
       };
       const textLuminance = .2126 * luminance(channels[0]) + .7152 * luminance(channels[1]) + .0722 * luminance(channels[2]);
-      const paperLuminance = .2126 * luminance(241) + .7152 * luminance(238) + .0722 * luminance(232);
+      const paperLuminance = .2126 * luminance(250) + .7152 * luminance(249) + .0722 * luminance(245);
       return (Math.max(textLuminance, paperLuminance) + .05) / (Math.min(textLuminance, paperLuminance) + .05);
     });
     expect(contrast).toBeGreaterThanOrEqual(4.5);
@@ -150,7 +150,7 @@ test.describe('responsive foundation', () => {
       display: getComputedStyle(element).fontFamily,
       body: getComputedStyle(document.body).fontFamily,
     }));
-    expect(fontPair.display).toMatch(/Inter Tight/);
+    expect(fontPair.display).toMatch(/Cormorant Garamond/);
     expect(fontPair.body).toMatch(/Inter/);
   });
 });
