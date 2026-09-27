@@ -1,6 +1,6 @@
 # Repository Guidelines
 
-Next.js App Router marketing site for Pie Square Technologies. TypeScript, GSAP/ScrollTrigger + Lenis, Tailwind v4. No backend; no CI.
+Next.js App Router marketing site for Pie Square Technologies. TypeScript, GSAP/ScrollTrigger + Lenis, Tailwind v4. No CI. Public pages render from static data with an optional MySQL-backed admin CMS overriding content when configured.
 
 ## Commands (PowerShell)
 
@@ -18,12 +18,19 @@ npm run test:e2e        # builds, then serves :3100 and runs Playwright (chromiu
 ## Architecture
 
 - `app/page.tsx` mounts `components/home-experience.tsx` (homepage scene sequence). `components/inner-page.tsx` is the paper-style shell for all non-home routes.
-- `data/site.ts` is the source of truth for business content and route records — edit copy/data there, not in components.
+- `data/site.ts` is the source of truth for business content and route records — edit copy/data there, not in components. `server/content.ts:getPublicContent()` returns DB content when MySQL is configured and falls back to `data/site.ts` otherwise (including on query failure).
 - `lib/motion.ts` defines the named signal states consumed by `components/signal-line.tsx` (global overlay). Motion setup lives in `components/motion/`.
 - Path alias `@/*` maps to repo root (`tsconfig.json`). `next.config.ts` pins `experimental.cpus: 1` — do not remove.
 - Contact / project-inquiry forms are presentation-only by design (README). Do not wire a backend unasked; email/phone/WhatsApp links are the real contact path.
 - Root `index.html`, `script.js`, `styles.css` are a legacy static prototype. Never edit; the Next.js app is the source of truth.
 - ESLint ignores `creative/prototypes/**` — prototype code there is exempt from lint.
+
+## Admin CMS (MySQL, optional)
+
+- Setup: copy `.env.example` to `.env.local` (`DB_*`, `SESSION_SECRET`; `.env*` is gitignored), run `server/schema.sql` then `server/seed.sql`, create the first admin with `npm run admin:create -- <email> "<10+char-password>" "<name>"`, log in at `/admin/login`.
+- The public site works without a DB — never require it for frontend work. `server/db.ts:isDatabaseConfigured()` gates the pool; all public reads degrade to static data.
+- Auth is an HMAC-signed token (`lib/admin-auth`) in HttpOnly SameSite=strict cookie `piesquare_admin_session` (8h); the login route rate-limits attempts.
+- Admin API uses parameterized queries. Service/project DELETE soft-archives (`status = 'ARCHIVED'`); media DELETE hard-deletes. Valid statuses: `DRAFT` / `PUBLISHED` / `ARCHIVED`.
 
 ## Motion & style
 
