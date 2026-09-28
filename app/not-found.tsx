@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FloatingContact } from '@/components/floating-contact';
 import { SiteNav } from '@/components/site-nav';
+import { SiteFooter } from '@/components/site-footer';
 
 export default function NotFound() {
   return (
@@ -15,6 +16,7 @@ export default function NotFound() {
           <div className="not-found-page__actions"><Link className="button button--primary" href="/">Back to Home ↗</Link><Link className="button button--ghost" href="/contact">Contact ↗</Link></div>
         </div>
       </main>
+      <SiteFooter />
     </>
   );
 }

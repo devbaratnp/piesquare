@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { SiteNav } from '@/components/site-nav';
 import { SignalLine } from '@/components/signal-line';
 import { FloatingContact } from '@/components/floating-contact';
-import { primaryNav, serviceNav, siteContact } from '@/data/site';
+import { SiteFooter } from '@/components/site-footer';
+import { siteContact } from '@/data/site';
 
 type InnerPageProps = Readonly<{
   eyebrow: string;
@@ -19,7 +20,7 @@ type InnerPageProps = Readonly<{
   children: React.ReactNode;
 }>;
 
-export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt = '', light = true, variant = 'default', hideActions = false, contact = siteContact, children }: InnerPageProps) {
+export function InnerPage({ eyebrow, title, lede, image, imageAlt = '', light = true, variant = 'default', hideActions = false, contact = siteContact, children }: InnerPageProps) {
   return (
     <>
       <a className="skip-link" href="#inner-content">Skip to main content</a>
@@ -29,20 +30,6 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
       <main id="inner-content" className={`inner-page ${light ? 'inner-page--light' : ''} ${variant === 'contact' ? 'inner-page--contact' : ''}`} aria-labelledby="inner-page-title">
         <div className="page-wrap">
           <div className="inner-page__hero">
-            <div className="inner-page__hero-index" aria-hidden="true">
-              <span>Pie Square Technologies</span>
-              <span>Signal editorial / route brief</span>
-            </div>
-            {crumbs.length > 0 && (
-              <nav className="crumbs" aria-label="Breadcrumb">
-                {crumbs.map((crumb, index) => (
-                  <span key={crumb.href}>
-                    {index > 0 && <span aria-hidden="true"> / </span>}
-                    <Link href={crumb.href}>{crumb.label}</Link>
-                  </span>
-                ))}
-              </nav>
-            )}
             <p className="inner-page__eyebrow">{eyebrow}</p>
             <h1 id="inner-page-title">{title}</h1>
             <p className="inner-page__lede">{lede}</p>
@@ -58,42 +45,8 @@ export function InnerPage({ eyebrow, title, lede, crumbs = [], image, imageAlt =
           </div>
           <div className="inner-page__body">{children}</div>
         </div>
-        <footer className="site-footer">
-          <div className="page-wrap site-footer__inner">
-            <div className="site-footer__descriptor">
-              <span>PIE SQUARE / INTEGRATED INFRASTRUCTURE &amp; TECHNOLOGY SOLUTIONS</span>
-              <p>End-to-end field engineering, deployment, installation, testing, commissioning and maintenance across telecom, fiber optic, solar energy and IT infrastructure in Nepal.</p>
-            </div>
-            <nav className="site-footer__routes" aria-label="Footer navigation">
-              <div>
-                <h2>SERVICES</h2>
-                {serviceNav.map((item) => (
-                  <Link key={item.href} href={item.href}>{item.label.replace(' Infrastructure', '').replace(' Networks', '')}</Link>
-                ))}
-              </div>
-              <div>
-                <h2>COMPANY</h2>
-                {primaryNav.filter((item) => ['About Us', 'Projects', 'Capabilities', 'Careers'].includes(item.label)).map((item) => (
-                  <Link key={item.href} href={item.href}>{item.label === 'About Us' ? 'About' : item.label}</Link>
-                ))}
-              </div>
-              <div>
-                <h2>RESOURCES</h2>
-                <Link href="/contact">Contact</Link>
-              </div>
-              <div>
-                <h2>CONTACT</h2>
-                <span>{contact.address}</span>
-                <a href={contact.phoneHref}>{contact.phone}</a>
-                <a href={`mailto:${contact.email}`}>{contact.email}</a>
-                <a href={contact.facebook}>Facebook ↗</a>
-                <a href={contact.mapUrl}>Google Maps ↗</a>
-              </div>
-            </nav>
-            <span className="site-footer__legal">© 2026 Pie Square Technologies / All Rights Reserved.</span>
-          </div>
-        </footer>
       </main>
+      <SiteFooter contact={contact} />
     </>
   );
 }

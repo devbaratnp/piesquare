@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ContactForm } from '@/components/contact-form';
 import { InnerPage } from '@/components/inner-page';
+import { PhoneIcon, WhatsAppIcon } from '@/components/contact-icons';
 import { capabilityRoutes } from '@/data/site';
 import { getPublicContent } from '@/server/content';
 
@@ -31,8 +32,8 @@ export default async function ContactPage() {
           <h2>One partner from first call to handover.</h2>
           <p>Talk directly with the team coordinating telecom, fiber, solar, electrical, and IT delivery across Nepal.</p>
           <div className="contact-direct__actions">
-            <a className="button button--primary" href={contact.phoneHref}>Call Pie Square ↗</a>
-            <a className="button button--ghost" href={`https://wa.me/${contact.phone.replace(/\D/g, '')}`}>WhatsApp ↗</a>
+            <a className="button button--primary" href={contact.phoneHref}><PhoneIcon className="button__icon" /><span>Call Pie Square ↗</span></a>
+            <a className="button button--ghost" href={`https://wa.me/${contact.phone.replace(/\D/g, '')}`}><WhatsAppIcon className="button__icon" /><span>WhatsApp ↗</span></a>
             <a className="button button--ghost" href={`mailto:${contact.email}`}>Email ↗</a>
             <a className="button button--ghost" href={contact.mapUrl}>Lalitpur office ↗</a>
           </div>

@@ -19,13 +19,13 @@ describe('InnerPage', () => {
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
     expect(screen.getAllByRole('link', { name: /request a quote/i }).some((link) => link.getAttribute('href') === '/contact#quote')).toBe(true);
     expect(screen.getByRole('navigation', { name: /footer/i })).toBeInTheDocument();
-    expect(screen.getByRole('navigation', { name: /breadcrumb/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Test' })).toHaveAttribute('href', '/test');
+    expect(screen.queryByRole('navigation', { name: /breadcrumb/i })).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'SERVICES' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'COMPANY' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'RESOURCES' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'CONTACT' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /facebook/i })).toHaveAttribute('href', expect.stringContaining('facebook.com/share'));
+    expect(document.querySelector('.inner-page__hero-index')).not.toBeInTheDocument();
     expect(screen.getByText('Body')).toBeInTheDocument();
   });
 });

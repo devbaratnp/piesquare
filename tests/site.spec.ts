@@ -115,6 +115,25 @@ test.describe('home experience', () => {
 });
 
 test.describe('responsive foundation', () => {
+  test('scales the floating WhatsApp and call controls responsively', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/contact', { waitUntil: 'domcontentloaded' });
+
+    const mobileSize = await page.locator('.floating-contact a').first().evaluate((element) => element.getBoundingClientRect().width);
+
+    await page.setViewportSize({ width: 1440, height: 900 });
+    const desktopSize = await page.locator('.floating-contact a').first().evaluate((element) => element.getBoundingClientRect().width);
+    const dimensions = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }));
+
+    expect(mobileSize).toBeGreaterThanOrEqual(76);
+    expect(desktopSize).toBeGreaterThan(mobileSize);
+    expect(desktopSize).toBeLessThanOrEqual(104);
+    expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
+  });
+
   test('keeps the mobile menu compact, footer consistent, and paper copy readable', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/projects', { waitUntil: 'domcontentloaded' });

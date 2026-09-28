@@ -11,6 +11,8 @@ import { SceneShell } from '@/components/scene-shell';
 import { SignalLine } from '@/components/signal-line';
 import { SiteNav } from '@/components/site-nav';
 import { FloatingContact } from '@/components/floating-contact';
+import { SiteFooter } from '@/components/site-footer';
+import { PhoneIcon, WhatsAppIcon } from '@/components/contact-icons';
 import { ClientLogoWheel } from '@/components/client-logo-wheel';
 import {
   capabilityRoutes,
@@ -47,6 +49,8 @@ type HomeContact = Readonly<{
   phone: string;
   phoneHref: string;
   address: string;
+  mapUrl: string;
+  facebook: string;
   website: string;
 }>;
 
@@ -165,7 +169,8 @@ function CapabilitiesScene({ services }: { services: ReadonlyArray<HomeService> 
         </div>
         <div className="capability-list">
           {services.map((service, index) => (
-            <Link className="capability-row editorial-reveal" key={service.slug} href={service.href || capabilityRoutes[index]?.href || '/capabilities'}>
+            <Link className="capability-row editorial-reveal" key={service.slug} href={service.href || capabilityRoutes[index]?.href || '/capabilities'} aria-label={`${service.title} — ${service.summary}`}>
+              <span className="capability-row__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
               <strong>{service.title}</strong>
               <span className="capability-row__meta">
                 <small>{service.summary}</small>
@@ -183,7 +188,7 @@ function CapabilitiesScene({ services }: { services: ReadonlyArray<HomeService> 
             <h3 className="display-title">HOW WE <em>DELIVER.</em></h3>
           </div>
           <ol>
-            {deliveryFlow.map((step) => <li key={step}><strong>{step}</strong></li>)}
+            {deliveryFlow.map((step, index) => <li key={step}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><strong>{step}</strong></li>)}
           </ol>
         </section>
       </div>
@@ -434,9 +439,9 @@ function FinalScene({ contact }: { contact: HomeContact }) {
         <h2 className="display-title">ONE PARTNER. MULTIPLE INFRASTRUCTURE <em>LAYERS.</em></h2>
         <h3 className="display-title display-title--secondary">BUILD THE NEXT CONNECTION <em>WITH US.</em></h3>
         <div className="final-scene__actions">
-          <a className="button button--primary" href={`https://wa.me/${contact.phone.replace(/\D/g, '')}`} data-cursor="contact">WhatsApp ↗</a>
+          <a className="button button--primary" href={`https://wa.me/${contact.phone.replace(/\D/g, '')}`} data-cursor="contact"><WhatsAppIcon className="button__icon" /><span>WhatsApp ↗</span></a>
           <a className="button button--ghost" href={'mailto:' + contact.email} data-cursor="contact">{contact.email}</a>
-          <a className="button button--ghost" href={contact.phoneHref} data-cursor="contact">{contact.phone}</a>
+          <a className="button button--ghost" href={contact.phoneHref} data-cursor="contact"><PhoneIcon className="button__icon" /><span>{contact.phone}</span></a>
         </div>
         <div className="final-scene__foot">
           <span>{contact.address}</span>
@@ -525,6 +530,7 @@ export function HomeExperience({ hero, contact, services, projects }: { hero?: H
         <WhyScene />
         <FinalScene contact={resolvedContact} />
       </main>
+      <SiteFooter contact={resolvedContact} />
     </LenisProvider>
   );
 }

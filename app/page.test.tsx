@@ -9,6 +9,7 @@ describe('home page shell', () => {
     render(await Page());
 
     expect(screen.getByRole('main')).toBeInTheDocument();
+    expect(screen.getByRole('contentinfo')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /building the infrastructure that keeps nepal connected/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /what we deliver/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /trusted by industry.*built for long-term partnerships/i })).toBeInTheDocument();
@@ -36,7 +37,7 @@ describe('home page shell', () => {
     expect(screen.getByRole('heading', { name: /build the next connection with us/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /engineering discipline.*field-proven/i })).toBeInTheDocument();
 
-    // Four capability labels remain visible without decorative sequence counters
+    // Four capability labels remain visible with 01-04 row indices (not the old "01 / 04" sequence counters)
     for (const label of ['Telecom', 'Fiber', 'Solar & Electrical', 'IT Solutions']) {
       expect(screen.getAllByText(label).length).toBeGreaterThan(0);
     }
