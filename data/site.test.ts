@@ -12,7 +12,9 @@ describe('site content', () => {
     expect(telecomFrames).toHaveLength(7);
     expect(impactStats).toHaveLength(5);
     expect(impactStats.map((stat) => stat[0])).toEqual(['3500+', '115', '4', '2,240+ KM', '400 kW']);
-    expect(projects).toHaveLength(12);
+    expect(projects).toHaveLength(14);
+    expect(projects.map((project) => project.id)).toContain('telecom-tower-site-infrastructure-works');
+    expect(projects.map((project) => project.id)).toContain('telecom-equipment-installation-commissioning');
     expect(clients).toContain('Nepal Telecom');
   });
 

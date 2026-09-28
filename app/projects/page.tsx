@@ -21,6 +21,7 @@ export default async function ProjectsPage() {
       lede="Field experience that speaks for itself — select any project for full technical detail."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }]}
       contact={content.contact}
+      hideActions
       light
     >
       <ProjectGrid projects={content.projects} />

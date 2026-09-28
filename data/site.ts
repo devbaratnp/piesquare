@@ -405,7 +405,81 @@ const complaintOptimization: ProjectRecord = {
   role: 'Field-based RF testing, customer complaint investigation, Drive Test execution, KPI analysis, optimization and technical reporting.',
 };
 
-export const projects: ReadonlyArray<ProjectRecord> = [rfDriveTest, clusterOptimization, ncellVerification, fiberOperations, fiberDeployment, solarOandM, popSurvey, electricalDistribution, websiteContent, websiteManagement, digitalPromotion, complaintOptimization];
+const telecomTowerInfrastructure: ProjectRecord = {
+  id: 'telecom-tower-site-infrastructure-works',
+  title: 'Telecom Tower & Site Infrastructure Works',
+  status: 'COMPLETED',
+  category: 'TELECOM',
+  categoryLabel: 'TELECOM',
+  location: 'Rautahat, Madhesh Province, Nepal',
+  duration: 'November 2019 - February 2021',
+  scope: ['Tower Foundation', 'Civil Works', 'Tower Installation', 'Earthing', 'Site Infrastructure'],
+  description: 'Telecom Site Civil & Infrastructure Deployment',
+  image: '/media/cinematic/T03-telecom-tower.webp',
+  imageAlt: 'Telecom tower and site infrastructure deployment in Nepal',
+  client: 'Paramount Construction Pvt. Ltd.',
+  operator: 'Nepal Telecom',
+  projectName: 'NT 4G LTE Project',
+  coverage: '4 Telecom Sites · 25-50 m Self-Supporting Towers',
+  coverageDetails: ['4 telecom sites', 'Rautahat, Madhesh Province', '25-50 m self-supporting towers'],
+  metrics: [
+    { value: '4', label: 'Telecom Sites' },
+    { value: '25-50 M', label: 'Self-Supporting Towers' },
+    { value: '15+ Months', label: 'Project Duration' },
+    { value: 'Completed', label: 'Telecom Infrastructure Deployment' },
+  ],
+  overview: [
+    'Pie Square Technologies executed telecom site civil and infrastructure works for the NT 4G LTE Project in Rautahat, Madhesh Province, supporting the construction, installation and completion of assigned telecom tower sites.',
+    'The project covered tower and equipment foundations, site preparation, fencing, tower installation, earthing, electrical works and associated site infrastructure, along with material and manpower coordination required for successful site execution.',
+    'The works were carried out with a focus on quality, EHS compliance, construction coordination and timely site completion, supporting the deployment of Nepal Telecom’s 4G LTE infrastructure.',
+  ],
+  scopeGroups: [
+    { title: 'Site & civil works', items: ['Equipment foundation construction', 'Tower foundation construction', 'Excavation, reinforcement, concrete casting and backfilling', 'Stone and brick masonry work', 'Site preparation and associated civil works', 'Galvanized steel sunshade installation'] },
+    { title: 'Tower & site infrastructure', items: ['Installation of 25-50 m self-supporting angular towers', 'Tower painting and finishing', 'Tower transportation and site handling', 'Chain-link fencing and gate installation', 'Aviation lamp installation and cabling'] },
+    { title: 'Electrical & earthing works', items: ['Site earthing system installation', 'Earth ring installation and associated civil works', 'NT power connection preparation and liaison support', 'Installation of associated electrical accessories'] },
+    { title: 'Site management & handover', items: ['EHS management and site safety compliance', 'Material and manpower coordination', 'Site documentation and reporting', 'Quality inspection and completion support', 'Site handover as per project requirements'] },
+  ],
+  role: 'Pie Square Technologies provided field execution and site coordination for the assigned telecom infrastructure works, covering civil construction, tower installation, electrical and earthing works, manpower deployment, material handling, quality control, EHS management and final site completion. The project was delivered through coordinated field execution and technical supervision, ensuring the assigned sites were completed in accordance with project requirements and ready for telecom infrastructure deployment.',
+};
+
+const telecomEquipmentCommissioning: ProjectRecord = {
+  id: 'telecom-equipment-installation-commissioning',
+  title: 'Telecom Equipment Installation & Commissioning',
+  status: 'COMPLETED',
+  category: 'TELECOM',
+  categoryLabel: 'TELECOM',
+  location: 'Gandaki Province & Lumbini Province, Nepal',
+  duration: 'September 2019 - January 2021',
+  scope: ['DBS', 'Microwave', 'Antenna/RRU', 'Power Systems', 'Commissioning'],
+  description: '4G LTE Equipment Deployment & Commissioning',
+  image: '/media/cinematic/T04-telecom-equipment.webp',
+  imageAlt: 'Telecom equipment installation and commissioning at a Nepal site',
+  client: 'Paramount Construction Pvt. Ltd.',
+  operator: 'Nepal Telecom',
+  projectName: 'NT 4G LTE Project',
+  coverage: '57 4G LTE Sites · Gandaki & Lumbini Provinces',
+  coverageDetails: ['57 4G LTE sites', '2 provinces covered', 'Gandaki and Lumbini Provinces'],
+  metrics: [
+    { value: '57', label: '4G LTE Sites' },
+    { value: '2', label: 'Provinces Covered' },
+    { value: '16 Months', label: 'Project Duration' },
+    { value: 'Completed', label: 'Equipment Installation & Commissioning' },
+  ],
+  overview: [
+    'Pie Square Technologies executed telecom equipment installation and commissioning works across 57 sites under the NT 4G LTE Project in Gandaki and Lumbini Provinces, Nepal.',
+    'The project involved the deployment and commissioning of critical telecom infrastructure, including DBS equipment, microwave systems, power systems, antennas and RRUs, along with equipment transportation, site-level installation coordination and replacement works.',
+    'The execution also included battery bank and power plant installation, equipment handling and logistics, EHS compliance, commissioning records and technical documentation, supporting the successful completion of the assigned 4G LTE sites.',
+  ],
+  scopeGroups: [
+    { title: 'Telecom equipment', items: ['DBS installation and commissioning', 'Microwave installation and commissioning', 'Antenna and RRU dismantling and replacement', 'Telecom equipment handling and installation', 'Site-level equipment integration support'] },
+    { title: 'Power systems', items: ['Battery bank installation', 'Power plant installation', 'Associated power-system installation works', 'Power-system commissioning and verification'] },
+    { title: 'Logistics & site support', items: ['Transportation of telecom equipment from warehouse to site', 'Equipment handling and site logistics', 'Site-level installation coordination', 'Material movement and deployment support'] },
+    { title: 'EHS & documentation', items: ['EHS management and site safety compliance', 'Site documentation and reporting', 'Installation and commissioning records', 'Project completion documentation'] },
+  ],
+  role: 'Pie Square Technologies was responsible for field execution of telecom equipment installation and commissioning across the assigned sites. Our role included equipment handling and transportation, DBS and microwave installation, power-system deployment, antenna/RRU replacement, site coordination, EHS management and technical documentation, supporting the successful commissioning and completion of the NT 4G LTE sites.',
+};
+
+export const projects: ReadonlyArray<ProjectRecord> = [rfDriveTest, clusterOptimization, ncellVerification, fiberOperations, fiberDeployment, solarOandM, popSurvey, electricalDistribution, websiteContent, websiteManagement, digitalPromotion, complaintOptimization, telecomTowerInfrastructure, telecomEquipmentCommissioning];
 export const projectFilters = ['All', 'Telecom', 'Fiber', 'Solar', 'IT'] as const;
 export const clients = ['Nepal Telecom', 'Ncell', 'CGNET', 'Surya Nepal', 'ZTE Nepal', 'CCS Nepal'] as const;
 

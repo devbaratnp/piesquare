@@ -16,11 +16,12 @@ export default async function CapabilitiesPage() {
   const content = await getPublicContent();
   return (
     <InnerPage
-      eyebrow="Capabilities / four divisions"
+      eyebrow="Capabilities"
       title="Built to Execute."
       lede="People, equipment and systems organized for multi-site, multi-location project delivery."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }]}
       contact={content.contact}
+      hideActions
     >
       <p className="reference-kicker">Four Divisions. One Delivery Standard.</p>
       <div className="service-overview-grid">
@@ -36,14 +37,14 @@ export default async function CapabilitiesPage() {
         ))}
       </div>
 
-      <section className="capability-metrics" aria-label="Verified company capabilities">
-        <p className="inner-page__eyebrow">COMPANY CAPABILITIES</p>
+      <section className="capability-metrics" aria-label="Proven delivery metrics">
+        <p className="inner-page__eyebrow section-kicker--strong">PROVEN DELIVERY</p>
         <h2>Verified field metrics.</h2>
         <div className="capability-metrics__grid">
           {impactStats.map(([value, label, detail]) => (
             <article key={label}>
               <strong>{value}</strong>
-              <span>{label}</span>
+              <span className="metric-label--highlight">{label}</span>
               <small>{detail}</small>
             </article>
           ))}
@@ -51,8 +52,8 @@ export default async function CapabilitiesPage() {
       </section>
 
       <section className="inner-page__card technical-workforce-card" aria-label="Technical workforce">
-        <p className="inner-page__eyebrow">TECHNICAL WORKFORCE</p>
-        <h2>Trained. Field-Ready.</h2>
+        <p className="inner-page__eyebrow section-kicker--strong">TECHNICAL WORKFORCE</p>
+        <h2>Trained. Certified. Field-Ready.</h2>
         <div className="workforce-list">
           {technicalWorkforce.map((role) => (
             <span key={role}>{role}</span>
@@ -73,15 +74,22 @@ export default async function CapabilitiesPage() {
         </div>
       </section>
 
-      <div className="inner-page__grid technical-resources-grid">
-        {capabilityRoutes.map((route) => (
-          <section className="inner-page__card" key={route.slug} aria-label={`${route.label} technical resources`}>
-            <h2>{serviceDetails[route.slug].title}</h2>
-            <p>{serviceDetails[route.slug].scope.join(' · ')}</p>
-            <Link href={route.href}>View capability details ↗</Link>
-          </section>
-        ))}
-      </div>
+      <section className="technical-resources" aria-label="Technical resources">
+        <p className="inner-page__eyebrow section-kicker--strong">EXPERTISE &amp; ENGINEERING</p>
+        <h2>Technical Resources</h2>
+        <p className="technical-resources__intro">The tools, technology and field resources behind our project delivery.</p>
+        <div className="technical-resources__grid">
+          {capabilityRoutes.map((route) => (
+            <article className="technical-resources__card" key={route.slug}>
+              <h3>{serviceDetails[route.slug].title}</h3>
+              <ul>
+                {serviceDetails[route.slug].scope.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+              <Link href={route.href}>View capability details ↗</Link>
+            </article>
+          ))}
+        </div>
+      </section>
     </InnerPage>
   );
 }
