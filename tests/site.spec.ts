@@ -23,18 +23,20 @@ test.describe('home experience', () => {
       await expect(page.getByRole('navigation', { name: /mobile/i })).toBeVisible();
     }
     await expect(page.getByRole('heading', { name: /building the infrastructure that keeps nepal connected/i })).toBeVisible();
-    await expect(page.getByRole('heading', { name: /from survey to signal/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /from survey to service.*we deliver end to end/i })).toBeAttached();
     await expect(page.getByRole('heading', { name: /build the next connection with us/i })).toBeVisible();
     await expect(page.locator('main#main-content')).toBeVisible();
     await expect(page.locator('#top h1')).toHaveCount(1);
     await expect(page.locator('a[href="/contact"]:visible').first()).toBeVisible();
     await expect(page.locator('#company .logo-carousel__stage')).toHaveCount(0);
-    await expect(page.locator('#clients .clients-scene__logos img')).toHaveCount(6);
-    await expect(page.locator('#clients .clients-scene__names > p')).toHaveCount(7);
-    await expect(page.locator('#clients .clients-scene__names')).toContainText('Nepal Telecom');
-    await expect(page.locator('#clients .clients-scene__names')).toContainText('Surya Nepal');
-    await expect(page.locator('#clients .clients-scene__names')).toContainText('ZTE Nepal');
-    await expect(page.locator('#clients .clients-scene__names')).toContainText('CCS Nepal');
+    await expect(page.locator('#clients .atlas-client-logo img')).toHaveCount(6);
+    await expect(page.locator('#clients')).toContainText('Nepal Telecom');
+    await expect(page.locator('#clients')).toContainText('Surya Nepal');
+    await expect(page.locator('#clients')).toContainText('ZTE Nepal');
+    await expect(page.locator('#clients')).toContainText('CCS Nepal');
+    await expect(page.locator('#industries li')).toHaveCount(9);
+    await expect(page.locator('#process ol li')).toHaveCount(5);
+    await expect(page.locator('#profile a[href="/resources/pie-square-company-profile-2026.pdf"]')).toBeVisible();
     await expect(page.locator('body')).toHaveCSS('overflow-x', 'hidden');
     await expect(page.locator('[data-signal-state="FINAL_CONVERGENCE"]').first()).toBeAttached();
 
@@ -53,6 +55,25 @@ test.describe('home experience', () => {
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
   });
 
+  test('keeps the hero heading readable and contact controls clear of its actions on narrow phones', async ({ page }) => {
+    for (const width of [390, 320]) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
+      const layout = await page.evaluate(() => {
+        const lines = Array.from(document.querySelectorAll('#top h1 span'));
+        const buttons = Array.from(document.querySelectorAll('#top .button'));
+        const floating = Array.from(document.querySelectorAll('.floating-contact a'));
+        const intersects = (a: DOMRect, b: DOMRect) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+        return {
+          headingClipped: lines.some((line) => line.scrollWidth > line.clientWidth + 1),
+          actionOverlap: buttons.some((button) => floating.some((contact) => intersects(button.getBoundingClientRect(), contact.getBoundingClientRect()))),
+        };
+      });
+      expect(layout.headingClipped, `${width}px hero title is clipped`).toBe(false);
+      expect(layout.actionOverlap, `${width}px floating contact overlaps a hero action`).toBe(false);
+    }
+  });
+
   test('keeps the impact stats inside a narrow mobile viewport', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 844 });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
@@ -67,6 +88,14 @@ test.describe('home experience', () => {
 
     expect(boxes).toHaveLength(5);
     expect(Math.max(...boxes.map(({ right }) => right))).toBeLessThanOrEqual(boxes[0].viewport + 1);
+  });
+
+  test('loads selected-project and client-logo images when their sections enter view', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    for (const image of await page.locator('#projects img, #clients img').all()) {
+      await image.scrollIntoViewIfNeeded();
+      await expect.poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+    }
   });
 
   test('wraps direct contact actions inside a narrow mobile viewport', async ({ page }) => {
@@ -99,11 +128,11 @@ test.describe('home experience', () => {
     const page = await context.newPage();
     await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-    for (const id of ['top', 'company', 'expertise', 'telecom', 'rf', 'fiber', 'energy', 'digital', 'impact', 'projects', 'clients', 'why', 'contact']) {
+    for (const id of ['top', 'company', 'expertise', 'telecom', 'rf', 'fiber', 'energy', 'digital', 'process', 'impact', 'projects', 'industries', 'clients', 'why', 'profile', 'contact']) {
       await expect(page.locator('#' + id)).toBeAttached();
     }
-    await expect(page.locator('.telecom-scene__phase-list')).toBeVisible();
-    await expect(page.locator('.telecom-scene__frames img')).toHaveCount(7);
+    await expect(page.locator('.telecom-scene')).toHaveCount(0);
+    await expect(page.locator('#process ol li')).toHaveCount(5);
 
     const dimensions = await page.evaluate(() => ({
       viewport: document.documentElement.clientWidth,
@@ -119,7 +148,15 @@ test.describe('responsive foundation', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/contact', { waitUntil: 'domcontentloaded' });
 
-    const mobileSize = await page.locator('.floating-contact a').first().evaluate((element) => element.getBoundingClientRect().width);
+    const mobileContact = await page.locator('.floating-contact').evaluate((element) => {
+      const links = Array.from(element.querySelectorAll('a'));
+      const computed = getComputedStyle(element);
+      return {
+        firstSize: links[0].getBoundingClientRect().width,
+        secondSize: links[1].getBoundingClientRect().width,
+        gap: parseFloat(computed.rowGap),
+      };
+    });
 
     await page.setViewportSize({ width: 1440, height: 900 });
     const desktopSize = await page.locator('.floating-contact a').first().evaluate((element) => element.getBoundingClientRect().width);
@@ -128,8 +165,10 @@ test.describe('responsive foundation', () => {
       scrollWidth: document.documentElement.scrollWidth,
     }));
 
-    expect(mobileSize).toBeGreaterThanOrEqual(76);
-    expect(desktopSize).toBeGreaterThan(mobileSize);
+    expect(mobileContact.firstSize).toBe(mobileContact.secondSize);
+    expect(mobileContact.firstSize).toBeGreaterThanOrEqual(76);
+    expect(mobileContact.gap).toBeLessThanOrEqual(4);
+    expect(desktopSize).toBeGreaterThan(mobileContact.firstSize);
     expect(desktopSize).toBeLessThanOrEqual(104);
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
   });
@@ -229,6 +268,25 @@ test.describe('inner routes', () => {
     await expect(page.getByRole('heading', { level: 1, name: /rf drive test & network optimization/i })).toBeVisible();
     await expect(page.getByText(/1,214/i).first()).toBeVisible();
     await expect(page.locator('.inner-page__actions a[href="/contact#quote"]').first()).toBeVisible();
+  });
+
+  test('keeps capability metric labels highlighted and legible', async ({ page }) => {
+    await page.goto('/capabilities', { waitUntil: 'domcontentloaded' });
+
+    const metricStyle = await page.locator('.metric-label').first().evaluate((element) => {
+      const computed = getComputedStyle(element);
+      return {
+        color: computed.color,
+        borderStyle: computed.borderStyle,
+        fontSize: parseFloat(computed.fontSize),
+        fontWeight: parseInt(computed.fontWeight, 10),
+      };
+    });
+
+    expect(metricStyle.color).toBe('rgb(255, 0, 0)');
+    expect(metricStyle.borderStyle).toBe('solid');
+    expect(metricStyle.fontSize).toBeGreaterThanOrEqual(11);
+    expect(metricStyle.fontWeight).toBeGreaterThanOrEqual(700);
   });
 
   test('renders a branded 404 for unpublished routes', async ({ page }) => {

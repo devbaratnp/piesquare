@@ -9,6 +9,13 @@ vi.mock('next/navigation', () => ({
 afterEach(() => cleanup());
 
 describe('SiteNav', () => {
+  it('uses the clean larger brand mark in the header', () => {
+    render(<SiteNav />);
+    const logo = screen.getByAltText('Pie Square Technologies');
+    expect(logo.getAttribute('src')).toContain('pie-square-logo-transparent.png');
+    expect(logo).toHaveAttribute('width', '252');
+  });
+
   it('marks the current route in desktop and mobile navigation', () => {
     render(<SiteNav />);
 
@@ -33,6 +40,9 @@ describe('SiteNav', () => {
     fireEvent.click(services);
     expect(services).toHaveAttribute('aria-expanded', 'true');
     expect(screen.getAllByRole('link', { name: /telecom/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Civil Works').length).toBeGreaterThan(0);
+    expect(screen.queryAllByRole('link', { name: 'Civil Works' })).toHaveLength(0);
+    expect(document.querySelectorAll('.nav-services__menu .nav-services__column')).toHaveLength(4);
     fireEvent.keyDown(window, { key: 'Escape' });
     expect(services).toHaveAttribute('aria-expanded', 'false');
   });

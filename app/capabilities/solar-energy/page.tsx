@@ -17,12 +17,13 @@ export default async function SolarCapabilityPage() {
   const content = await getPublicContent();
   return (
     <InnerPage
-      eyebrow="Capabilities / Solar & Energy"
+      eyebrow="03 SERVICES"
       title={detail.title}
       lede={detail.intro}
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }, { label: 'Solar & Energy', href: '/capabilities/solar-energy' }]}
       image={detail.image}
       imageAlt={detail.imageAlt}
+      hideActions
       contact={content.contact}
       light
     >
@@ -30,7 +31,6 @@ export default async function SolarCapabilityPage() {
         capabilities={[...detail.capabilities]}
         lifecycle={[...detail.lifecycle]}
         scope={[...detail.scope]}
-        proof={detail.proof}
         relatedProjects={content.projects.filter((project) => detail.relatedProjectIds.includes(project.id))}
       />
     </InnerPage>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { InnerPage } from '@/components/inner-page';
-import { capabilityRoutes, deliveryCapabilities, impactStats, serviceDetails, technicalWorkforce } from '@/data/site';
+import { deliveryCapabilities, impactStats, technicalResources, technicalWorkforce } from '@/data/site';
 import { getPublicContent } from '@/server/content';
 
 export const dynamic = 'force-dynamic';
@@ -44,7 +44,7 @@ export default async function CapabilitiesPage() {
           {impactStats.map(([value, label, detail]) => (
             <article key={label}>
               <strong>{value}</strong>
-              <span className="metric-label--highlight">{label}</span>
+              <span className="metric-label metric-label--highlight">{label}</span>
               <small>{detail}</small>
             </article>
           ))}
@@ -63,7 +63,7 @@ export default async function CapabilitiesPage() {
 
       <section className="delivery-capabilities" aria-label="Delivery capabilities">
         <p className="inner-page__eyebrow">DELIVERY CAPABILITIES</p>
-        <h2>Delivery capabilities</h2>
+        <h2 className="delivery-capabilities__title">Delivery capabilities</h2>
         <div className="delivery-capabilities__grid">
           {deliveryCapabilities.map((capability) => (
             <article className="delivery-capability-card" key={capability.title}>
@@ -75,17 +75,17 @@ export default async function CapabilitiesPage() {
       </section>
 
       <section className="technical-resources" aria-label="Technical resources">
-        <p className="inner-page__eyebrow section-kicker--strong">EXPERTISE &amp; ENGINEERING</p>
+        <p className="inner-page__eyebrow section-kicker--strong">EQUIPMENT &amp; RESOURCES</p>
         <h2>Technical Resources</h2>
         <p className="technical-resources__intro">The tools, technology and field resources behind our project delivery.</p>
         <div className="technical-resources__grid">
-          {capabilityRoutes.map((route) => (
-            <article className="technical-resources__card" key={route.slug}>
-              <h3>{serviceDetails[route.slug].title}</h3>
+          {technicalResources.map((resource) => (
+            <article className="technical-resources__card" key={resource.title}>
+              <span className="technical-resources__icon" aria-hidden="true">{resource.mark}</span>
+              <h3>{resource.title}</h3>
               <ul>
-                {serviceDetails[route.slug].scope.map((item) => <li key={item}>{item}</li>)}
+                {resource.items.map((item) => <li key={item}>{item}</li>)}
               </ul>
-              <Link href={route.href}>View capability details ↗</Link>
             </article>
           ))}
         </div>

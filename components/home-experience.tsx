@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LenisProvider } from '@/components/motion/lenis-provider';
 import { useReducedMotion } from '@/components/motion/reduced-motion';
 import { SceneShell } from '@/components/scene-shell';
@@ -13,27 +12,22 @@ import { SiteNav } from '@/components/site-nav';
 import { FloatingContact } from '@/components/floating-contact';
 import { SiteFooter } from '@/components/site-footer';
 import { PhoneIcon, WhatsAppIcon } from '@/components/contact-icons';
-import { ClientLogoWheel } from '@/components/client-logo-wheel';
 import {
-  capabilityRoutes,
   clients,
-  companyTimeline,
   companyIntro,
-  deliveryFlow,
-  digitalModules,
-  energyPoints,
-  fiberSteps,
+  companyTimeline,
+  homeDeliverySteps,
+  homeIndustries,
   impactStats,
   projects as fallbackProjects,
-  siteContact,
   serviceOverview,
-  telecomFrames,
+  siteContact,
   trustedClientLogoFiles,
   whyPieSquare,
   type ProjectRecord,
 } from '@/data/site';
-import { ImageCarouselHero } from '@/components/ui/ai-image-generator-hero';
 import type { SignalState } from '@/lib/motion';
+import styles from './home-atlas.module.css';
 
 type HomeHeroContent = Readonly<{
   eyebrow: string;
@@ -62,65 +56,42 @@ type HomeService = Readonly<{
   href: string;
 }>;
 
-gsap.registerPlugin(ScrollTrigger);
+const stateOrder: SignalState[] = ['HERO_TRANSMIT', 'MAP_ROUTE', 'DIGITAL_NETWORK', 'FINAL_CONVERGENCE'];
 
-const stateOrder: SignalState[] = [
-  'HERO_TRANSMIT',
-  'MAP_ROUTE',
-  'TELECOM_BUILD',
-  'RF_DRIVE',
-  'FIBER_LIGHT',
-  'ENERGY_CURRENT',
-  'DIGITAL_NETWORK',
-  'FINAL_CONVERGENCE',
-];
-
-type MediaPlateProps = Readonly<{
-  src: string;
-  alt: string;
-  className?: string;
-  priority?: boolean;
-}>;
-
-function MediaPlate({ src, alt, className = '', priority = false }: MediaPlateProps) {
-  return (
-    <figure className={'media-plate ' + className}>
-      <Image src={src} alt={alt} fill priority={priority} sizes="(max-width: 720px) 100vw, 50vw" />
-      <span className="media-plate__rule" aria-hidden="true" />
-    </figure>
-  );
+function serviceAnchor(service: HomeService, index: number) {
+  if (service.href.endsWith('/telecom')) return 'telecom';
+  if (service.href.endsWith('/optical-fiber')) return 'fiber';
+  if (service.href.endsWith('/solar-energy')) return 'energy';
+  if (service.href.endsWith('/it-solutions')) return 'digital';
+  return (['telecom', 'fiber', 'energy', 'digital'] as const)[index] ?? `service-${index + 1}`;
 }
 
 function HeroScene({ hero }: { hero: HomeHeroContent }) {
+  const lines = hero.title.split('|');
   return (
-    <SceneShell id="top" state="HERO_TRANSMIT" className="hero-scene">
-      <div className="hero-scene__media" aria-hidden="true">
-        <Image src={hero.image} alt="" fill priority sizes="100vw" />
-        <div className="hero-scene__veil" />
-        <div className="hero-scene__rings"><i /><i /><i /></div>
-        <div className="hero-scene__antenna" />
+    <SceneShell id="top" state="HERO_TRANSMIT" className={styles.hero}>
+      <div className={styles.heroPhoto} aria-hidden="true">
+        <Image src={hero.image} alt="" fill priority sizes="(max-width: 720px) 100vw, 58vw" />
       </div>
-
-      <div className="page-wrap hero-scene__content">
-        <div className="hero-editorial__copy">
-          <p className="eyebrow">{hero.eyebrow}</p>
-          <h1 className="display-title hero-scene__title">
-            {hero.title.split('|').map((line, index) => (
-              <span key={line}>{index === hero.title.split('|').length - 1 && line.includes('NEPAL CONNECTED.') ? <>{line.replace('NEPAL CONNECTED.', '')}<em>NEPAL CONNECTED.</em></> : line}</span>
+      <div className={styles.heroGrid} aria-hidden="true" />
+      <div className={`page-wrap ${styles.heroContent}`}>
+        <div className={styles.heroCopy}>
+          <p className={styles.kicker}>{hero.eyebrow}</p>
+          <h1 className={styles.heroTitle}>
+            {lines.map((line, index) => (
+              <span key={`${line}-${index}`}>
+                {line.includes('NEPAL CONNECTED.') ? <>{line.replace('NEPAL CONNECTED.', '')}<em>NEPAL CONNECTED.</em></> : line}
+              </span>
             ))}
           </h1>
-          <p className="hero-scene__disciplines">{hero.subtitle}</p>
-          <div className="hero-scene__footer">
-            <div className="hero-scene__meta">
-              <span>Established 2019</span>
-              <span>Lalitpur, Nepal</span>
-            </div>
-          </div>
-          <div className="hero-scene__actions">
+          <p className={styles.heroSubtitle}>{hero.subtitle}</p>
+          <div className={styles.heroMeta}><span>ESTABLISHED 2019</span><span>LALITPUR, NEPAL</span></div>
+          <div className={styles.heroActions}>
             <a className="button button--primary" href={hero.ctaUrl} data-cursor="view">{hero.ctaText} ↗</a>
             <a className="button button--ghost" href="#expertise" data-cursor="view">Explore our services ↗</a>
           </div>
         </div>
+        <div className={styles.heroImageCaption} aria-hidden="true"><span>FIELD NOTES / 001</span><span>NEPAL — CONNECTED INFRASTRUCTURE</span></div>
       </div>
     </SceneShell>
   );
@@ -128,28 +99,30 @@ function HeroScene({ hero }: { hero: HomeHeroContent }) {
 
 function CompanyScene() {
   return (
-    <SceneShell id="company" state="MAP_ROUTE" className="company-scene light-scene">
-      <div className="topo-grid" aria-hidden="true"><span /><span /><span /><span /><span /><span /></div>
-      <div className="page-wrap company-scene__layout">
-        <ImageCarouselHero
-          title={<>INFRASTRUCTURE<br /><em>EXPERTISE. FIELD EXECUTION.<br />RELIABLE RESULTS.</em></>}
-          subtitle=""
-          description={companyIntro}
-          ctaText="Learn more about us"
-          ctaHref="/company"
-          images={[]}
-          showOrbit={false}
-          features={[
-            { title: 'PIE SQUARE — FIELD DELIVERY NETWORK', description: 'TELECOM | FIBER | SOLAR & ELECTRICAL | IT' },
-            { title: 'ENGINEERING • DEPLOYMENT • COMMISSIONING • O&M', description: 'One integrated infrastructure partner' },
-          ]}
-        />
-        <ol className="company-timeline" aria-label="Company timeline from 2019 to today">
+    <SceneShell id="company" state="MAP_ROUTE" className={styles.company}>
+      <div className={`page-wrap ${styles.companyContent}`}>
+        <div className={styles.companyIntro}>
+          <p className={styles.kicker}>WHO WE ARE</p>
+          <h2 className={styles.displayTitle}>INFRASTRUCTURE <em>EXPERTISE. FIELD EXECUTION. RELIABLE RESULTS.</em></h2>
+          <p className={styles.bodyCopy}>{companyIntro}</p>
+          <Link className={styles.textLink} href="/company">Learn more about us <span aria-hidden="true">↗</span></Link>
+        </div>
+        <div className={styles.network} aria-label="Pie Square field delivery network across telecom, fiber, solar and electrical, and IT">
+          <div className={styles.networkRule} aria-hidden="true" />
+          <p className={styles.networkTop}>FOUR DISCIPLINES / ONE DELIVERY NETWORK</p>
+          <div className={styles.networkMap}>
+            <span className={styles.networkNode}>TELECOM</span>
+            <span className={styles.networkNode}>FIBER</span>
+            <strong className={styles.networkCore}>PIE SQUARE<span>FIELD DELIVERY NETWORK</span></strong>
+            <span className={styles.networkNode}>SOLAR &amp;<br /> ELECTRICAL</span>
+            <span className={styles.networkNode}>IT</span>
+          </div>
+          <p className={styles.networkBottom}>ENGINEERING • DEPLOYMENT • COMMISSIONING • O&amp;M</p>
+          <p className={styles.networkAccessible}>PIE SQUARE — FIELD DELIVERY NETWORK · TELECOM | FIBER | SOLAR &amp; ELECTRICAL | IT</p>
+        </div>
+        <ol className={styles.timeline} aria-label="Pie Square company timeline">
           {companyTimeline.map((item) => (
-            <li key={item.marker}>
-              <span>{item.marker}</span>
-              <strong>{item.title}</strong>
-            </li>
+            <li key={item.marker}><span>{item.marker}</span><strong>{item.title}</strong></li>
           ))}
         </ol>
       </div>
@@ -157,187 +130,48 @@ function CompanyScene() {
   );
 }
 
-function CapabilitiesScene({ services }: { services: ReadonlyArray<HomeService> }) {
+function ServicesScene({ services }: { services: ReadonlyArray<HomeService> }) {
   return (
-    <SceneShell id="expertise" state="MAP_ROUTE" className="capabilities-scene">
-      <div className="page-wrap">
-        <div className="capabilities-scene__intro">
-          <div>
-            <p className="capabilities-scene__aside">Four divisions. One delivery standard. Engineering, deployment, commissioning, O&amp;M.</p>
-          </div>
-          <h2 className="display-title">WHAT WE<br /><em>DELIVER.</em></h2>
+    <SceneShell id="expertise" state="MAP_ROUTE" className={styles.services}>
+      <div className={`page-wrap ${styles.sectionPad}`}>
+        <div className={styles.servicesHead}>
+          <div><p className={styles.kicker}>FOUR DIVISIONS / ONE STANDARD</p><p>Engineering, deployment, commissioning and long-term support.</p></div>
+          <h2 className={styles.displayTitle}>WHAT WE <em>DELIVER.</em></h2>
         </div>
-        <div className="capability-list">
-          {services.map((service, index) => (
-            <Link className="capability-row editorial-reveal" key={service.slug} href={service.href || capabilityRoutes[index]?.href || '/capabilities'} aria-label={`${service.title} — ${service.summary}`}>
-              <span className="capability-row__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <strong>{service.title}</strong>
-              <span className="capability-row__meta">
-                <small>{service.summary}</small>
-                <span className="capability-row__scope" aria-label={`${service.title} scope`}>
-                  {service.scope.map((scope) => <span key={scope}>{scope}</span>)}
-                </span>
-              </span>
-              <i aria-hidden="true">↗</i>
-            </Link>
+        <div className={styles.serviceGrid}>
+          {services.map((service, index) => {
+            const anchor = serviceAnchor(service, index);
+            const hasRfScope = service.scope.some((scope) => /\brf\b/i.test(scope));
+            return (
+              <Link id={anchor} className={`${styles.serviceCard} atlas-reveal`} href={service.href} key={`${service.href}-${index}`}>
+                <div className={styles.serviceCardTop}><span>{String(index + 1).padStart(2, '0')} / 04</span><span aria-hidden="true">↗</span></div>
+                <h3>{service.title}</h3>
+                <p>{service.summary}</p>
+                <ul aria-label={`${service.title} scope`}>
+                  {service.scope.map((scope) => <li id={anchor === 'telecom' && /\brf\b/i.test(scope) ? 'rf' : undefined} key={scope}>{scope}</li>)}
+                  {anchor === 'telecom' && !hasRfScope ? <li id="rf">RF Drive Testing</li> : null}
+                </ul>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </SceneShell>
+  );
+}
+
+function ProcessScene() {
+  return (
+    <SceneShell id="process" state="MAP_ROUTE" className={styles.process}>
+      <div className={`page-wrap ${styles.sectionPad}`}>
+        <p className={styles.kicker}>HOW WE DELIVER</p>
+        <h2 className={styles.processTitle}>From Survey to Service —<br />We Deliver End to End.</h2>
+        <p className={styles.processIntro}>A disciplined, documented delivery methodology applied to every project regardless of scale.</p>
+        <ol className={styles.processSteps} aria-label="Delivery process">
+          {homeDeliverySteps.map((step, index) => (
+            <li key={step.title} className="atlas-reveal"><span className={styles.processNumber}>{String(index + 1).padStart(2, '0')}</span><h3>{step.title}</h3><p>{step.copy}</p></li>
           ))}
-        </div>
-        <section className="delivery-flow" aria-label="How we deliver">
-          <div>
-            <p className="eyebrow eyebrow--red">DELIVERY STANDARD</p>
-            <h3 className="display-title">HOW WE <em>DELIVER.</em></h3>
-          </div>
-          <ol>
-            {deliveryFlow.map((step, index) => <li key={step}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><strong>{step}</strong></li>)}
-          </ol>
-        </section>
-      </div>
-    </SceneShell>
-  );
-}
-
-function TelecomScene() {
-  const [active, setActive] = useState(0);
-  const sceneRef = useRef<HTMLElement>(null);
-  const reduced = useReducedMotion();
-
-  useEffect(() => {
-    const scene = sceneRef.current;
-    if (reduced || !scene || typeof window === 'undefined' || !('ResizeObserver' in window)) return;
-    const trigger = ScrollTrigger.create({
-      trigger: scene,
-      start: 'top top',
-      end: '+=200%',
-      pin: true,
-      scrub: 0.8,
-      onUpdate: (self) => setActive(Math.min(telecomFrames.length - 1, Math.floor(self.progress * telecomFrames.length))),
-    });
-    return () => trigger.kill();
-  }, [reduced]);
-
-  return (
-    <section id="telecom" ref={sceneRef} className="telecom-scene" data-scene="telecom" data-signal-state="TELECOM_BUILD">
-      <div className="telecom-scene__backdrop" aria-hidden="true">
-        <Image src="/media/cinematic/T01-telecom-survey.webp" alt="" fill sizes="100vw" />
-        <div className="telecom-scene__shade" />
-      </div>
-      <div className="page-wrap telecom-scene__layout">
-        <div className="telecom-scene__copy">
-          <h2 className="display-title">FROM SURVEY<br /><em>TO SIGNAL.</em></h2>
-          <p>Survey. Foundation. Steel. Equipment. Power. Commissioning. Optimization. A network is a physical thing before it becomes an invisible one.</p>
-          <div className="telecom-scene__phase">
-            <b>{telecomFrames[active][1]}</b>
-          </div>
-          <ol className="telecom-scene__phase-list" aria-label="Telecom construction phases">
-            {telecomFrames.map(([, label], index) => (
-              <li className={index === active ? 'is-active' : ''} key={label}>
-                {label}
-              </li>
-            ))}
-          </ol>
-        </div>
-        <div className="telecom-scene__frames">
-          {telecomFrames.map(([src, label]) => (
-            <Image key={src} className={telecomFrames[active][0] === src ? 'is-active' : ''} src={src} alt={label + ' phase of the telecom construction sequence'} fill sizes="(max-width: 720px) 100vw, 50vw" />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function RFScene() {
-  return (
-    <SceneShell id="rf" state="RF_DRIVE" className="rf-scene">
-      <div className="rf-scene__scan" aria-hidden="true" />
-      <div className="page-wrap rf-scene__layout">
-        <div className="rf-scene__copy">
-          <p className="eyebrow eyebrow--red">A network is never finished</p>
-          <h2 className="display-title">A NETWORK ISN&apos;T<br />FINISHED WHEN<br /><em>THE TOWER GOES LIVE.</em></h2>
-          <p className="rf-scene__body">It has to perform. Drive testing maps the moments a signal weakens, hands over, or disappears. The route study is a visualization, not a project measurement.</p>
-          <p className="rf-scene__note">Readouts shown for illustration — visualization only, not project measurements.</p>
-          <div className="rf-readout">
-            <span><small>RSRP</small><b>-85 dBm</b></span>
-            <span><small>SINR</small><b>18 dB</b></span>
-            <span><small>RSRQ</small><b>-10 dB</b></span>
-            <span><small>THROUGHPUT</small><b>150 Mbps</b></span>
-          </div>
-        </div>
-        <div className="rf-scene__visual">
-          <MediaPlate className="rf-scene__media" src="/media/projects/rf-drive.jpg" alt="RF drive-testing vehicle on a field route" />
-          <div className="rf-map" aria-label="Abstract RF route visualization">
-            <div className="rf-map__rings" />
-            <svg viewBox="0 0 700 600" aria-hidden="true">
-              <path className="rf-map__ghost" d="M40 490 C160 250 180 560 320 350 S470 180 650 80" />
-              <path className="rf-map__route" d="M40 490 C160 250 180 560 320 350 S470 180 650 80" pathLength="1" />
-            </svg>
-            {[18, 34, 52, 68, 79].map((left, index) => (
-              <i key={left} style={{ left: left + '%', top: (58 - index * 7) + '%' }} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </SceneShell>
-  );
-}
-
-function FiberScene() {
-  return (
-    <SceneShell id="fiber" state="FIBER_LIGHT" className="fiber-scene light-scene">
-      <div className="fiber-scene__photo">
-        <Image src="/media/cinematic/F01-fiber-macro.webp" alt="Cinematic macro study of a red light traveling through fiber glass" fill sizes="100vw" />
-        <div className="fiber-scene__veil" />
-      </div>
-      <div className="page-wrap fiber-scene__layout">
-        <div>
-          <h2 className="fiber-number">2,240<span>+ KM</span></h2>
-          <h3 className="display-title">CONNECTING COMMUNITIES. KILOMETER BY <em>KILOMETER.</em></h3>
-          <div className="fiber-steps">{fiberSteps.map((step) => <span key={step}>{step}</span>)}</div>
-        <MediaPlate className="fiber-scene__submedia" src="/media/client/fiber-deployment.jpeg" alt="Field technician deploying optical fiber in Nepal" />
-        </div>
-      </div>
-    </SceneShell>
-  );
-}
-
-function EnergyScene() {
-  return (
-    <SceneShell id="energy" state="ENERGY_CURRENT" className="energy-scene light-scene">
-      <div className="page-wrap energy-scene__layout">
-        <div className="energy-scene__copy">
-          <h2 className="display-title">POWERING THE INFRASTRUCTURE BEHIND <em>CONNECTIVITY.</em></h2>
-          <p className="energy-scene__body">Hybrid power, off-grid systems, battery storage, load optimization, and maintenance for telecom and public infrastructure.</p>
-          <ul className="energy-scene__points">
-            {energyPoints.map((point) => (
-              <li key={point.title}><strong>{point.title}</strong><span>{point.copy}</span></li>
-            ))}
-          </ul>
-          <div className="energy-scene__spec"><strong>400 kW</strong><span>Solar O&amp;M project documented in the company profile</span></div>
-        </div>
-        <MediaPlate className="energy-scene__media" src="/media/client/solar-plant.png" alt="Solar panels and inverter equipment supporting infrastructure" />
-      </div>
-    </SceneShell>
-  );
-}
-
-function DigitalScene() {
-  const nodes = Array.from({ length: 24 }, (_, index) => ({
-    x: (index * 43) % 96 + '%',
-    y: (index * 67) % 84 + '%',
-  }));
-
-  return (
-    <SceneShell id="digital" state="DIGITAL_NETWORK" className="digital-scene">
-      <div className="digital-scene__network" aria-hidden="true">
-        {nodes.map((node, index) => <i key={index} style={{ '--x': node.x, '--y': node.y } as CSSProperties} />)}
-      </div>
-      <div className="page-wrap digital-scene__layout">
-        <h2 className="display-title">INFRASTRUCTURE<br />DOESN&apos;T END<br /><em>AT THE TOWER.</em></h2>
-        <div className="digital-scene__body">
-          <p>Infrastructure, security, and software that keeps connected organizations moving after the field crew leaves site.</p>
-          <div className="digital-scene__list">{digitalModules.map((item) => <span key={item}>{item}</span>)}</div>
-        </div>
-        <MediaPlate className="digital-scene__media" src="/media/client/operations-dashboard.jpeg" alt="Operations dashboard showing connected infrastructure systems" />
+        </ol>
       </div>
     </SceneShell>
   );
@@ -345,88 +179,104 @@ function DigitalScene() {
 
 function ImpactScene() {
   return (
-    <section id="impact" className="impact-scene" data-scene="impact" data-signal-state="DIGITAL_NETWORK">
-      <div className="page-wrap">
-        <div className="impact-scene__label">FIELD OUTPUT / COMPANY PROFILE REFERENCE</div>
-        <h2 className="display-title impact-scene__title">BUILT TO <em>EXECUTE.</em></h2>
-        <div className="impact-stats">
-          {impactStats.map(([value, label, detail], index) => (
-            <div key={label} className={'impact-stat ' + (index === 0 ? 'is-active' : '')}>
-              <strong>{value}</strong>
-              <span>{label}</span>
-              <small>{detail}</small>
-            </div>
+    <SceneShell id="impact" state="DIGITAL_NETWORK" className={styles.impact}>
+      <div className={`page-wrap ${styles.sectionPad}`}>
+        <p className={styles.kicker}>PROVEN DELIVERY</p>
+        <h2 className={styles.displayTitle}>VERIFIED FIELD<br /><em>METRICS.</em></h2>
+        <div className={styles.metricGrid}>
+          {impactStats.map(([value, label, detail]) => (
+            <article className={`${styles.metric} impact-stat atlas-reveal`} key={label}>
+              <strong>{value}</strong><span>{label}</span><small>{detail}</small>
+            </article>
           ))}
         </div>
-        <div className="impact-scene__line"><i /></div>
       </div>
-    </section>
+    </SceneShell>
   );
 }
 
 function ProjectsScene({ projects }: { projects: ReadonlyArray<ProjectRecord> }) {
   return (
-    <section id="projects" className="projects-scene" data-scene="projects" data-signal-state="DIGITAL_NETWORK">
-      <div className="page-wrap">
-        <div className="projects-scene__head">
-          <p className="projects-scene__eyebrow">PROJECT PORTFOLIO / OUR PROJECTS</p>
-          <h2 className="display-title">BUILT IN THE FIELD.<br /><em>PROVEN IN THE NETWORK.</em></h2>
+    <SceneShell id="projects" state="DIGITAL_NETWORK" className={styles.projects}>
+      <div className={`page-wrap ${styles.sectionPad}`}>
+        <div className={styles.projectsHead}>
+          <div><p className={styles.kicker}>SELECTED PROJECTS</p><h2 className={styles.displayTitle}>BUILT IN THE FIELD.<br /><em>PROVEN IN THE NETWORK.</em></h2></div>
+          <Link className={styles.textLink} href="/projects">View all projects <span aria-hidden="true">↗</span></Link>
         </div>
-        <div className="evidence-wall">
+        <div className={styles.projectGrid}>
           {projects.slice(0, 6).map((project, index) => (
-            <Link href={`/projects/${project.id}`} className={'evidence-card evidence-card--' + (index + 1) + ' editorial-reveal'} key={project.id}>
-              <div className="evidence-card__image">
-                <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 720px) 100vw, 33vw" />
-              </div>
-              <div className="evidence-card__copy">
-                <span>{project.status} / {project.categoryLabel}</span>
-                <h3>{project.title}</h3>
-                <p>{project.location} / {project.duration}</p>
-                <span className="evidence-card__link">View Project ↗</span>
-              </div>
+            <Link href={`/projects/${project.id}`} className={`${styles.projectCard} atlas-reveal`} key={project.id}>
+              <div className={styles.projectImage}><Image src={project.image || '/media/projects/hero.jpg'} alt={project.imageAlt || project.title} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" /></div>
+              <div className={styles.projectMeta}><span>{String(index + 1).padStart(2, '0')} / {project.categoryLabel}</span><span>{project.status}</span></div>
+              <h3>{project.title}</h3>
+              <p>{project.location} · {project.duration}</p>
+              <span className={styles.projectLink}>VIEW PROJECT ↗</span>
             </Link>
           ))}
         </div>
-        <Link className="button button--dark projects-scene__cta" href="/projects">View All Projects ↗</Link>
       </div>
-    </section>
+    </SceneShell>
+  );
+}
+
+function IndustriesScene() {
+  return (
+    <SceneShell id="industries" state="DIGITAL_NETWORK" className={styles.industries}>
+      <div className={`page-wrap ${styles.sectionPad}`}>
+        <p className={styles.kicker}>INDUSTRIES</p>
+        <h2 className={styles.industriesTitle}>Industries We Support</h2>
+        <ul className={styles.industryGrid}>
+          {homeIndustries.map((industry) => <li key={industry}><span aria-hidden="true">◆</span>{industry}</li>)}
+        </ul>
+      </div>
+    </SceneShell>
   );
 }
 
 function ClientsScene() {
   return (
-    <section id="clients" className="clients-scene light-scene" data-scene="clients" data-signal-state="DIGITAL_NETWORK">
-      <div className="page-wrap clients-scene__layout">
-        <div>
-          <h2 className="display-title">TRUSTED BY INDUSTRY.<br /><em>BUILT FOR LONG-TERM PARTNERSHIPS.</em></h2>
+    <SceneShell id="clients" state="DIGITAL_NETWORK" className={styles.clients}>
+      <div className={`page-wrap ${styles.sectionPad}`}>
+        <p className={styles.kicker}>FIELD PARTNERSHIPS</p>
+        <h2 className={styles.displayTitle}><em>TRUSTED BY INDUSTRY.</em><br />BUILT FOR LONG-TERM PARTNERSHIPS.</h2>
+        <div className={styles.logoGrid} aria-label="Trusted clients">
+          {trustedClientLogoFiles.map((logo) => (
+            <figure className={`${styles.logoCell} atlas-client-logo`} key={logo.name}>
+              <div className={styles.logoImage}><Image src={logo.src} alt={logo.alt} fill sizes="(max-width: 720px) 45vw, 22vw" /></div>
+              <figcaption>{logo.name}</figcaption>
+            </figure>
+          ))}
         </div>
-        <div className="clients-scene__names">
-          <ClientLogoWheel logos={trustedClientLogoFiles} />
-          <div className="clients-scene__marquee" role="list" aria-label="Trusted clients">
-            <div className="clients-scene__marquee-track" aria-hidden="true">
-              {[...clients, ...clients].map((name, index) => <span key={`${name}-${index}`} role="listitem">{name}</span>)}
-            </div>
-          </div>
-          {clients.map((name) => <p key={name}>{name}</p>)}
-          <p className="clients-scene__support">Delivering reliable infrastructure and technology solutions across Nepal through trusted partnerships and proven field execution.</p>
-        </div>
+        <p className={styles.clientNote}>{clients.length} established client and project relationships across Nepal’s infrastructure landscape.</p>
       </div>
-    </section>
+    </SceneShell>
   );
 }
 
 function WhyScene() {
   return (
-    <section id="why" className="why-scene light-scene" data-scene="why" data-signal-state="FINAL_CONVERGENCE" aria-label="Why Pie Square">
-      <div className="page-wrap why-scene__layout">
-        <h2 className="display-title">ENGINEERING DISCIPLINE,<br /><em>FIELD-PROVEN.</em></h2>
-        <div className="why-scene__grid">
-          {whyPieSquare.map((item) => (
-            <article key={item.title}><h3>{item.title}</h3><p>{item.copy}</p></article>
+    <SceneShell id="why" state="FINAL_CONVERGENCE" className={styles.why}>
+      <div className={`page-wrap ${styles.sectionPad}`}>
+        <p className={styles.kicker}>WHY PIE SQUARE</p>
+        <h2 className={styles.displayTitle}>ENGINEERING DISCIPLINE,<br /><em>FIELD-PROVEN.</em></h2>
+        <div className={styles.whyGrid}>
+          {whyPieSquare.map((item, index) => (
+            <article key={item.title} className="atlas-reveal"><span>{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3><p>{item.copy}</p></article>
           ))}
         </div>
       </div>
-    </section>
+    </SceneShell>
+  );
+}
+
+function ProfileScene() {
+  return (
+    <SceneShell id="profile" state="FINAL_CONVERGENCE" className={styles.profile}>
+      <div className={`page-wrap ${styles.profileContent}`}>
+        <div><p className={styles.kicker}>COMPANY PROFILE</p><h2>Looking for More Information?</h2><p>Download our company profile to learn more about our services, technical capabilities, project experience and resources.</p></div>
+        <div className={styles.profileAction}><a href="/resources/pie-square-company-profile-2026.pdf" target="_blank" rel="noopener noreferrer">Download Company Profile <span aria-hidden="true">↗</span></a><small>PDF · COMPANY PROFILE 2026</small></div>
+      </div>
+    </SceneShell>
   );
 }
 
@@ -443,11 +293,7 @@ function FinalScene({ contact }: { contact: HomeContact }) {
           <a className="button button--ghost" href={'mailto:' + contact.email} data-cursor="contact">{contact.email}</a>
           <a className="button button--ghost" href={contact.phoneHref} data-cursor="contact"><PhoneIcon className="button__icon" /><span>{contact.phone}</span></a>
         </div>
-        <div className="final-scene__foot">
-          <span>{contact.address}</span>
-          <span>{contact.email}</span>
-          <span>{contact.website}</span>
-        </div>
+        <div className="final-scene__foot"><span>{contact.address}</span><span>{contact.email}</span><span>{contact.website}</span></div>
       </div>
     </SceneShell>
   );
@@ -458,18 +304,12 @@ function MotionBridge({ onState }: { onState: (state: SignalState) => void }) {
 
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-signal-state]'));
-    const update = (entries: IntersectionObserverEntry[]) => {
+    if (reduced || !('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver((entries) => {
       const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       const state = visible?.target.getAttribute('data-signal-state') as SignalState | null;
       if (state && stateOrder.includes(state)) onState(state);
-    };
-
-    if (reduced || !('IntersectionObserver' in window)) {
-      sections.forEach((section) => section.style.scrollSnapAlign = 'none');
-      return;
-    }
-
-    const observer = new IntersectionObserver(update, { threshold: [0.2, 0.5, 0.8], rootMargin: '-12% 0px -12% 0px' });
+    }, { threshold: [0.2, 0.5, 0.8], rootMargin: '-12% 0px -12% 0px' });
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, [onState, reduced]);
@@ -493,41 +333,32 @@ export function HomeExperience({ hero, contact, services, projects }: { hero?: H
   const reduced = useReducedMotion();
 
   useEffect(() => {
-    if (reduced || typeof window === 'undefined' || !('ResizeObserver' in window)) return;
-
-    const contexts = gsap.context(() => {
-      gsap.fromTo('.hero-scene__media img', { scale: 1.04 }, { scale: 1.12, ease: 'none', scrollTrigger: { trigger: '.hero-scene', start: 'top top', end: 'bottom top', scrub: true } });
-      gsap.fromTo('.hero-editorial__copy', { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1, ease: 'power3.out', stagger: 0.08 });
-      gsap.fromTo('.fiber-scene__photo img', { scale: 1.05 }, { scale: 1.16, ease: 'none', scrollTrigger: { trigger: '.fiber-scene', start: 'top bottom', end: 'bottom top', scrub: true } });
-      gsap.fromTo('.energy-scene__media img', { scale: 1.07 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.energy-scene', start: 'top bottom', end: 'bottom top', scrub: true } });
-      gsap.utils.toArray<HTMLElement>('.editorial-reveal').forEach((element) => {
-        gsap.fromTo(element, { y: 28, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out', scrollTrigger: { trigger: element, start: 'top 82%', once: true } });
-      });
+    if (reduced || typeof window === 'undefined') return;
+    const context = gsap.context(() => {
+      gsap.fromTo(`.${styles.heroCopy}`, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out' });
+      gsap.fromTo(`.${styles.heroPhoto} img`, { scale: 1.06 }, { scale: 1, duration: 1.5, ease: 'power2.out' });
     });
-
-    return () => contexts.revert();
+    return () => context.revert();
   }, [reduced]);
 
   return (
     <LenisProvider>
       <a className="skip-link" href="#main-content">Skip to main content</a>
-      <SiteNav />
+      <SiteNav tone="paper" />
       <FloatingContact contact={resolvedContact} />
       <SignalLine state={signalState} />
       <MotionBridge onState={setSignalState} />
       <main id="main-content" className="experience">
         <HeroScene hero={resolvedHero} />
         <CompanyScene />
-        <CapabilitiesScene services={resolvedServices} />
-        <TelecomScene />
-        <RFScene />
-        <FiberScene />
-        <EnergyScene />
-        <DigitalScene />
+        <ServicesScene services={resolvedServices} />
+        <ProcessScene />
         <ImpactScene />
         <ProjectsScene projects={resolvedProjects} />
+        <IndustriesScene />
         <ClientsScene />
         <WhyScene />
+        <ProfileScene />
         <FinalScene contact={resolvedContact} />
       </main>
       <SiteFooter contact={resolvedContact} />

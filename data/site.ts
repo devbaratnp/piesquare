@@ -45,6 +45,7 @@ export type ProjectRecord = Readonly<{
 
 export type ServiceCapability = Readonly<{ number: string; title: string; copy: string }>;
 export type ServiceOverview = Readonly<{ number: string; title: string; summary: string; scope: ReadonlyArray<string>; href: string }>;
+export type TechnicalResourceGroup = Readonly<{ title: string; mark: string; items: ReadonlyArray<string> }>;
 export type CareerRole = Readonly<{
   id: string;
   title: string;
@@ -74,18 +75,18 @@ export const primaryNav = [
 ] as const;
 
 export const serviceNav = [
-  { label: 'Telecom', href: '/capabilities/telecom' },
-  { label: 'Fiber', href: '/capabilities/optical-fiber' },
-  { label: 'Solar & Electrical', href: '/capabilities/solar-energy' },
-  { label: 'IT Solutions', href: '/capabilities/it-solutions' },
+  { number: '01', label: 'Telecom', href: '/capabilities/telecom', scope: ['Civil Works', 'Tower Installation', 'Tower Maintenance', 'RF Drive Testing', 'Telecom Site Installation'] },
+  { number: '02', label: 'Fiber', href: '/capabilities/optical-fiber', scope: ['Route Survey', 'Fiber Installation', 'Fiber Splicing', 'Fiber Testing', 'Fiber Maintenance'] },
+  { number: '03', label: 'Solar & Electrical', href: '/capabilities/solar-energy', scope: ['Site Survey', 'System Design', 'Solar Installation', 'Testing & Commissioning', 'O&M'] },
+  { number: '04', label: 'IT Solutions', href: '/capabilities/it-solutions', scope: ['Network Infrastructure', 'Structured Cabling', 'Server & Data Center', 'CCTV & Security', 'IT Maintenance'] },
 ] as const;
 
 export const companyTimeline = [
   { marker: '2019', title: 'Established', copy: 'Engineering solutions since 2019.' },
-  { marker: 'Telecom', title: 'Telecom', copy: 'Telecom infrastructure, testing and commissioning.' },
-  { marker: 'Fiber', title: 'Fiber', copy: 'Fiber deployment, operations and maintenance.' },
-  { marker: 'Energy', title: 'Solar & Electrical', copy: 'Solar, electrical installation and O&M.' },
-  { marker: 'IT', title: 'IT & Digital', copy: 'Digital infrastructure, security and software.' },
+  { marker: 'Telecom', title: 'Telecom Infrastructure', copy: 'Telecom infrastructure, testing and commissioning.' },
+  { marker: 'Fiber', title: 'Fiber Optic Infrastructure', copy: 'Fiber deployment, operations and maintenance.' },
+  { marker: 'Energy', title: 'Solar & Electrical Infrastructure', copy: 'Solar, electrical installation and O&M.' },
+  { marker: 'IT', title: 'IT & Digital Solutions', copy: 'Digital infrastructure, security and software.' },
   { marker: 'Today', title: 'One integrated partner', copy: 'One integrated infrastructure partner.' },
 ] as const;
 
@@ -107,7 +108,25 @@ export const energyPoints = [
   { title: 'O&M support', copy: 'Annual operations, monitoring and fault response.' },
 ] as const;
 export const digitalModules = ['IT consulting & infrastructure', 'Networking & cloud', 'CCTV & security', 'Software & web'] as const;
-export const deliveryFlow = ['Survey', 'Design', 'Deploy', 'Test', 'Optimize', 'Maintain'] as const;
+export const homeDeliverySteps = [
+  { title: 'Survey & Assessment', copy: 'Site inspection, data collection and technical assessment by field engineers.' },
+  { title: 'Engineering & Planning', copy: 'Design, route planning, BOQ, resource planning and project preparation.' },
+  { title: 'Installation & Deployment', copy: 'Civil works, tower installation, fiber deployment, solar installation and IT infrastructure.' },
+  { title: 'Testing & Commissioning', copy: 'Technical testing, quality inspection, troubleshooting and commissioning.' },
+  { title: 'Maintenance & Support', copy: 'Preventive maintenance, fault restoration and ongoing technical support.' },
+] as const;
+
+export const homeIndustries = [
+  'Telecommunications',
+  'Internet Service Providers',
+  'Fiber Network Operators',
+  'EPC & Infrastructure Companies',
+  'Renewable Energy',
+  'Data Centers',
+  'Government Infrastructure',
+  'Commercial & Industrial',
+  'Enterprise IT',
+] as const;
 
 export const impactStats = [
   ['3500+', 'RF sites tested', 'SSV & Cluster Drive Testing'],
@@ -502,9 +521,15 @@ export const whyPieSquare = [
 ] as const;
 
 export const companyIntro = 'Pie Square Technologies delivers integrated infrastructure solutions across telecom, fiber optics, solar & renewable energy and IT. With experienced technical teams, specialized equipment, and a field-focused approach, we work with telecom operators, ISPs, EPC contractors, technology companies, enterprises and government agencies, supporting infrastructure projects from survey, installation, testing, commissioning and long-term maintenance. Our focus is simple: quality execution, safe operations, timely delivery, and dependable long-term service.' as const;
+export const companyAboutTitle = 'An Engineering Company Built for the Field.' as const;
+export const companyAboutIntro = 'Our strength lies in bringing multi-disciplinary expertise in Telecom, Fiber Optics, Solar Energy, and IT Infrastructure under one roof, with responsible execution, and EHS compliance enabling clients to manage diverse infrastructure requirements through a single, dependable partner. From field-level execution to project coordination and management, our teams work with a practical, solution-oriented approach to meet demanding project requirements. We continuously focus on operational efficiency, technical accuracy, adaptability, and long-term client relationships, helping build infrastructure that is reliable, scalable, and ready for the future.' as const;
+export const companyVisionTitle = 'Building the infrastructure that connects, powers and enables Nepal.' as const;
+export const companyVisionCopy = 'To create reliable infrastructure that strengthens connectivity, supports sustainable energy, and enables communities and businesses to move forward through technology.' as const;
+export const companyMissionTitle = 'Integrated solutions. Reliable delivery.' as const;
+export const companyMissionCopy = 'To deliver integrated infrastructure and technology solutions with quality, safety and accountability, combining engineering expertise, field execution and dependable project delivery across Nepal.' as const;
 export const footerIntro = 'Integrated Infrastructure & Technology Solutions — end-to-end field engineering, deployment, installation, testing, commissioning and maintenance across telecom, fiber optic, solar energy and IT infrastructure in Nepal.' as const;
 export const companyTeamIntro = 'Our multidisciplinary workforce brings together engineering, technical and field expertise to deliver infrastructure projects safely, efficiently and reliably across Nepal.' as const;
-export const companyApproachIntro = 'Every project follows a structured process, from site survey and planning to safe execution, testing, documentation and handover. We combine engineering discipline with practical field execution to deliver reliable, measurable results.' as const;
+export const companyApproachIntro = 'Every project follows a structured process—from site survey and planning to safe execution, testing, documentation and handover. We combine engineering discipline with practical field execution to deliver reliable, measurable results.' as const;
 
 export const organizationLevels = [
   { title: 'Leadership', copy: 'Direction, partnerships and delivery accountability.' },
@@ -633,14 +658,19 @@ export const industryDetails = [
   { title: 'Government & Public Infrastructure', copy: 'Infrastructure Deployment · Connectivity · Technology Solutions' },
   { title: 'Commercial & Industrial', copy: 'Electrical · Solar · Infrastructure · Technology Solutions' },
 ] as const;
-export const companyApproach = ['Survey-Based Engineering - Field data and site assessments inform practical, build-ready solutions.', 'Quality Testing & Documentation - Inspection, testing and documentation provide clear evidence of completed work.', 'Safety-Controlled Execution - Method statements, toolbox briefings and site procedures support safe project delivery.', 'Dedicated Project Coordination - Clear communication, reporting and coordination keep every project aligned from survey to handover.'] as const;
+export const companyApproach = [
+  { title: 'Survey-Based Engineering', copy: 'Field data and site assessments inform practical, build-ready solutions.' },
+  { title: 'Quality Testing & Documentation', copy: 'Inspection, testing and documentation provide clear evidence of completed work.' },
+  { title: 'Safety-Controlled Execution', copy: 'Method statements, toolbox briefings and site procedures support safe project delivery.' },
+  { title: 'Dedicated Project Coordination', copy: 'Clear communication, reporting and coordination keep every project aligned from survey to handover.' },
+] as const;
 export const companyValuesDetailed = [
   { title: 'Integrity', copy: 'We work transparently, keep our commitments and make decisions that stand up to scrutiny and field realities.' },
-  { title: 'Safety', copy: 'We promote a proactive safety culture through risk assessment, proper PPE, safe work practices, trained personnel, and continuous EHS awareness, ensuring our people, clients, communities, and the environment are protected.' },
+  { title: 'Safety', copy: 'We promote a proactive safety culture through risk assessment, proper PPE, safe work practices, trained personnel, and continuous EHS awareness—ensuring our people, clients, communities, and the environment are protected.' },
   { title: 'Quality', copy: 'We combine disciplined workmanship, measured testing and clear documentation to deliver reliable results.' },
-  { title: 'Accountability', copy: 'We take ownership of communication, coordination and delivery, from survey and execution to handover and support.' },
+  { title: 'Accountability', copy: 'We take ownership of communication, coordination and delivery—from survey and execution to handover and support.' },
   { title: 'Innovation', copy: 'We adopt practical technologies, tools and methods that improve efficiency, reliability and field performance.' },
-  { title: 'Customer Focus', copy: "We listen closely, communicate clearly and deliver solutions aligned with our clients' needs and objectives." },
+  { title: 'Customer Focus', copy: 'We listen closely, communicate clearly and deliver solutions aligned with our clients’ needs and objectives.' },
 ] as const;
 
 export const deliveryCapabilities = [
@@ -650,6 +680,13 @@ export const deliveryCapabilities = [
   { title: 'Operation & Maintenance', copy: 'Preventive maintenance · Fault response · Restoration' },
   { title: 'Project Documentation', copy: 'BOQ · Reports · Test records · As-built documentation · Handover' },
   { title: 'Multi-Site Coordination', copy: 'Planning · Field deployment · Progress monitoring · Reporting' },
+] as const;
+
+export const technicalResources: ReadonlyArray<TechnicalResourceGroup> = [
+  { title: 'Telecom', mark: 'RF', items: ['RF Drive Test Equipment', 'Survey Equipment', 'Tower Installation Equipment', 'Safety Equipment'] },
+  { title: 'Fiber', mark: 'OF', items: ['OTDR', 'Optical Power Meter', 'Fiber Splicing Tool Kit'] },
+  { title: 'Solar', mark: 'PV', items: ['Electrical Testing Equipment', 'Solar Inspection Equipment', 'Installation Tools', 'Safety & Working-at-Height Equipment'] },
+  { title: 'IT', mark: 'IT', items: ['Network Testing Equipment', 'Structured Cabling Tools', 'Server/Network Installation Tools'] },
 ] as const;
 
 export const careerRoles: ReadonlyArray<CareerRole> = [

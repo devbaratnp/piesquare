@@ -32,7 +32,6 @@ export function SignalLine({ state }: SignalLineProps) {
         <path className="signal-overlay__ghost" d={paths[displayState]} pathLength="1" />
         <path ref={pathRef} className="signal-overlay__line" d={paths[displayState]} pathLength="1" />
       </svg>
-      <span className="signal-overlay__label">{displayState.replace('_', ' ')}</span>
     </div>
   );
 }

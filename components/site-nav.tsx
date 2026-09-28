@@ -45,11 +45,26 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
     const active = isActive(item.href);
     return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} data-cursor="view">{item.label}</Link>;
   };
+  const renderServicesMenu = (id: string, className: string) => (
+    <div id={id} className={className} hidden={!servicesOpen}>
+      {serviceNav.map((item) => (
+        <div className="nav-services__column" key={item.href}>
+          <Link className="nav-services__heading" href={item.href} onClick={closeMenus}>
+            <span className="nav-services__number">{item.number}</span>
+            <span>{item.label}</span>
+          </Link>
+          <ul aria-label={`${item.label} scope`}>
+            {item.scope.map((scope) => <li key={scope}>{scope}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <header className={`site-nav-shell ${tone === 'paper' ? 'site-nav-shell--paper' : ''} ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
       <Link className="brand-lockup" href="/" aria-label="Pie Square Technologies home">
-        <Image className="brand-lockup__logo" src="/media/logos/pie-square-logo.png" alt="Pie Square Technologies" width={208} height={44} priority />
+        <Image className="brand-lockup__logo" src="/media/logos/pie-square-logo-transparent.png" alt="Pie Square Technologies" width={252} height={125} priority />
       </Link>
 
       <nav className="desktop-nav" aria-label="Primary navigation">
@@ -64,11 +79,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
           >
             Services <span aria-hidden="true">⌄</span>
           </button>
-          <div id="services-menu-desktop" className={`nav-services__menu ${servicesOpen ? 'is-open' : ''}`} hidden={!servicesOpen}>
-            {serviceNav.map((item) => (
-              <Link key={item.href} href={item.href} onClick={() => setServicesOpen(false)}>{item.label}</Link>
-            ))}
-          </div>
+          {renderServicesMenu('services-menu-desktop', `nav-services__menu ${servicesOpen ? 'is-open' : ''}`)}
         </div>
         {primaryNav.slice(2).map(renderPrimaryLink)}
       </nav>
@@ -97,11 +108,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
             >
               Services <b aria-hidden="true">⌄</b>
             </button>
-            <div id="services-menu-mobile" className="mobile-menu__services-list" hidden={!servicesOpen}>
-              {serviceNav.map((item) => (
-                <Link key={item.href} href={item.href} onClick={closeMenus}>{item.label}</Link>
-              ))}
-            </div>
+            {renderServicesMenu('services-menu-mobile', 'mobile-menu__services-list')}
           </div>
           {primaryNav.slice(2).map((item) => {
             const active = isActive(item.href);

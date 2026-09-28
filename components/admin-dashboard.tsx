@@ -11,6 +11,7 @@ type About = { title: string; intro: string; vision: string; mission: string };
 type Service = { id: number; slug: string; title: string; summary: string; sort_order: number; status: string };
 type Project = { id: number; slug: string; title: string; category: string; short_description: string; full_description: string | null; featured_image: string | null; client_name: string | null; location: string | null; completion_info: string | null; featured: number; sort_order: number; status: string };
 type Media = { id: number; filename: string; storage_path: string; mime_type: string; size_bytes: number; alt_text: string | null; created_at: string };
+type JobApplication = { id: number; role_id: string; name: string; phone: string; email: string; desired_position: string; message: string | null; cv_filename: string | null; cv_path: string | null; cv_size_bytes: number | null; status: string; created_at: string };
 
 const emptyService = { slug: '', title: '', summary: '', sortOrder: 0, status: 'PUBLISHED' };
 const emptyProject = { slug: '', title: '', category: 'TELECOM', shortDescription: '', fullDescription: '', featuredImage: '', clientName: '', location: '', completionInfo: '', featured: false, sortOrder: 0, status: 'DRAFT' };
@@ -23,6 +24,7 @@ export function AdminDashboard() {
   const [services, setServices] = useState<Service[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [media, setMedia] = useState<Media[]>([]);
+  const [applications, setApplications] = useState<JobApplication[]>([]);
   const [summary, setSummary] = useState<Record<string, number | boolean | null>>({});
   const [serviceDraft, setServiceDraft] = useState(emptyService);
   const [editingServiceId, setEditingServiceId] = useState<number | null>(null);
@@ -34,13 +36,14 @@ export function AdminDashboard() {
   const [error, setError] = useState('');
 
   async function load() {
-    const [contentResponse, servicesResponse, projectsResponse, mediaResponse] = await Promise.all([
+    const [contentResponse, servicesResponse, projectsResponse, mediaResponse, applicationsResponse] = await Promise.all([
       fetch('/api/admin/content'),
       fetch('/api/admin/services'),
       fetch('/api/admin/projects'),
       fetch('/api/admin/media'),
+      fetch('/api/admin/applications'),
     ]);
-    if (![contentResponse, servicesResponse, projectsResponse, mediaResponse].every((response) => response.ok)) {
+    if (![contentResponse, servicesResponse, projectsResponse, mediaResponse, applicationsResponse].every((response) => response.ok)) {
       setError('Your session has expired. Sign in again.');
       return;
     }
@@ -48,6 +51,7 @@ export function AdminDashboard() {
     const servicePayload = await servicesResponse.json();
     const projectPayload = await projectsResponse.json();
     const mediaPayload = await mediaResponse.json();
+    const applicationsPayload = await applicationsResponse.json();
     setHero(content.content.hero);
     setContact(content.content.contact);
     setAbout(content.content.about);
@@ -55,6 +59,7 @@ export function AdminDashboard() {
     setServices(servicePayload.services ?? []);
     setProjects(projectPayload.projects ?? []);
     setMedia(mediaPayload.media ?? []);
+    setApplications(applicationsPayload.applications ?? []);
   }
 
   useEffect(() => {
@@ -155,6 +160,14 @@ export function AdminDashboard() {
     await load();
   }
 
+  async function setApplicationStatus(id: number, status: string) {
+    resetNotice();
+    const response = await fetch('/api/admin/applications', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, status }) });
+    if (!response.ok) { setError('Application could not be updated.'); return; }
+    setMessage(status === 'ARCHIVED' ? 'Application archived and CV removed.' : 'Application updated.');
+    await load();
+  }
+
   async function logout() {
     await fetch('/api/admin/logout', { method: 'POST' });
     router.replace('/admin/login');
@@ -169,6 +182,7 @@ export function AdminDashboard() {
           <a href="#homepage">Homepage</a>
           <a href="#services">Services</a>
           <a href="#projects">Projects</a>
+          <a href="#applications">Applications</a>
           <a href="#media">Media</a>
           <Link href="/projects">View public site</Link>
         </nav>
@@ -242,6 +256,10 @@ export function AdminDashboard() {
             </div>
             <div className="admin-row-actions"><button className="button button--dark" type="submit">{editingProjectId ? 'Update project' : 'Create project'}</button>{editingProjectId && <button className="button button--ghost" type="button" onClick={() => { setEditingProjectId(null); setProjectDraft(emptyProject); }}>Cancel</button>}</div>
           </form>
+        </section>
+        <section className="admin-panel" id="applications">
+          <div className="admin-panel__heading"><div><p className="admin-kicker">Hiring</p><h2>Job applications ({applications.length})</h2></div></div>
+          <div className="admin-service-list">{applications.length === 0 && <p>No applications yet.</p>}{applications.map((application) => <article key={application.id}><div><strong>{application.name} — {application.desired_position}</strong><p>{application.email} · {application.phone} · {application.role_id}</p><p>{application.message}</p><small>{application.status} · {application.cv_filename} {application.cv_size_bytes ? `· ${Math.round(application.cv_size_bytes / 1024)} KB` : ''} · {application.created_at}</small></div><div className="admin-row-actions">{application.cv_path && <a className="admin-text-button" href={application.cv_path} target="_blank" rel="noreferrer">CV</a>}{application.status === 'NEW' && <button className="admin-text-button" type="button" onClick={() => setApplicationStatus(application.id, 'REVIEWED')}>Mark reviewed</button>}{application.status !== 'ARCHIVED' && <button className="admin-text-button" type="button" onClick={() => setApplicationStatus(application.id, 'ARCHIVED')}>Archive</button>}</div></article>)}</div>
         </section>
         <section className="admin-panel" id="media">
           <div className="admin-panel__heading"><div><p className="admin-kicker">Assets</p><h2>Media library</h2></div></div>

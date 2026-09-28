@@ -17,19 +17,19 @@ export default async function FiberCapabilityPage() {
   const content = await getPublicContent();
   return (
     <InnerPage
-      eyebrow="Capabilities / Optical Fiber"
+      eyebrow="02 SERVICES"
       title={detail.title}
       lede={detail.intro}
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }, { label: 'Optical Fiber', href: '/capabilities/optical-fiber' }]}
       image={detail.image}
       imageAlt={detail.imageAlt}
+      hideActions
       contact={content.contact}
     >
       <ServiceDetail
         capabilities={[...detail.capabilities]}
         lifecycle={[...detail.lifecycle]}
         scope={[...detail.scope]}
-        proof={detail.proof}
         relatedProjects={content.projects.filter((project) => detail.relatedProjectIds.includes(project.id))}
       />
     </InnerPage>

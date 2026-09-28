@@ -14,7 +14,7 @@ type InnerPageProps = Readonly<{
   image?: string;
   imageAlt?: string;
   light?: boolean;
-  variant?: 'default' | 'contact';
+  variant?: 'default' | 'contact' | 'company';
   hideActions?: boolean;
   contact?: Readonly<{ email: string; phone: string; phoneHref: string; address: string; mapUrl: string; facebook: string; website: string }>;
   children: React.ReactNode;
@@ -27,7 +27,7 @@ export function InnerPage({ eyebrow, title, lede, image, imageAlt = '', light = 
       <SiteNav tone={light ? 'paper' : 'dark'} />
       <FloatingContact contact={contact} />
       <SignalLine state="MAP_ROUTE" />
-      <main id="inner-content" className={`inner-page ${light ? 'inner-page--light' : ''} ${variant === 'contact' ? 'inner-page--contact' : ''}`} aria-labelledby="inner-page-title">
+      <main id="inner-content" className={`inner-page ${light ? 'inner-page--light' : ''} ${variant === 'contact' ? 'inner-page--contact' : ''} ${variant === 'company' ? 'inner-page--company' : ''}`} aria-labelledby="inner-page-title">
         <div className="page-wrap">
           <div className="inner-page__hero">
             <p className="inner-page__eyebrow">{eyebrow}</p>

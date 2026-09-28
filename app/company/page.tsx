@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
-import { companyApproach, companyApproachIntro, companyIntro, companyTeamIntro, companyValuesDetailed, industryDetails, teamDepartments } from '@/data/site';
+import { companyAboutIntro, companyApproach, companyApproachIntro, companyMissionCopy, companyMissionTitle, companyTeamIntro, companyValuesDetailed, companyVisionCopy, companyVisionTitle, industryDetails, teamDepartments } from '@/data/site';
 import { getPublicContent } from '@/server/content';
 
 export const dynamic = 'force-dynamic';
@@ -23,25 +23,28 @@ export default async function CompanyPage() {
       crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us', href: '/company' }]}
       image="/media/cinematic/C01-company-infrastructure-landscape.png"
       imageAlt="Infrastructure landscape supporting telecom networks across Nepal"
+      variant="company"
+      hideActions
       contact={content.contact}
     >
       <section className="about-intro" aria-label="Who we are">
+        <p className="inner-page__eyebrow">WHO WE ARE</p>
         <h2>{content.about.title}</h2>
         <div className="about-intro__copy">
-          <p>{content.about.intro || companyIntro}</p>
+          <p>{content.about.intro || companyAboutIntro}</p>
         </div>
       </section>
 
       <div className="inner-page__grid about-vision-grid">
         <section className="inner-page__card" aria-label="Our Vision">
           <p className="inner-page__eyebrow">OUR VISION</p>
-          <h2>{content.about.vision}</h2>
-          <p>To create reliable infrastructure that strengthens connectivity, supports sustainable energy, and enables communities and businesses to move forward through technology.</p>
+          <h2>{content.about.vision || companyVisionTitle}</h2>
+          <p>{companyVisionCopy}</p>
         </section>
         <section className="inner-page__card" aria-label="Our Mission">
           <p className="inner-page__eyebrow">OUR MISSION</p>
-          <h2>Integrated solutions. Reliable delivery.</h2>
-          <p>{content.about.mission}</p>
+          <h2>{companyMissionTitle}</h2>
+          <p>{content.about.mission || companyMissionCopy}</p>
         </section>
       </div>
 
@@ -63,7 +66,7 @@ export default async function CompanyPage() {
         <h2>Engineered with Precision. Delivered with Discipline.</h2>
         <p>{companyApproachIntro}</p>
         <ul>
-          {companyApproach.map((item) => <li key={item}>{item}</li>)}
+          {companyApproach.map((item) => <li key={item.title}><strong>{item.title}</strong><span>{item.copy}</span></li>)}
         </ul>
       </section>
 
@@ -71,8 +74,21 @@ export default async function CompanyPage() {
         <p className="inner-page__eyebrow">OUR TEAM</p>
         <h2>Multidisciplinary Expertise. Experienced Delivery Team.</h2>
         <p className="about-team__intro">{companyTeamIntro}</p>
-          <div className="workforce-list">
-            {teamDepartments.map((department) => <span key={department.title}><strong>{department.title}</strong>{department.copy}</span>)}
+        <div className="workforce-list">
+          {teamDepartments.map((department) => (
+            <span key={department.title}>
+              <strong>{department.title}</strong>
+              {department.copy}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      <section className="inner-page__card about-industries" aria-label="Industries we support">
+        <p className="inner-page__eyebrow">INDUSTRIES WE SUPPORT</p>
+        <h2>Industries We Support</h2>
+        <div className="industry-detail-list">
+          {industryDetails.map((industry) => <article key={industry.title}><h3>{industry.title}</h3><p>{industry.copy}</p></article>)}
         </div>
       </section>
 
@@ -83,14 +99,6 @@ export default async function CompanyPage() {
         <span className="about-coverage__coordinates">27.7172° N / 85.3240° E — HQ KATHMANDU</span>
         <div className="province-list">
           {provinces.map((province) => <span key={province}>{province}</span>)}
-        </div>
-      </section>
-
-      <section className="inner-page__card about-industries" aria-label="Industries we support">
-        <p className="inner-page__eyebrow">INDUSTRIES</p>
-        <h2>Industries We Support</h2>
-        <div className="industry-detail-list">
-          {industryDetails.map((industry) => <article key={industry.title}><h3>{industry.title}</h3><p>{industry.copy}</p></article>)}
         </div>
       </section>
     </InnerPage>

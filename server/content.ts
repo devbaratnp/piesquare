@@ -1,4 +1,4 @@
-import { companyIntro, projects, serviceOverview, siteContact, type ProjectRecord } from '@/data/site';
+import { companyAboutIntro, companyAboutTitle, companyMissionCopy, companyVisionTitle, projects, serviceOverview, siteContact, type ProjectRecord } from '@/data/site';
 import { isDatabaseConfigured, queryRows } from './db';
 
 export type HomeHeroContent = Readonly<{
@@ -69,10 +69,10 @@ export const fallbackHero: HomeHeroContent = {
 };
 
 export const fallbackAbout: PublicAbout = {
-  title: 'An Engineering Company Built for the Field.',
-  intro: companyIntro,
-  vision: 'Building the infrastructure that connects, powers and enables Nepal.',
-  mission: 'To deliver integrated infrastructure and technology solutions with quality, safety and accountability, combining engineering expertise, field execution and dependable project delivery across Nepal.',
+  title: companyAboutTitle,
+  intro: companyAboutIntro,
+  vision: companyVisionTitle,
+  mission: companyMissionCopy,
 };
 
 const fallbackServices: ReadonlyArray<PublicService> = serviceOverview.map((service) => ({ slug: service.href.split('/').pop() ?? service.title.toLowerCase(), title: service.title, summary: service.summary, scope: service.scope, href: service.href }));

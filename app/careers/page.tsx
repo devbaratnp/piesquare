@@ -20,6 +20,7 @@ export default async function CareersPage() {
       lede="Join a growing team delivering infrastructure, connectivity, energy and technology projects across Nepal."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Careers', href: '/careers' }]}
       contact={content.contact}
+      hideActions
     >
       <CareersList email={content.contact.email} />
     </InnerPage>

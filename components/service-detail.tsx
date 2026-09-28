@@ -6,7 +6,6 @@ type ServiceDetailProps = Readonly<{
   capabilities?: ReadonlyArray<ServiceCapability>;
   lifecycle: ReadonlyArray<string>;
   scope: ReadonlyArray<string>;
-  proof: string;
   relatedHref?: string;
   relatedProjects?: ReadonlyArray<ProjectRecord>;
   image?: string;
@@ -29,7 +28,7 @@ function ProjectProofCard({ project }: { project: ProjectRecord }) {
   );
 }
 
-export function ServiceDetail({ capabilities = [], lifecycle, scope, proof, relatedHref = '/projects', relatedProjects = [], image, imageAlt = '' }: ServiceDetailProps) {
+export function ServiceDetail({ capabilities = [], lifecycle, scope, relatedHref = '/projects', relatedProjects = [], image, imageAlt = '' }: ServiceDetailProps) {
   const hasLifecycle = lifecycle.length > 0;
   const hasScope = scope.length > 0;
 
@@ -100,11 +99,6 @@ export function ServiceDetail({ capabilities = [], lifecycle, scope, proof, rela
         )}
       </section>
 
-      <p className="inner-page__proof">{proof}</p>
-      <div className="inner-page__actions">
-        <Link className="button button--primary" href="/contact#quote">Request a Quote ↗</Link>
-        <Link className="button button--ghost" href="/contact#survey">Request a Site Survey ↗</Link>
-      </div>
     </>
   );
 }
