@@ -26,7 +26,7 @@
 
 .displayTitle {
   margin: 0;
-  font: 500 clamp(3.1rem, 6.4vw, 7.8rem)/.88 var(--display);
+  font: 500 clamp(2.7rem, 1.55rem + 4.7vw, 7.8rem)/.88 var(--display);
   letter-spacing: -.065em;
   text-transform: uppercase;
   text-wrap: balance;
@@ -125,7 +125,7 @@
 .heroTitle {
   max-width: 930px;
   margin: 0;
-  font: 500 clamp(3.6rem, 7vw, 8.35rem)/.83 var(--display);
+  font: 500 clamp(2.9rem, 1.85rem + 5vw, 8.35rem)/.83 var(--display);
   letter-spacing: -.071em;
   text-transform: uppercase;
 }
@@ -186,8 +186,8 @@
 }
 
 .companyIntro .displayTitle {
-  max-width: 810px;
-  font-size: clamp(3.3rem, 5.45vw, 6.7rem);
+  max-width: 700px;
+  font-size: clamp(2.8rem, 2rem + 3.2vw, 6.7rem);
 }
 
 .companyIntro .bodyCopy {
@@ -395,7 +395,7 @@
 .serviceCard h3 {
   max-width: 530px;
   margin: 12px 0 0;
-  font: 500 clamp(3.2rem, 5.2vw, 6rem)/.87 var(--display);
+  font: 500 clamp(3rem, 2.35rem + 2.6vw, 6rem)/.87 var(--display);
   letter-spacing: -.06em;
   text-transform: uppercase;
   text-wrap: balance;
@@ -433,7 +433,7 @@
 .processTitle {
   max-width: 1230px;
   margin: 0;
-  font: 700 clamp(2.6rem, 5.1vw, 6rem)/1.05 var(--body);
+  font: 700 clamp(2.3rem, 1.45rem + 3.5vw, 6rem)/1.05 var(--body);
   letter-spacing: -.055em;
   text-wrap: balance;
 }
@@ -494,7 +494,7 @@
 }
 
 .impact { background: #f5f1e9; }
-.impact .displayTitle { max-width: 1000px; font-size: clamp(3.3rem, 6.5vw, 7.8rem); }
+.impact .displayTitle { max-width: 1000px; font-size: clamp(2.55rem, 1.35rem + 5vw, 7.8rem); }
 
 .metricGrid {
   display: grid;
@@ -516,7 +516,7 @@
 
 .impact .metric strong {
   color: var(--ink);
-  font: 750 clamp(2.25rem, 3.35vw, 4.5rem)/.94 var(--body);
+  font: 750 clamp(2rem, 1.6rem + 1.55vw, 4.5rem)/.94 var(--body);
   letter-spacing: -.055em;
   overflow-wrap: anywhere;
 }
@@ -538,7 +538,7 @@
 
 .projects { background: #eae4d9; }
 .projectsHead { display: flex; justify-content: space-between; align-items: end; gap: 28px; }
-.projectsHead .displayTitle { max-width: 990px; font-size: clamp(3.1rem, 5.4vw, 6.2rem); }
+.projectsHead .displayTitle { max-width: 990px; font-size: clamp(2.5rem, 1.6rem + 3.6vw, 6.2rem); }
 .projectsHead .textLink { flex: none; }
 
 .projectGrid {
@@ -577,13 +577,13 @@
 .projectLink { margin-top: auto; padding-top: 20px; font: 700 10px/1.3 var(--mono); letter-spacing: .11em; }
 
 .industries { background: #fbfaf7; }
-.industriesTitle { margin: 0 0 50px; font: 700 clamp(2.5rem, 5vw, 5.4rem)/1.05 var(--body); letter-spacing: -.055em; }
+.industriesTitle { margin: 0 0 50px; font: 700 clamp(2.1rem, 1.2rem + 3.65vw, 5.4rem)/1.05 var(--body); letter-spacing: -.055em; }
 .industryGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding: 0; border-top: 1px solid var(--line-light); border-left: 1px solid var(--line-light); list-style: none; }
 .industryGrid li { display: flex; min-height: 112px; align-items: center; gap: 18px; padding: 20px 28px; border-right: 1px solid var(--line-light); border-bottom: 1px solid var(--line-light); font: 600 clamp(1rem, 1.3vw, 1.3rem)/1.3 var(--body); }
 .industryGrid li span { color: var(--signal); font-size: 12px; }
 
 .clients { background: #f1eee8; }
-.clients .displayTitle { max-width: 1100px; font-size: clamp(3.1rem, 5.5vw, 6.8rem); }
+.clients .displayTitle { max-width: 1100px; font-size: clamp(2.65rem, 1.8rem + 3.5vw, 6.8rem); }
 .logoGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin-top: clamp(38px, 5vw, 68px); border: 1px solid var(--line-light); background: var(--line-light); }
 .logoCell { display: grid; min-width: 0; min-height: 210px; align-content: center; gap: 8px; justify-items: center; margin: 0; padding: 26px; background: #fbfaf7; }
 .logoImage { position: relative; width: min(100%, 240px); height: 118px; }
@@ -592,7 +592,7 @@
 .clientNote { margin: 20px 0 0; color: var(--paper-muted); font-size: 13px; }
 
 .why { background: #fcfbf8; }
-.why .displayTitle { max-width: 1070px; font-size: clamp(3.2rem, 5.8vw, 7rem); }
+.why .displayTitle { max-width: 1070px; font-size: clamp(2.5rem, 1.5rem + 4.15vw, 7rem); }
 .whyGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 38px 30px; margin-top: clamp(40px, 6vw, 75px); }
 .whyGrid article { display: grid; align-content: start; gap: 9px; padding-top: 17px; border-top: 1px solid var(--line-light); }
 .whyGrid article > span { color: var(--signal); font: 700 11px/1 var(--mono); }
@@ -601,7 +601,7 @@
 
 .profile { background: #f1eee8; }
 .profileContent { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 360px); gap: 40px; align-items: center; margin-block: clamp(45px, 6vw, 80px); padding: clamp(28px, 5vw, 68px); border: 1px solid rgba(255, 0, 0, .36); background: #f9f7f2; box-shadow: inset 5px 0 0 var(--signal); }
-.profileContent h2 { max-width: 760px; margin: 0 0 17px; font: 700 clamp(2.2rem, 3.5vw, 4.3rem)/1.08 var(--body); letter-spacing: -.05em; }
+.profileContent h2 { max-width: 760px; margin: 0 0 17px; font: 700 clamp(1.9rem, 1.44rem + 1.9vw, 4.3rem)/1.08 var(--body); letter-spacing: -.05em; }
 .profileContent p:not(.kicker) { max-width: 740px; margin: 0; color: var(--paper-muted); font: 400 clamp(1rem, 1.2vw, 1.2rem)/1.65 var(--body); }
 .profileAction { display: grid; gap: 10px; }
 .profileAction a { display: flex; min-height: 80px; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 25px; background: var(--signal); color: #fff; font: 700 13px/1.3 var(--mono); letter-spacing: .04em; transition: background .2s ease; }
@@ -610,7 +610,6 @@
 .profileAction small { color: var(--paper-muted); font: 600 10px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
 
 @media (max-width: 1100px) {
-  .heroTitle { font-size: clamp(3.2rem, 7.3vw, 6.2rem); }
   .companyContent { grid-template-columns: minmax(0, 1fr) minmax(300px, .88fr); gap: 36px; }
   .metricGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .projectsHead { align-items: start; flex-direction: column; }
@@ -637,20 +636,17 @@
 @media (max-width: 600px) {
   .sectionPad { padding-block: 72px; }
   .kicker { margin-bottom: 18px; font-size: 10px; }
-  .displayTitle { font-size: clamp(2.7rem, 11vw, 4.8rem); }
   .hero { min-height: 100dvh; }
   .heroPhoto { inset: 0 0 auto; width: 100%; height: 56%; }
   .heroPhoto img { object-position: 29% 42%; }
   .heroPhoto::after { background: linear-gradient(0deg, #f5f1e9 0%, rgba(245, 241, 233, .88) 15%, rgba(245, 241, 233, .05) 74%); }
   .heroGrid { inset: 44% 0 0; }
   .heroContent { min-height: 100dvh; padding-top: 32vh; padding-bottom: 42px; }
-  .heroTitle { font-size: clamp(3.05rem, 11.5vw, 4.7rem); line-height: .86; }
   .heroSubtitle { margin-top: 28px; }
   .heroMeta { font-size: 9px; }
-  .heroActions { align-items: stretch; }
+  .heroActions { align-items: stretch; padding-right: clamp(88px, 24vw, 110px); }
   .heroActions a { justify-content: center; flex: 1 1 100%; }
   .companyContent { padding-block: 74px 42px; }
-  .companyIntro .displayTitle { font-size: clamp(2.8rem, 10vw, 4.9rem); }
   .network { min-height: 380px; padding: 18px; }
   .networkMap { min-height: 300px; gap: 10px; }
   .networkNode { width: min(100%, 118px); min-height: 52px; font-size: 9px; }
@@ -660,8 +656,10 @@
   .timeline strong { font-size: 12px; }
   .serviceGrid { grid-template-columns: 1fr; }
   .serviceCard { min-height: 310px; }
-  .serviceCard h3 { font-size: clamp(3rem, 12vw, 5rem); }
-  .processTitle { font-size: clamp(2.3rem, 9vw, 4rem); }
+  .displayTitle,
+  .heroTitle,
+  .processTitle,
+  .industriesTitle { max-width: 100%; overflow-wrap: break-word; }
   .processSteps { grid-template-columns: 1fr; gap: 0; margin-top: 46px; padding-left: 0; }
   .processSteps::before { display: block; top: 0; bottom: 0; left: 31px; right: auto; width: 1px; height: auto; }
   .processSteps li { display: grid; grid-template-columns: 64px 1fr; column-gap: 18px; padding: 0 0 32px; border: 0; }
@@ -670,13 +668,11 @@
   .processSteps p { grid-column: 2; max-width: 100%; }
   .metricGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 16px; }
   .impact .metricGrid .metric { min-height: 175px; }
-  .impact .metric strong { font-size: clamp(2rem, 8vw, 3.1rem); }
   .projectGrid { grid-template-columns: 1fr; }
   .projectImage { height: 230px; }
   .industriesTitle { margin-bottom: 28px; }
   .industryGrid { grid-template-columns: 1fr; }
   .industryGrid li { min-height: 72px; padding: 16px 20px; }
-  .clients .displayTitle { font-size: clamp(2.65rem, 9vw, 4.4rem); }
   .logoGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .logoCell { min-height: 140px; padding: 12px; }
   .logoImage { height: 76px; }
@@ -687,7 +683,6 @@
 }
 
 @media (max-width: 360px) {
-  .heroTitle { font-size: 2.9rem; }
   .metricGrid { grid-template-columns: 1fr; }
   .impact .metricGrid .metric { min-height: 0; }
 }
