@@ -502,6 +502,7 @@ export const whyPieSquare = [
 ] as const;
 
 export const companyIntro = 'Pie Square Technologies delivers integrated infrastructure solutions across telecom, fiber optics, solar & renewable energy and IT. With experienced technical teams, specialized equipment, and a field-focused approach, we work with telecom operators, ISPs, EPC contractors, technology companies, enterprises and government agencies, supporting infrastructure projects from survey, installation, testing, commissioning and long-term maintenance. Our focus is simple: quality execution, safe operations, timely delivery, and dependable long-term service.' as const;
+export const footerIntro = 'Integrated Infrastructure & Technology Solutions — end-to-end field engineering, deployment, installation, testing, commissioning and maintenance across telecom, fiber optic, solar energy and IT infrastructure in Nepal.' as const;
 export const companyTeamIntro = 'Our multidisciplinary workforce brings together engineering, technical and field expertise to deliver infrastructure projects safely, efficiently and reliably across Nepal.' as const;
 export const companyApproachIntro = 'Every project follows a structured process, from site survey and planning to safe execution, testing, documentation and handover. We combine engineering discipline with practical field execution to deliver reliable, measurable results.' as const;
 

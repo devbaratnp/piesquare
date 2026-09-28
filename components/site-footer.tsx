@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { companyIntro, primaryNav, serviceNav, siteContact } from '@/data/site';
+import { footerIntro, primaryNav, serviceNav, siteContact } from '@/data/site';
 import { PhoneIcon, WhatsAppIcon } from '@/components/contact-icons';
 
 export type SiteFooterContact = Readonly<{
@@ -19,9 +19,8 @@ export function SiteFooter({ contact = siteContact }: { contact?: SiteFooterCont
         <div className="site-footer__descriptor">
           <div className="site-footer__brand">
             <strong className="site-footer__company-name">Pie Square Technologies Private Limited</strong>
-            <span>Integrated infrastructure &amp; technology solutions</span>
           </div>
-          <p>{companyIntro}</p>
+          <p>{footerIntro}</p>
         </div>
         <nav className="site-footer__routes" aria-label="Footer navigation">
           <div>

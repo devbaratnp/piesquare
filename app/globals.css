@@ -2905,8 +2905,8 @@ img {
 
 .site-footer__routes h2 {
   margin: 0 0 8px;
-  color: var(--paper-muted);
-  font: 10px/1 var(--mono);
+  color: var(--signal);
+  font: 700 10px/1 var(--mono);
   letter-spacing: .12em;
 }
 
