@@ -165,7 +165,7 @@ function ProcessScene() {
     <SceneShell id="process" state="MAP_ROUTE" className={styles.process}>
       <div className={`page-wrap ${styles.sectionPad}`}>
         <p className={styles.kicker}>HOW WE DELIVER</p>
-        <h2 className={styles.processTitle}>From Survey to Service —<br />We Deliver End to End.</h2>
+        <h2 className={styles.processTitle}>From Survey to Service<br />We Deliver End to End.</h2>
         <p className={styles.processIntro}>A disciplined, documented delivery methodology applied to every project regardless of scale.</p>
         <ol className={styles.processSteps} aria-label="Delivery process">
           {homeDeliverySteps.map((step, index) => (
