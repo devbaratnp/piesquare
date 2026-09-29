@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { InnerPage } from '@/components/inner-page';
-import { deliveryCapabilities, impactStats, technicalResources, technicalWorkforce } from '@/data/site';
+import { ProvenMetrics } from '@/components/proven-metrics';
+import { deliveryCapabilities, technicalResources, technicalWorkforce } from '@/data/site';
 import { getPublicContent } from '@/server/content';
 
 export const dynamic = 'force-dynamic';
@@ -37,18 +38,8 @@ export default async function CapabilitiesPage() {
         ))}
       </div>
 
-      <section className="capability-metrics" aria-label="Proven delivery metrics">
-        <p className="inner-page__eyebrow section-kicker--strong">PROVEN DELIVERY</p>
-        <h2>Verified field metrics.</h2>
-        <div className="capability-metrics__grid">
-          {impactStats.map(([value, label, detail]) => (
-            <article key={label}>
-              <strong>{value}</strong>
-              <span className="metric-label">{label}</span>
-              <small>{detail}</small>
-            </article>
-          ))}
-        </div>
+      <section aria-label="Proven delivery metrics">
+        <ProvenMetrics />
       </section>
 
       <section className="inner-page__card technical-workforce-card" aria-label="Technical workforce">

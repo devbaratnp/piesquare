@@ -14,11 +14,11 @@ describe('capabilities page', () => {
       expect(Array.from(document.querySelectorAll('.service-overview-card h2')).some((heading) => heading.textContent === label)).toBe(true);
     }
     expect(screen.getByText('PROVEN DELIVERY')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /verified field metrics/i })).toBeInTheDocument();
     expect(screen.getByText('3500+')).toBeInTheDocument();
     expect(screen.getByText('400 kW')).toBeInTheDocument();
-    expect(document.querySelectorAll('.capability-metrics__grid .metric-label--highlight')).toHaveLength(0);
-    expect(screen.getByRole('heading', { name: /trained\. certified\. field-ready/i })).toBeInTheDocument();
-    expect(document.querySelectorAll('.capability-metrics__grid .metric-label')).toHaveLength(5);
+    expect(document.querySelectorAll('.impact-stat')).toHaveLength(5);
+    expect(document.querySelectorAll('.capability-metrics__grid .metric-label')).toHaveLength(0);
     expect(screen.queryByText(/^certifications$/i)).not.toBeInTheDocument();
     expect(screen.getByText('DELIVERY CAPABILITIES')).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: /^delivery capabilities$/i })).not.toBeInTheDocument();

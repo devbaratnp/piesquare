@@ -7,6 +7,7 @@ import { gsap } from 'gsap';
 import { LenisProvider } from '@/components/motion/lenis-provider';
 import { useReducedMotion } from '@/components/motion/reduced-motion';
 import { SceneShell } from '@/components/scene-shell';
+import { ProvenMetrics } from '@/components/proven-metrics';
 import { SignalLine } from '@/components/signal-line';
 import { SiteNav } from '@/components/site-nav';
 import { FloatingContact } from '@/components/floating-contact';
@@ -18,7 +19,6 @@ import {
   companyTimeline,
   homeDeliverySteps,
   homeIndustries,
-  impactStats,
   projects as fallbackProjects,
   serviceOverview,
   siteContact,
@@ -179,17 +179,7 @@ function ProcessScene() {
 function ImpactScene() {
   return (
     <SceneShell id="impact" state="DIGITAL_NETWORK" className={styles.impact}>
-      <div className={`page-wrap ${styles.sectionPad}`}>
-        <p className={styles.kicker}>PROVEN DELIVERY</p>
-        <h2 className={styles.displayTitle}>VERIFIED FIELD<br /><em>METRICS.</em></h2>
-        <div className={styles.metricGrid}>
-          {impactStats.map(([value, label, detail]) => (
-            <article className={`${styles.metric} impact-stat atlas-reveal`} key={label}>
-              <strong>{value}</strong><span>{label}</span><small>{detail}</small>
-            </article>
-          ))}
-        </div>
-      </div>
+      <ProvenMetrics />
     </SceneShell>
   );
 }

@@ -336,10 +336,12 @@ test.describe('inner routes', () => {
     await expect(page.locator('.inner-page__actions a[href="/contact#quote"]').first()).toBeVisible();
   });
 
-  test('keeps capability metric labels neutral and legible', async ({ page }) => {
+  test('reuses the home verified-metrics block on capabilities', async ({ page }) => {
     await page.goto('/capabilities', { waitUntil: 'domcontentloaded' });
 
-    const metricStyle = await page.locator('.metric-label').first().evaluate((element) => {
+    await expect(page.getByRole('heading', { name: /verified field metrics/i })).toBeVisible();
+    await expect(page.locator('.impact-stat')).toHaveCount(5);
+    const metricStyle = await page.locator('.impact-stat span').first().evaluate((element) => {
       const computed = getComputedStyle(element);
       return {
         color: computed.color,
@@ -349,10 +351,9 @@ test.describe('inner routes', () => {
       };
     });
 
-    expect(metricStyle.color).toBe('rgb(61, 61, 58)');
-    expect(metricStyle.color).not.toBe('rgb(255, 0, 0)');
+    expect(metricStyle.color).toBe('rgb(255, 0, 0)');
     expect(metricStyle.borderStyle).toBe('solid');
-    expect(metricStyle.fontSize).toBeGreaterThanOrEqual(11);
+    expect(metricStyle.fontSize).toBeGreaterThanOrEqual(10);
     expect(metricStyle.fontWeight).toBeGreaterThanOrEqual(700);
   });
 

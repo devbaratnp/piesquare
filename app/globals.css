@@ -3177,13 +3177,6 @@ img {
   color: var(--signal);
 }
 
-.capability-metrics {
-  margin-top: 78px;
-  padding-block: 28px 0;
-  border-top: 1px solid var(--line-light);
-}
-
-.capability-metrics h2,
 .service-capability-section__heading h2,
 .careers-list__intro h2 {
   max-width: 600px;
@@ -3191,40 +3184,6 @@ img {
   font: 500 clamp(2.4rem, 5vw, 6rem)/1.02 var(--display);
   letter-spacing: -.07em;
   text-transform: uppercase;
-}
-
-.capability-metrics__grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-}
-
-.capability-metrics__grid article {
-  display: grid;
-  gap: 8px;
-  min-height: 130px;
-  padding-top: 18px;
-  border-top: 1px solid var(--line-light);
-}
-
-.capability-metrics__grid strong {
-  font: 700 clamp(2.3rem, 4vw, 4.5rem)/.84 var(--body);
-  letter-spacing: -.04em;
-}
-
-.capability-metrics__grid .metric-label {
-  display: block;
-  width: fit-content;
-  max-width: 100%;
-  min-height: 0;
-  padding: 7px 9px 6px;
-  border: 1px solid var(--line-light);
-  background: transparent;
-  color: var(--ink);
-  font: 700 clamp(11px, 1vw, 14px)/1.25 var(--mono);
-  letter-spacing: .05em;
-  text-transform: uppercase;
-  overflow-wrap: anywhere;
 }
 
 .technical-workforce-card {
@@ -3490,12 +3449,6 @@ img {
   font: 700 10px/1.2 var(--mono);
   letter-spacing: .1em;
   text-transform: uppercase;
-}
-
-.capability-metrics__grid small {
-  color: var(--paper-muted);
-  font-size: 11px;
-  line-height: 1.4;
 }
 
 .career-role ul {
@@ -3856,7 +3809,6 @@ img {
 .inner-page--light .inner-page__card li,
 .inner-page--light .service-overview-card p,
 .inner-page--light .service-overview-card li,
-.inner-page--light .capability-metrics__grid span,
 .inner-page--light .service-capability-grid p,
 .inner-page--light .related-projects__empty,
 .inner-page--light .career-role > p,
@@ -5691,10 +5643,6 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .capability-metrics__grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   .technical-resources__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -5719,7 +5667,6 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .capability-metrics__grid,
   .workforce-list,
   .certifications-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -5754,7 +5701,6 @@ body {
 }
 
 @media (max-width: 480px) {
-  .capability-metrics__grid,
   .workforce-list,
   .certifications-grid,
   .site-footer__routes {
