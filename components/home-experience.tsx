@@ -91,7 +91,6 @@ function HeroScene({ hero }: { hero: HomeHeroContent }) {
             <a className="button button--ghost" href="#expertise" data-cursor="view">Explore our services ↗</a>
           </div>
         </div>
-        <div className={styles.heroImageCaption} aria-hidden="true"><span>FIELD NOTES / 001</span><span>NEPAL — CONNECTED INFRASTRUCTURE</span></div>
       </div>
     </SceneShell>
   );
@@ -324,7 +323,7 @@ export function HomeExperience({ hero, contact, services, projects }: { hero?: H
     subtitle: 'Telecom. Fiber. Solar. IT.',
     ctaText: 'View our work',
     ctaUrl: '#projects',
-    image: '/media/cinematic/H01-hero-nepal-tower.webp',
+    image: '/media/cinematic/pie-square-hero-integrated-infrastructure.webp',
   };
   const resolvedContact = contact ?? siteContact;
   const resolvedServices = services ?? serviceOverview.map((service) => ({ slug: service.href.split('/').pop() ?? service.title.toLowerCase(), title: service.title, summary: service.summary, scope: service.scope, href: service.href }));

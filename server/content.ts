@@ -65,7 +65,7 @@ export const fallbackHero: HomeHeroContent = {
   subtitle: 'Telecom. Fiber. Solar. IT.',
   ctaText: 'View our work',
   ctaUrl: '#projects',
-  image: '/media/cinematic/H01-hero-nepal-tower.webp',
+  image: '/media/cinematic/pie-square-hero-integrated-infrastructure.webp',
 };
 
 export const fallbackAbout: PublicAbout = {

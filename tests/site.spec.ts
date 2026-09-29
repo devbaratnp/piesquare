@@ -55,6 +55,25 @@ test.describe('home experience', () => {
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
   });
 
+  test('uses warm cream surfaces and readable dark type for What We Deliver', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const colors = await page.locator('#expertise').evaluate((section) => {
+      const card = section.querySelector('a');
+      const heading = section.querySelector('h2');
+      const description = section.querySelector('a p');
+      return {
+        section: getComputedStyle(section).backgroundColor,
+        card: getComputedStyle(card!).backgroundColor,
+        heading: getComputedStyle(heading!).color,
+        description: getComputedStyle(description!).color,
+      };
+    });
+    expect(colors.section).toBe('rgb(248, 246, 240)');
+    expect(colors.card).toBe('rgb(255, 252, 247)');
+    expect(colors.heading).toBe('rgb(20, 25, 26)');
+    expect(colors.description).toBe('rgb(77, 82, 79)');
+  });
+
   test('keeps the hero heading readable and contact controls clear of its actions on narrow phones', async ({ page }) => {
     for (const width of [390, 320]) {
       await page.setViewportSize({ width, height: 844 });
@@ -66,10 +85,12 @@ test.describe('home experience', () => {
         const intersects = (a: DOMRect, b: DOMRect) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
         return {
           headingClipped: lines.some((line) => line.scrollWidth > line.clientWidth + 1),
+          infrastructureWrapped: lines[1].getBoundingClientRect().height > parseFloat(getComputedStyle(lines[1]).lineHeight) * 1.2,
           actionOverlap: buttons.some((button) => floating.some((contact) => intersects(button.getBoundingClientRect(), contact.getBoundingClientRect()))),
         };
       });
       expect(layout.headingClipped, `${width}px hero title is clipped`).toBe(false);
+      expect(layout.infrastructureWrapped, `${width}px Infrastructure line wraps awkwardly`).toBe(false);
       expect(layout.actionOverlap, `${width}px floating contact overlaps a hero action`).toBe(false);
     }
   });
@@ -140,6 +161,51 @@ test.describe('home experience', () => {
     }));
     expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
     await context.close();
+  });
+});
+
+test.describe('project filters', () => {
+  test('aligns project cards inside clear, readable boundaries', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/projects', { waitUntil: 'domcontentloaded' });
+    const cards = await page.locator('.project-grid .project-card').evaluateAll((elements) => elements.slice(0, 3).map((element) => {
+      const box = element.getBoundingClientRect();
+      const style = getComputedStyle(element);
+      return { top: box.top, width: box.width, border: style.borderTopWidth, background: style.backgroundColor };
+    }));
+    expect(cards).toHaveLength(3);
+    expect(cards[0].top).toBe(cards[1].top);
+    expect(cards[1].top).toBe(cards[2].top);
+    expect(cards.every((card) => card.border === '1px')).toBe(true);
+    expect(cards.every((card) => card.background === 'rgb(255, 253, 248)')).toBe(true);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    const mobileBounds = await page.locator('.project-grid .project-card').first().evaluate((element) => ({
+      right: element.getBoundingClientRect().right,
+      viewport: document.documentElement.clientWidth,
+    }));
+    expect(mobileBounds.right).toBeLessThanOrEqual(mobileBounds.viewport + 1);
+  });
+
+  test('filters the portfolio and announces the current count', async ({ page }) => {
+    await page.goto('/projects', { waitUntil: 'domcontentloaded' });
+    const filters = page.getByRole('group', { name: 'Filter projects' });
+    await expect(filters.getByRole('button', { name: 'All' })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('#project-results .project-card')).toHaveCount(14);
+
+    await filters.getByRole('button', { name: 'Fiber' }).click();
+    await expect(filters.getByRole('button', { name: 'Fiber' })).toHaveAttribute('aria-pressed', 'true');
+    await expect(filters.locator('[aria-live="polite"]')).toHaveText('3 projects / Fiber');
+    await expect(page.locator('#project-results .project-card')).toHaveCount(3);
+    await expect(page.locator('#project-results .project-card[data-category="FIBER"]')).toHaveCount(3);
+
+    await filters.getByRole('button', { name: 'Solar' }).click();
+    await expect(filters.locator('[aria-live="polite"]')).toHaveText('2 projects / Solar');
+    await expect(page.locator('#project-results .project-card')).toHaveCount(2);
+
+    await filters.getByRole('button', { name: 'All' }).click();
+    await expect(filters.locator('[aria-live="polite"]')).toHaveText('14 projects / All');
+    await expect(page.locator('#project-results .project-card')).toHaveCount(14);
   });
 });
 

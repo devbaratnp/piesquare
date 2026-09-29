@@ -2,7 +2,7 @@
 
 Source: `D:\Gym\HOME.docx` (18 embedded screenshots, reviewed in document order)
 
-Status: proposed for review; website changes have **not** been implemented from this brief.
+Status: implemented in the current Home experience. The supplied hero image, cream delivery section, responsive typography, and portfolio links are included.
 
 The red boxes, arrows, and comments in the screenshots are instructions, not website content. Existing approved About, Services, Capabilities, and Projects content remains the authority for business facts. Where a later screenshot conflicts with an earlier one, the later, more specific instruction is followed.
 

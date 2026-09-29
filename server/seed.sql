@@ -9,7 +9,7 @@ INSERT INTO site_settings (setting_key, setting_value) VALUES
 ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value);
 
 INSERT INTO hero_section (eyebrow, title, subtitle, cta_text, cta_url, image_path, status)
-SELECT 'Integrated infrastructure and technology solutions', 'BUILDING THE|INFRASTRUCTURE|THAT KEEPS NEPAL CONNECTED.', 'Telecom. Fiber. Solar. IT.', 'View our work', '#projects', '/media/cinematic/H01-hero-nepal-tower.webp', 'PUBLISHED'
+SELECT 'Integrated infrastructure and technology solutions', 'BUILDING THE|INFRASTRUCTURE|THAT KEEPS NEPAL CONNECTED.', 'Telecom. Fiber. Solar. IT.', 'View our work', '#projects', '/media/cinematic/pie-square-hero-integrated-infrastructure.webp', 'PUBLISHED'
 WHERE NOT EXISTS (SELECT 1 FROM hero_section);
 
 INSERT INTO services (slug, title, summary, sort_order, status) VALUES

@@ -22,6 +22,7 @@ describe('home page field atlas', () => {
     expect(navigation.getByRole('button', { name: /services/i })).toBeInTheDocument();
     expect(document.querySelector('.loader')).toBeNull();
     expect(screen.queryByText(/FIELD NOTES \/ 001/i)).not.toBeInTheDocument();
+    expect(document.querySelector('#top img')?.getAttribute('src')).toContain('pie-square-hero-integrated-infrastructure.webp');
   });
 
   it('introduces the company and its four-part field delivery network', async () => {
