@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { ContactForm } from '@/components/contact-form';
 import { InnerPage } from '@/components/inner-page';
 import { PhoneIcon, WhatsAppIcon } from '@/components/contact-icons';
-import { capabilityRoutes } from '@/data/site';
 import { getPublicContent } from '@/server/content';
 
 export const dynamic = 'force-dynamic';
@@ -95,14 +93,6 @@ export default async function ContactPage() {
           <ContactForm variant="survey" />
         </section>
       </div>
-
-      <section className="inner-page__card contact-service-links" aria-label="Service shortcuts">
-        <p className="contact-section-kicker">Capabilities</p>
-        <h2>Start with the right field team.</h2>
-        <div>
-          {capabilityRoutes.map((route) => <Link key={route.href} href={route.href}>{route.label} ↗</Link>)}
-        </div>
-      </section>
     </InnerPage>
   );
 }
