@@ -2631,6 +2631,7 @@ img {
 }
 
 .inner-page__hero-media img {
+  width: 100%;
   height: 100%;
   object-fit: cover;
   filter: saturate(.76) contrast(1.08);
@@ -2812,6 +2813,11 @@ img {
 }
 
 .inner-page .project-card__copy .project-card__scope {
+  color: #303634;
+  font-weight: 600;
+}
+
+.inner-page .project-card__copy .project-card__coverage {
   color: #303634;
   font-weight: 600;
 }
@@ -3198,7 +3204,7 @@ img {
   gap: 8px;
   min-height: 130px;
   padding-top: 18px;
-  border-top: 2px solid var(--signal);
+  border-top: 1px solid var(--line-light);
 }
 
 .capability-metrics__grid strong {
@@ -3212,17 +3218,13 @@ img {
   max-width: 100%;
   min-height: 0;
   padding: 7px 9px 6px;
-  border: 1px solid var(--signal);
-  background: rgba(238, 53, 46, .05);
+  border: 1px solid var(--line-light);
+  background: transparent;
   color: var(--ink);
   font: 700 clamp(11px, 1vw, 14px)/1.25 var(--mono);
   letter-spacing: .05em;
   text-transform: uppercase;
   overflow-wrap: anywhere;
-}
-
-.capability-metrics__grid .metric-label--highlight {
-  color: var(--signal);
 }
 
 .technical-workforce-card {
@@ -3269,16 +3271,17 @@ img {
 
 .service-capability-section__heading {
   display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--line-light);
 }
 
 .service-capability-section__heading h2 {
   margin: 0;
-  font-size: clamp(2.4rem, 5vw, 5.8rem);
+  max-width: 640px;
+  font-size: clamp(1.7rem, 3.2vw, 2.75rem);
 }
 
 .service-capability-grid {
@@ -3288,7 +3291,6 @@ img {
   margin: 0;
   padding: 0;
   list-style: none;
-  counter-reset: service-capability;
 }
 
 .service-capability-grid li {
@@ -3301,17 +3303,10 @@ img {
   border-bottom: 1px solid var(--line-light);
 }
 
-.service-capability-grid li > span {
-  grid-row: 1 / -1;
-  color: var(--signal);
-  font: 10px/1.4 var(--mono);
-  letter-spacing: .08em;
-}
-
-.service-capability-grid h2 {
+.service-capability-grid h3 {
   margin: 0;
-  font: 500 clamp(1.45rem, 2.3vw, 2.6rem)/1.02 var(--display);
-  letter-spacing: -.05em;
+  font: 500 clamp(1.15rem, 1.9vw, 1.6rem)/1.08 var(--display);
+  letter-spacing: -.03em;
   text-transform: uppercase;
 }
 
@@ -3321,10 +3316,6 @@ img {
   color: var(--steel);
   font-size: 13px;
   line-height: 1.6;
-}
-
-.service-detail__media {
-  margin-top: 48px;
 }
 
 .related-projects {
@@ -3372,6 +3363,8 @@ img {
 }
 
 .related-project-card__image img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -3394,6 +3387,17 @@ img {
   color: var(--steel-light);
   font-size: 12px;
   line-height: 1.45;
+}
+
+.related-project-card__copy > a {
+  color: var(--ink);
+  font: 10px/1.3 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.related-project-card__copy > a:hover {
+  color: var(--signal);
 }
 
 .related-projects__empty {
@@ -3891,14 +3895,6 @@ img {
 .inner-page--light .site-footer__routes span,
 .inner-page--light .site-footer__legal {
   color: var(--paper-muted);
-}
-
-.inner-page--light .capability-metrics__grid .metric-label {
-  color: var(--ink);
-}
-
-.inner-page--light .capability-metrics__grid .metric-label--highlight {
-  color: var(--signal);
 }
 
 .mobile-menu nav a,
@@ -4865,7 +4861,6 @@ body {
 
 .capability-row__meta b,
 .service-overview-card__number,
-.service-capability-grid li > span,
 .why-scene__grid article > span,
 .telecom-scene__phase span,
 .telecom-scene__phase-list li span {
@@ -5059,7 +5054,7 @@ body {
   grid-template-columns: minmax(0, 1fr);
 }
 
-.service-capability-grid li h2,
+.service-capability-grid li h3,
 .service-capability-grid li p {
   grid-column: 1;
 }
@@ -5985,13 +5980,6 @@ body {
   margin-top: clamp(64px, 9vw, 130px);
 }
 
-.delivery-capabilities > h2 {
-  margin: 16px 0 30px;
-  font: 500 clamp(3rem, 7vw, 7rem)/.94 var(--display);
-  letter-spacing: -.07em;
-  text-transform: uppercase;
-}
-
 .delivery-capabilities__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -6192,21 +6180,30 @@ body {
   margin-top: clamp(44px, 7vw, 86px);
 }
 
+.project-detail-meta > .inner-page__eyebrow,
+.project-detail-metrics > .inner-page__eyebrow,
+.project-detail-focus > .inner-page__eyebrow,
+.project-detail-scope > .inner-page__eyebrow,
+.project-detail-copy > .inner-page__eyebrow {
+  margin: 0;
+}
+
 .project-detail-meta dl,
-.project-detail-metrics,
+.project-detail-metrics > div,
 .project-detail-focus > div,
 .project-detail-scope > div {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
-  margin: 0;
+  margin: 20px 0 0;
+  border: 1px solid var(--line-light);
   background: var(--line-light);
 }
 
 .project-detail-meta dl > div,
-.project-detail-metrics > div,
-.project-detail-focus > div,
-.project-detail-scope > div {
+.project-detail-metrics > div > article,
+.project-detail-focus > div > article,
+.project-detail-scope > div > article {
   min-height: 100px;
   padding: 20px;
   background: var(--paper);
@@ -6214,22 +6211,27 @@ body {
 
 .project-detail-meta dt,
 .project-detail-metrics span,
-.project-detail-focus span,
-.project-detail-scope h3 {
+.project-detail-focus span {
   display: block;
-  margin-bottom: 8px;
+  margin: 0 0 8px;
   color: var(--steel);
   font: 600 10px/1.2 var(--mono);
   letter-spacing: .1em;
   text-transform: uppercase;
 }
 
-.project-detail-meta dd,
-.project-detail-metrics strong,
-.project-detail-focus p,
-.project-detail-scope p {
+.project-detail-meta dd {
   margin: 0;
   color: var(--ink);
+  font: 600 15px/1.5 var(--body);
+}
+
+.project-detail-metrics strong {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--ink);
+  font: 500 clamp(1.6rem, 2.6vw, 2.3rem)/1.05 var(--display);
+  letter-spacing: -.02em;
 }
 
 .project-detail-copy {
@@ -6237,28 +6239,41 @@ body {
   margin-top: clamp(44px, 7vw, 86px);
 }
 
-.project-detail-copy > p:last-child {
-  margin: 14px 0 0;
+.project-detail-copy > p:not(.inner-page__eyebrow) {
+  margin: 16px 0 0;
   color: var(--paper-muted);
-  font-size: 18px;
-  line-height: 1.7;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.project-detail-focus p {
+  margin: 0;
+  color: var(--paper-muted);
+  font-size: 15px;
+  line-height: 1.65;
 }
 
 .project-detail-scope h2,
 .project-detail-focus h2 {
-  margin: 0 0 22px;
-  font: 500 clamp(2rem, 4vw, 3.2rem)/1.05 var(--display);
+  margin: 0 0 14px;
+  color: var(--ink);
+  font: 700 clamp(12px, 1.1vw, 14px)/1.4 var(--mono);
+  letter-spacing: .12em;
   text-transform: uppercase;
 }
 
-.project-detail-scope h3 {
-  margin-top: 0;
+.project-detail-scope ul,
+.project-detail-coverage {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--paper-muted);
+  font-size: 15px;
+  line-height: 1.7;
 }
 
-.project-detail__proof-image {
-  width: 100%;
-  height: auto;
-  margin-top: clamp(44px, 7vw, 86px);
+.project-detail-scope li + li,
+.project-detail-coverage li + li {
+  margin-top: 8px;
 }
 
 .not-found-page {
@@ -6305,7 +6320,7 @@ body {
 
   .delivery-flow ol,
   .project-detail-meta dl,
-  .project-detail-metrics,
+  .project-detail-metrics > div,
   .project-detail-focus > div,
   .project-detail-scope > div,
   .career-general-application form,

@@ -8,27 +8,26 @@ type ServiceDetailProps = Readonly<{
   scope: ReadonlyArray<string>;
   relatedHref?: string;
   relatedProjects?: ReadonlyArray<ProjectRecord>;
-  image?: string;
-  imageAlt?: string;
 }>;
 
 function ProjectProofCard({ project }: { project: ProjectRecord }) {
   return (
     <article className="related-project-card">
       <div className="related-project-card__image">
-        <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 720px) 100vw, 50vw" />
+        <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 720px) calc(100vw - 36px), (max-width: 1440px) 46vw, 640px" />
       </div>
       <div className="related-project-card__copy">
         <span>{project.status} / {project.category}</span>
         <h3>{project.title}</h3>
         <p>{project.location}</p>
         <p>{project.scope.join(' • ')}</p>
+        <Link href={`/projects/${project.id}`}>View project ↗</Link>
       </div>
     </article>
   );
 }
 
-export function ServiceDetail({ capabilities = [], lifecycle, scope, relatedHref = '/projects', relatedProjects = [], image, imageAlt = '' }: ServiceDetailProps) {
+export function ServiceDetail({ capabilities = [], lifecycle, scope, relatedHref = '/projects', relatedProjects = [] }: ServiceDetailProps) {
   const hasLifecycle = lifecycle.length > 0;
   const hasScope = scope.length > 0;
 
@@ -43,7 +42,7 @@ export function ServiceDetail({ capabilities = [], lifecycle, scope, relatedHref
           <ol className="service-capability-grid">
             {capabilities.map((item) => (
               <li key={item.number}>
-                <h2>{item.title}</h2>
+                <h3>{item.title}</h3>
                 <p>{item.copy}</p>
               </li>
             ))}
@@ -73,12 +72,6 @@ export function ServiceDetail({ capabilities = [], lifecycle, scope, relatedHref
               </ul>
             </section>
           )}
-        </div>
-      )}
-
-      {image && (
-        <div className="inner-page__hero-media service-detail__media">
-          <Image src={image} alt={imageAlt} fill sizes="100vw" />
         </div>
       )}
 

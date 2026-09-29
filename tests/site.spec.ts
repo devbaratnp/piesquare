@@ -336,7 +336,7 @@ test.describe('inner routes', () => {
     await expect(page.locator('.inner-page__actions a[href="/contact#quote"]').first()).toBeVisible();
   });
 
-  test('keeps capability metric labels highlighted and legible', async ({ page }) => {
+  test('keeps capability metric labels neutral and legible', async ({ page }) => {
     await page.goto('/capabilities', { waitUntil: 'domcontentloaded' });
 
     const metricStyle = await page.locator('.metric-label').first().evaluate((element) => {
@@ -349,7 +349,8 @@ test.describe('inner routes', () => {
       };
     });
 
-    expect(metricStyle.color).toBe('rgb(255, 0, 0)');
+    expect(metricStyle.color).toBe('rgb(61, 61, 58)');
+    expect(metricStyle.color).not.toBe('rgb(255, 0, 0)');
     expect(metricStyle.borderStyle).toBe('solid');
     expect(metricStyle.fontSize).toBeGreaterThanOrEqual(11);
     expect(metricStyle.fontWeight).toBeGreaterThanOrEqual(700);

@@ -44,7 +44,7 @@ export default async function CapabilitiesPage() {
           {impactStats.map(([value, label, detail]) => (
             <article key={label}>
               <strong>{value}</strong>
-              <span className="metric-label metric-label--highlight">{label}</span>
+              <span className="metric-label">{label}</span>
               <small>{detail}</small>
             </article>
           ))}
@@ -63,7 +63,6 @@ export default async function CapabilitiesPage() {
 
       <section className="delivery-capabilities" aria-label="Delivery capabilities">
         <p className="inner-page__eyebrow">DELIVERY CAPABILITIES</p>
-        <h2 className="delivery-capabilities__title">Delivery capabilities</h2>
         <div className="delivery-capabilities__grid">
           {deliveryCapabilities.map((capability) => (
             <article className="delivery-capability-card" key={capability.title}>

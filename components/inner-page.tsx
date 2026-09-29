@@ -39,7 +39,7 @@ export function InnerPage({ eyebrow, title, lede, image, imageAlt = '', light = 
             </div>}
             {image && (
               <div className="inner-page__hero-media">
-                <Image src={image} alt={imageAlt} fill sizes="100vw" priority />
+                <Image src={image} alt={imageAlt} fill sizes="(max-width: 720px) calc(100vw - 36px), (max-width: 1440px) calc(100vw - 8vw), 1296px" priority />
               </div>
             )}
           </div>

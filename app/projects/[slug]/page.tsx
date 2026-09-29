@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { InnerPage } from '@/components/inner-page';
@@ -90,7 +89,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       )}
 
       <div className="inner-page__actions"><Link className="button button--primary" href="/projects">All Projects ↗</Link><Link className="button button--ghost" href="/contact#quote">Request a Quote ↗</Link></div>
-      <Image className="project-detail__proof-image" src={project.image} alt={project.imageAlt} width={1200} height={720} />
     </InnerPage>
   );
 }

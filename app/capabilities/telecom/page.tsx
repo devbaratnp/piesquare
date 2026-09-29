@@ -31,8 +31,6 @@ export default async function TelecomCapabilityPage() {
         lifecycle={[...detail.lifecycle]}
         scope={[...detail.scope]}
         relatedProjects={content.projects.filter((project) => detail.relatedProjectIds.includes(project.id))}
-        image="/media/cinematic/T07-telecom-optimization.png"
-        imageAlt="Field measurement during network optimization"
       />
     </InnerPage>
   );

@@ -25,7 +25,6 @@ export default async function SolarCapabilityPage() {
       imageAlt={detail.imageAlt}
       hideActions
       contact={content.contact}
-      light
     >
       <ServiceDetail
         capabilities={[...detail.capabilities]}

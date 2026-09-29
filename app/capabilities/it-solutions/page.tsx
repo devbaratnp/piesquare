@@ -31,8 +31,6 @@ export default async function ITSolutionsPage() {
         lifecycle={[...detail.lifecycle]}
         scope={[...detail.scope]}
         relatedProjects={content.projects.filter((project) => detail.relatedProjectIds.includes(project.id))}
-        image="/media/projects/rack.jpg"
-        imageAlt="Network equipment rack installed by Pie Square"
       />
     </InnerPage>
   );

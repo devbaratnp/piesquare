@@ -49,6 +49,7 @@ export function ProjectGrid({ projects = fallbackProjects }: { projects?: Readon
                 <span className="project-card__category">{project.categoryLabel}</span>
                 <h3>{project.title}</h3>
                 <p className="project-card__location">{project.location}</p>
+                {project.coverage && <p className="project-card__coverage">{project.coverage}</p>}
                 <p className="project-card__location">{project.duration}</p>
                 <p className="project-card__scope">{project.scope.join(' • ')}</p>
                 <p>{project.description}</p>

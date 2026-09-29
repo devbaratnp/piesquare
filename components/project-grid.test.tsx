@@ -47,4 +47,12 @@ describe('ProjectGrid', () => {
     }
     expect(document.body.textContent).toContain('Route Survey');
   });
+
+  it('shows the coverage line on cards that define it', () => {
+    render(<ProjectGrid />);
+
+    expect(document.body.textContent).toContain('4 Telecom Sites');
+    expect(document.body.textContent).toContain('57 4G LTE Sites');
+    expect(document.querySelectorAll('.project-card__coverage').length).toBeGreaterThan(0);
+  });
 });
