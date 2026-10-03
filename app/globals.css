@@ -14,9 +14,9 @@
   --line-dark: rgba(250, 249, 245, .18);
   --page-gutter: clamp(18px, 4vw, 72px);
   --page-max: 1440px;
-  --display: var(--font-display), "Cormorant Garamond", "Tiempos Headline", Garamond, "Times New Roman", serif;
-  --body: var(--font-body), "Inter", sans-serif;
-  --mono: var(--font-mono), "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  --display: var(--font-display), "Libre Baskerville", Garamond, "Times New Roman", serif;
+  --body: var(--font-body), "Plus Jakarta Sans", "Inter", sans-serif;
+  --mono: var(--font-mono), "Nunito", "Plus Jakarta Sans", sans-serif;
   --ease-heavy: cubic-bezier(.16, 1, .3, 1);
   --z-content: 1;
   --z-overlay: 10;

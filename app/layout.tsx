@@ -1,25 +1,25 @@
 import type { Metadata } from 'next';
-import { Cormorant_Garamond, IBM_Plex_Mono, Inter } from 'next/font/google';
+import { Libre_Baskerville, Nunito, Plus_Jakarta_Sans } from 'next/font/google';
 import { CustomCursor } from '@/components/custom-cursor';
 import { getPublicContent } from '@/server/content';
 import './globals.css';
 
-const displaySerif = Cormorant_Garamond({
+const displaySerif = Libre_Baskerville({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: ['400', '500', '600'],
+  weight: ['400', '700'],
 });
 
-const inter = Inter({
+const inter = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-body',
-  weight: ['400', '500', '600', '700'],
+  weight: ['200', '300', '400', '500', '600', '700', '800'],
 });
 
-const plexMono = IBM_Plex_Mono({
+const plexMono = Nunito({
   subsets: ['latin'],
   variable: '--font-mono',
-  weight: ['500', '600'],
+  weight: ['400', '500', '600', '700', '800'],
 });
 
 export const metadata: Metadata = {
