@@ -43,7 +43,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
   };
   const renderPrimaryLink = (item: (typeof primaryNav)[number]) => {
     const active = isActive(item.href);
-    return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} data-cursor="view">{item.label}</Link>;
+    return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href}>{item.label}</Link>;
   };
   const renderServicesMenu = (id: string, className: string) => (
     <div id={id} className={className} hidden={!servicesOpen}>
@@ -84,7 +84,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
         {primaryNav.slice(2).map(renderPrimaryLink)}
       </nav>
 
-      <Link className="nav-project-link" href="/contact#quote" data-cursor="start">
+      <Link className="nav-project-link" href="/contact#quote">
         <span>Request a Quote</span><b aria-hidden="true">↗</b>
       </Link>
 
@@ -114,7 +114,7 @@ export function SiteNav({ tone = 'dark' }: SiteNavProps) {
             const active = isActive(item.href);
             return <Link key={item.href} className={active ? 'is-active' : ''} aria-current={active ? 'page' : undefined} href={item.href} onClick={closeMenus}>{item.label}</Link>;
           })}
-          <Link className="mobile-menu__project" href="/contact#quote" data-cursor="start" onClick={closeMenus}>Request a Quote</Link>
+          <Link className="mobile-menu__project" href="/contact#quote" onClick={closeMenus}>Request a Quote</Link>
         </nav>
       </div>
     </header>

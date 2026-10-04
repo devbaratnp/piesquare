@@ -84,11 +84,10 @@ function HeroScene({ hero }: { hero: HomeHeroContent }) {
               </span>
             ))}
           </h1>
-          <p className={styles.heroSubtitle}>{hero.subtitle}</p>
           <div className={styles.heroMeta}><span>ESTABLISHED 2019</span><span>LALITPUR, NEPAL</span></div>
           <div className={styles.heroActions}>
-            <a className="button button--primary" href={hero.ctaUrl} data-cursor="view">{hero.ctaText} ↗</a>
-            <a className="button button--ghost" href="#expertise" data-cursor="view">Explore our services ↗</a>
+            <a className="button button--primary" href={hero.ctaUrl}>{hero.ctaText} ↗</a>
+            <a className="button button--ghost" href="#expertise">Explore our services ↗</a>
           </div>
         </div>
       </div>
@@ -278,9 +277,9 @@ function FinalScene({ contact }: { contact: HomeContact }) {
         <h2 className="display-title">ONE PARTNER. MULTIPLE INFRASTRUCTURE <em>LAYERS.</em></h2>
         <h3 className="display-title display-title--secondary">BUILD THE NEXT CONNECTION <em>WITH US.</em></h3>
         <div className="final-scene__actions">
-          <a className="button button--primary" href={`https://wa.me/${contact.phone.replace(/\D/g, '')}`} data-cursor="contact"><WhatsAppIcon className="button__icon" /><span>WhatsApp ↗</span></a>
-          <a className="button button--ghost" href={'mailto:' + contact.email} data-cursor="contact">{contact.email}</a>
-          <a className="button button--ghost" href={contact.phoneHref} data-cursor="contact"><PhoneIcon className="button__icon" /><span>{contact.phone}</span></a>
+          <a className="button button--primary" href={`https://wa.me/${contact.phone.replace(/\D/g, '')}`}><WhatsAppIcon className="button__icon" /><span>WhatsApp ↗</span></a>
+          <a className="button button--ghost" href={'mailto:' + contact.email}>{contact.email}</a>
+          <a className="button button--ghost" href={contact.phoneHref}><PhoneIcon className="button__icon" /><span>{contact.phone}</span></a>
         </div>
         <div className="final-scene__foot"><span>{contact.address}</span><span>{contact.email}</span><span>{contact.website}</span></div>
       </div>

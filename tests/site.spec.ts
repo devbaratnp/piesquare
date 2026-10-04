@@ -95,6 +95,26 @@ test.describe('home experience', () => {
     }
   });
 
+  test('keeps company and service typography inside the desktop layout columns', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const layout = await page.evaluate(() => {
+      const companyHeading = document.querySelector('#company h2') as HTMLElement;
+      const serviceHeading = document.querySelector('#expertise h2') as HTMLElement;
+      const serviceCardHeading = document.querySelector('#expertise h3') as HTMLElement;
+      return {
+        companyOverflow: companyHeading.scrollWidth > companyHeading.clientWidth + 1,
+        companySize: parseFloat(getComputedStyle(companyHeading).fontSize),
+        serviceSize: parseFloat(getComputedStyle(serviceHeading).fontSize),
+        serviceCardSize: parseFloat(getComputedStyle(serviceCardHeading).fontSize),
+      };
+    });
+    expect(layout.companyOverflow).toBe(false);
+    expect(layout.companySize).toBeLessThan(80);
+    expect(layout.serviceSize).toBeLessThan(80);
+    expect(layout.serviceCardSize).toBeLessThan(64);
+  });
+
   test('keeps the impact stats inside a narrow mobile viewport', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 844 });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
@@ -306,7 +326,7 @@ test.describe('inner routes', () => {
       });
       await page.goto(route, { waitUntil: 'domcontentloaded' });
       await expect(page.locator('.desktop-nav')).toBeAttached();
-      await expect(page.locator('.custom-cursor')).toHaveCount(1);
+      await expect(page.locator('.custom-cursor')).toHaveCount(0);
       await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
       const desktopDiscussButton = page.locator('.nav-project-link');

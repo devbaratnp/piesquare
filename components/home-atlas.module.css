@@ -133,13 +133,6 @@
   display: block;
 }
 
-.heroSubtitle {
-  margin: clamp(26px, 4vw, 58px) 0 20px;
-  font: 700 11px/1.5 var(--mono);
-  letter-spacing: .17em;
-  text-transform: uppercase;
-}
-
 .heroMeta {
   display: flex;
   flex-wrap: wrap;
@@ -641,7 +634,6 @@
   .heroGrid { inset: 44% 0 0; }
   .heroContent { min-height: 100dvh; padding-top: 32vh; padding-bottom: 42px; }
   .heroTitle { font-size: clamp(2rem, 10vw, 3rem); }
-  .heroSubtitle { margin-top: 28px; }
   .heroMeta { font-size: 9px; }
   .heroActions { align-items: stretch; padding-right: clamp(88px, 24vw, 110px); }
   .heroActions a { justify-content: center; flex: 1 1 100%; }
@@ -684,6 +676,34 @@
 @media (max-width: 360px) {
   .metricGrid { grid-template-columns: 1fr; }
   .impact .metricGrid .metric { min-height: 0; }
+}
+
+@media (min-width: 801px) {
+  .displayTitle { font-size: clamp(2.25rem, 1.3rem + 4vw, 6.4rem); }
+  .companyIntro .displayTitle,
+  .servicesHead .displayTitle { font-size: clamp(2rem, 1.1rem + 2.65vw, 4.25rem); line-height: .94; }
+  .heroTitle { font-size: clamp(2.6rem, 1.65rem + 4.2vw, 6.9rem); }
+  .bodyCopy { font-size: clamp(.95rem, 1.05vw, 1.08rem); }
+  .networkCore { font-size: clamp(1.1rem, 1.5vw, 1.55rem); }
+  .timeline strong { font-size: 12px; }
+  .servicesHead > div > p:last-child { font-size: 14px; }
+  .serviceCard h3 { font-size: clamp(2.2rem, 1.5rem + 1.7vw, 3.8rem); }
+  .serviceCard p { font-size: 14px; }
+  .processTitle { font-size: clamp(2.1rem, 1.3rem + 3vw, 5.1rem); }
+  .processIntro { font-size: clamp(.95rem, 1.1vw, 1.12rem); }
+  .processSteps h3 { font-size: clamp(1.05rem, 1.35vw, 1.3rem); }
+  .processSteps p { font-size: 13px; }
+  .impact .displayTitle { font-size: clamp(2.2rem, 1.15rem + 4.2vw, 6.5rem); }
+  .impact .metric strong { font-size: clamp(1.8rem, 1.45rem + 1.3vw, 3.8rem); }
+  .projectsHead .displayTitle { font-size: clamp(2.2rem, 1.4rem + 3vw, 5.3rem); }
+  .projectCard h3 { font-size: clamp(1.1rem, 1.35vw, 1.4rem); }
+  .industriesTitle { font-size: clamp(1.9rem, 1.1rem + 3vw, 4.8rem); }
+  .industryGrid li { font-size: clamp(.95rem, 1.1vw, 1.1rem); }
+  .clients .displayTitle { font-size: clamp(2.35rem, 1.6rem + 3vw, 5.8rem); }
+  .why .displayTitle { font-size: clamp(2.2rem, 1.35rem + 3.55vw, 6rem); }
+  .whyGrid h3 { font-size: clamp(1.15rem, 1.45vw, 1.6rem); }
+  .profileContent h2 { font-size: clamp(1.75rem, 1.3rem + 1.65vw, 3.7rem); }
+  .profileContent p:not(.kicker) { font-size: clamp(.95rem, 1.05vw, 1.08rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {

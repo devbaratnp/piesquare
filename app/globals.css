@@ -21,7 +21,7 @@
   --z-content: 1;
   --z-overlay: 10;
   --z-nav: 30;
-  --z-cursor: 40;
+  --z-loader: 40;
 }
 
 *,
@@ -238,7 +238,7 @@ img {
 
 .loader {
   position: fixed;
-  z-index: calc(var(--z-cursor) + 1);
+  z-index: calc(var(--z-loader) + 1);
   inset: 0;
   display: grid;
   place-items: center;
@@ -751,7 +751,7 @@ img {
 
 .contact-dialog {
   position: fixed;
-  z-index: calc(var(--z-cursor) + 1);
+  z-index: calc(var(--z-loader) + 1);
   inset: 0;
   display: grid;
   place-items: center;
@@ -849,99 +849,6 @@ img {
 
 .contact-dialog .contact-form {
   margin-top: 26px;
-}
-
-.custom-cursor {
-  --cursor-block: var(--paper);
-  --cursor-ink: var(--carbon);
-  --cursor-x: -100px;
-  --cursor-y: -100px;
-  position: fixed;
-  z-index: var(--z-cursor);
-  top: 0;
-  left: 0;
-  display: grid;
-  width: 14px;
-  height: 14px;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--cursor-block);
-  pointer-events: none;
-  opacity: 0;
-  transform: translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-50%, -50%);
-  transition: width .35s cubic-bezier(.2,.9,.3,1), height .35s cubic-bezier(.2,.9,.3,1), opacity .25s ease, background-color .4s ease, transform .5s cubic-bezier(.2,.9,.3,1);
-  will-change: transform;
-}
-
-.custom-cursor.is-inverted {
-  --cursor-block: var(--ink);
-  --cursor-ink: var(--paper);
-}
-
-.custom-cursor.is-visible {
-  opacity: 1;
-}
-
-.custom-cursor.is-active {
-  width: 48px;
-  height: 48px;
-}
-
-.custom-cursor.is-active[data-label="view"],
-.custom-cursor.is-active[data-label="start"],
-.custom-cursor.is-active[data-label="contact"] {
-  width: 84px;
-  height: 84px;
-}
-
-.custom-cursor.is-text {
-  width: 4px;
-  height: 28px;
-  border-radius: 2px;
-}
-
-.custom-cursor.is-clicking {
-  transform: translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-50%, -50%) scale(.85);
-}
-
-.custom-cursor__label {
-  color: var(--cursor-ink);
-  font: 600 10px/1 var(--body);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  opacity: 0;
-  transition: opacity .3s ease;
-}
-
-.custom-cursor.is-active[data-label="view"] .custom-cursor__label,
-.custom-cursor.is-active[data-label="start"] .custom-cursor__label,
-.custom-cursor.is-active[data-label="contact"] .custom-cursor__label {
-  opacity: 1;
-}
-
-.custom-cursor[data-cursor-color="ice"] {
-  --cursor-block: #8be9ff;
-  --cursor-ink: var(--carbon);
-}
-
-.custom-cursor[data-cursor-color="signal"] {
-  --cursor-block: #ff5962;
-  --cursor-ink: #fff;
-}
-
-.custom-cursor[data-cursor-color="amber"] {
-  --cursor-block: #ffc857;
-  --cursor-ink: var(--carbon);
-}
-
-.custom-cursor[data-cursor-color="paper"] {
-  --cursor-block: var(--paper);
-  --cursor-ink: var(--carbon);
-}
-
-.custom-cursor.is-inverted[data-cursor-color="paper"] {
-  --cursor-block: var(--ink);
-  --cursor-ink: var(--paper);
 }
 
 .signal-overlay {
@@ -5708,23 +5615,6 @@ body {
   }
 }
 
-@media (pointer: fine) {
-  body {
-    cursor: none;
-  }
-
-  a,
-  button {
-    cursor: none;
-  }
-}
-
-@media (pointer: coarse) {
-  .custom-cursor {
-    display: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -5779,9 +5669,6 @@ body {
     transform: none !important;
   }
 
-  .custom-cursor {
-    display: none;
-  }
 }
 
 .floating-contact {
@@ -6697,5 +6584,51 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .clients-scene__marquee-track {
     animation: none;
+  }
+}
+
+@media (min-width: 801px) {
+  .display-title,
+  .hero-scene__title,
+  .inner-page__hero h1 {
+    font-size: clamp(2rem, 4vw, 4rem);
+  }
+
+  .service-overview-card h2 {
+    font-size: clamp(1.6rem, 2.2vw, 2.5rem);
+  }
+
+  .service-capability-section__heading h2 {
+    font-size: clamp(1.5rem, 2.7vw, 2.35rem);
+  }
+
+  .service-capability-grid h3 {
+    font-size: clamp(1.05rem, 1.55vw, 1.4rem);
+  }
+
+  .related-projects__heading h2 {
+    font-size: clamp(1.95rem, 3.2vw, 3.9rem);
+  }
+
+  .about-intro h2,
+  .about-approach h2,
+  .about-team h2,
+  .about-coverage h2,
+  .about-values > h2,
+  .contact-form-section h2 {
+    font-size: clamp(2rem, 4vw, 4.8rem);
+  }
+
+  .contact-direct__lead h2,
+  .contact-office > h3 {
+    font-size: clamp(2.1rem, 4vw, 4.5rem);
+  }
+
+  .contact-paths__heading h2 {
+    font-size: clamp(2rem, 3.8vw, 4.2rem);
+  }
+
+  .contact-paths__grid h3 {
+    font-size: clamp(1.35rem, 2.2vw, 2.1rem);
   }
 }

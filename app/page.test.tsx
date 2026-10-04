@@ -21,6 +21,9 @@ describe('home page field atlas', () => {
     }
     expect(navigation.getByRole('button', { name: /services/i })).toBeInTheDocument();
     expect(document.querySelector('.loader')).toBeNull();
+    expect(screen.queryByText('Telecom. Fiber. Solar. IT.')).not.toBeInTheDocument();
+    expect(document.querySelector('.custom-cursor')).toBeNull();
+    expect(document.querySelector('[data-cursor]')).toBeNull();
     expect(screen.queryByText(/FIELD NOTES \/ 001/i)).not.toBeInTheDocument();
     expect(document.querySelector('#top img')?.getAttribute('src')).toContain('pie-square-hero-integrated-infrastructure.webp');
   });
