@@ -20,6 +20,7 @@ export default async function ITSolutionsPage() {
       eyebrow="04 SERVICES"
       title={detail.title}
       lede={detail.intro}
+      justifyLede
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }, { label: 'IT Solutions', href: '/capabilities/it-solutions' }]}
       image={detail.image}
       imageAlt={detail.imageAlt}

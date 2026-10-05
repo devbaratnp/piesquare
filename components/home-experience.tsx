@@ -83,6 +83,7 @@ function HeroScene({ hero }: { hero: HomeHeroContent }) {
               </span>
             ))}
           </h1>
+          {hero.subtitle ? <p className={styles.heroSub}>.{hero.subtitle.replace(/^\.+/, '').replace(/[\s.]+$/, '')}</p> : null}
           <div className={styles.heroMeta}><span>ESTABLISHED 2019</span><span>LALITPUR, NEPAL</span></div>
           <div className={styles.heroActions}>
             <a className="button button--primary" href={hero.ctaUrl}>{hero.ctaText} ↗</a>
@@ -100,7 +101,7 @@ function CompanyScene() {
       <div className={`page-wrap ${styles.companyContent}`}>
         <div className={styles.companyIntro}>
           <p className={styles.kicker}>WHO WE ARE</p>
-          <h2 className={styles.displayTitle}>INFRASTRUCTURE <em>EXPERTISE. FIELD EXECUTION. RELIABLE RESULTS.</em></h2>
+          <h2 className={styles.displayTitle}>INFRASTRUCTURE EXPERTISE. <em>FIELD EXECUTION.</em> RELIABLE RESULTS.</h2>
           <p className={styles.bodyCopy}>{companyIntro}</p>
           <Link className="button button--primary" href="/company">Learn more about us <span aria-hidden="true">↗</span></Link>
         </div>
@@ -193,8 +194,8 @@ function ProjectsScene({ projects }: { projects: ReadonlyArray<ProjectRecord> })
         <div className={styles.projectGrid}>
           {projects.slice(0, 6).map((project, index) => (
             <Link href={`/projects/${project.id}`} className={`${styles.projectCard} atlas-reveal`} key={project.id}>
-              <div className={styles.projectImage}><Image src={project.image || '/media/projects/hero.jpg'} alt={project.imageAlt || project.title} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" /></div>
-              <div className={styles.projectMeta}><span>{String(index + 1).padStart(2, '0')} / {project.categoryLabel}</span><span>{project.status}</span></div>
+              <div className={styles.projectImage}><Image src={project.image || '/media/projects/hero.jpg'} alt={project.imageAlt || project.title} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" /><span className={project.status === 'COMPLETED' ? `${styles.projectStatus} ${styles.projectStatusCompleted}` : styles.projectStatus}>{project.status}</span></div>
+              <div className={styles.projectMeta}><span>{String(index + 1).padStart(2, '0')} / {project.categoryLabel}</span></div>
               <h3>{project.title}</h3>
               <p>{project.location} · {project.duration}</p>
               <span className={styles.projectLink}>VIEW PROJECT ↗</span>

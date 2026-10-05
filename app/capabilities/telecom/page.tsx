@@ -20,6 +20,7 @@ export default async function TelecomCapabilityPage() {
       eyebrow="01 SERVICES"
       title={detail.title}
       lede={detail.intro}
+      justifyLede
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }, { label: 'Telecom', href: '/capabilities/telecom' }]}
       image={detail.image}
       imageAlt={detail.imageAlt}

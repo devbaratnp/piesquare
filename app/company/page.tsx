@@ -18,7 +18,7 @@ export default async function CompanyPage() {
   return (
     <InnerPage
       eyebrow="About Us"
-      title="The Field Force Behind Critical Infrastructure."
+      title={<>The Field Force Behind <em>Critical Infrastructure.</em></>}
       lede="Pie Square Technologies is an integrated infrastructure and technology solutions company based in Nepal."
       crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us', href: '/company' }]}
       image="/media/cinematic/C01-company-infrastructure-landscape.png"
@@ -50,7 +50,7 @@ export default async function CompanyPage() {
 
       <section className="about-values" aria-label="Our values">
         <p className="inner-page__eyebrow">WHAT GUIDES US</p>
-        <h2>Our Values</h2>
+        <h2>Our <em>Values</em></h2>
         <div className="about-values__grid">
           {companyValuesDetailed.map((value) => (
             <article key={value.title}>
@@ -63,7 +63,7 @@ export default async function CompanyPage() {
 
       <section className="about-approach" aria-label="Our approach">
         <p className="inner-page__eyebrow">OUR APPROACH</p>
-        <h2>Engineered with Precision. Delivered with Discipline.</h2>
+        <h2>Engineered with Precision. <em>Delivered with Discipline.</em></h2>
         <p>{companyApproachIntro}</p>
         <ul>
           {companyApproach.map((item) => <li key={item.title}><strong>{item.title}</strong><span>{item.copy}</span></li>)}
@@ -72,7 +72,7 @@ export default async function CompanyPage() {
 
       <section className="about-team" aria-label="Technical workforce">
         <p className="inner-page__eyebrow">OUR TEAM</p>
-        <h2>Multidisciplinary Expertise. Experienced Delivery Team.</h2>
+        <h2>Multidisciplinary Expertise. <em>Experienced Delivery Team.</em></h2>
         <p className="about-team__intro">{companyTeamIntro}</p>
         <div className="workforce-list">
           {teamDepartments.map((department) => (
@@ -86,7 +86,7 @@ export default async function CompanyPage() {
 
       <section className="inner-page__card about-industries" aria-label="Industries we support">
         <p className="inner-page__eyebrow">INDUSTRIES WE SUPPORT</p>
-        <h2>Industries We Support</h2>
+        <h2>Industries <em>We Support</em></h2>
         <div className="industry-detail-list">
           {industryDetails.map((industry) => <article key={industry.title}><h3>{industry.title}</h3><p>{industry.copy}</p></article>)}
         </div>
@@ -94,7 +94,7 @@ export default async function CompanyPage() {
 
       <section className="about-coverage" aria-label="Geographic coverage">
         <p className="inner-page__eyebrow">GEOGRAPHIC COVERAGE</p>
-        <h2>Operating Across Nepal</h2>
+        <h2>Operating Across <em>Nepal</em></h2>
         <p>Field teams deployable across all seven provinces — coverage locations grow with the project footprint.</p>
         <span className="about-coverage__coordinates">27.7172° N / 85.3240° E — HQ KATHMANDU</span>
         <div className="province-list">

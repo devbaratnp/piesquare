@@ -20,6 +20,7 @@ export default async function FiberCapabilityPage() {
       eyebrow="02 SERVICES"
       title={detail.title}
       lede={detail.intro}
+      justifyLede
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }, { label: 'Optical Fiber', href: '/capabilities/optical-fiber' }]}
       image={detail.image}
       imageAlt={detail.imageAlt}

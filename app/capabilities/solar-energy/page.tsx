@@ -20,6 +20,7 @@ export default async function SolarCapabilityPage() {
       eyebrow="03 SERVICES"
       title={detail.title}
       lede={detail.intro}
+      justifyLede
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }, { label: 'Solar & Energy', href: '/capabilities/solar-energy' }]}
       image={detail.image}
       imageAlt={detail.imageAlt}

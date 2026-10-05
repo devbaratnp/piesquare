@@ -20,6 +20,7 @@ export default async function CapabilitiesPage() {
       eyebrow="Capabilities"
       title="Built to Execute."
       lede="People, equipment and systems organized for multi-site, multi-location project delivery."
+      justifyLede
       crumbs={[{ label: 'Home', href: '/' }, { label: 'Capabilities', href: '/capabilities' }]}
       contact={content.contact}
       hideActions
@@ -71,7 +72,6 @@ export default async function CapabilitiesPage() {
         <div className="technical-resources__grid">
           {technicalResources.map((resource) => (
             <article className="technical-resources__card" key={resource.title}>
-              <span className="technical-resources__icon" aria-hidden="true">{resource.mark}</span>
               <h3>{resource.title}</h3>
               <ul>
                 {resource.items.map((item) => <li key={item}>{item}</li>)}

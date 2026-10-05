@@ -15,9 +15,10 @@ function ProjectProofCard({ project }: { project: ProjectRecord }) {
     <article className="related-project-card">
       <div className="related-project-card__image">
         <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 720px) calc(100vw - 36px), (max-width: 1440px) 46vw, 640px" />
+        <span className={`related-project-card__status related-project-card__status--${project.status.toLowerCase()}`}>{project.status}</span>
       </div>
       <div className="related-project-card__copy">
-        <span>{project.status} / {project.category}</span>
+        <span>{project.category}</span>
         <h3>{project.title}</h3>
         <p>{project.location}</p>
         <p>{project.scope.join(' • ')}</p>

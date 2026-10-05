@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 import { SiteNav } from '@/components/site-nav';
 import { SignalLine } from '@/components/signal-line';
 import { FloatingContact } from '@/components/floating-contact';
@@ -8,8 +9,9 @@ import { siteContact } from '@/data/site';
 
 type InnerPageProps = Readonly<{
   eyebrow: string;
-  title: string;
+  title: ReactNode;
   lede: string;
+  justifyLede?: boolean;
   crumbs?: ReadonlyArray<{ label: string; href: string }>;
   image?: string;
   imageAlt?: string;
@@ -20,7 +22,7 @@ type InnerPageProps = Readonly<{
   children: React.ReactNode;
 }>;
 
-export function InnerPage({ eyebrow, title, lede, image, imageAlt = '', light = true, variant = 'default', hideActions = false, contact = siteContact, children }: InnerPageProps) {
+export function InnerPage({ eyebrow, title, lede, justifyLede = false, image, imageAlt = '', light = true, variant = 'default', hideActions = false, contact = siteContact, children }: InnerPageProps) {
   return (
     <>
       <a className="skip-link" href="#inner-content">Skip to main content</a>
@@ -32,7 +34,7 @@ export function InnerPage({ eyebrow, title, lede, image, imageAlt = '', light = 
           <div className="inner-page__hero">
             <p className="inner-page__eyebrow">{eyebrow}</p>
             <h1 id="inner-page-title">{title}</h1>
-            <p className="inner-page__lede">{lede}</p>
+            <p className={`inner-page__lede${justifyLede ? ' inner-page__lede--justify' : ''}`}>{lede}</p>
             {!hideActions && <div className="inner-page__actions">
               <Link className="button button--primary" href="/contact#quote">Request a Quote ↗</Link>
               <Link className="button button--ghost" href="/capabilities">Explore capabilities ↗</Link>
