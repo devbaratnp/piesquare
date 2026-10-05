@@ -14,7 +14,6 @@ import { FloatingContact } from '@/components/floating-contact';
 import { SiteFooter } from '@/components/site-footer';
 import { PhoneIcon, WhatsAppIcon } from '@/components/contact-icons';
 import {
-  clients,
   companyIntro,
   companyTimeline,
   homeDeliverySteps,
@@ -103,7 +102,7 @@ function CompanyScene() {
           <p className={styles.kicker}>WHO WE ARE</p>
           <h2 className={styles.displayTitle}>INFRASTRUCTURE <em>EXPERTISE. FIELD EXECUTION. RELIABLE RESULTS.</em></h2>
           <p className={styles.bodyCopy}>{companyIntro}</p>
-          <Link className={styles.textLink} href="/company">Learn more about us <span aria-hidden="true">↗</span></Link>
+          <Link className="button button--primary" href="/company">Learn more about us <span aria-hidden="true">↗</span></Link>
         </div>
         <div className={styles.network} aria-label="Pie Square field delivery network across telecom, fiber, solar and electrical, and IT">
           <div className={styles.networkRule} aria-hidden="true" />
@@ -189,7 +188,7 @@ function ProjectsScene({ projects }: { projects: ReadonlyArray<ProjectRecord> })
       <div className={`page-wrap ${styles.sectionPad}`}>
         <div className={styles.projectsHead}>
           <div><p className={styles.kicker}>SELECTED PROJECTS</p><h2 className={styles.displayTitle}>BUILT IN THE FIELD.<br /><em>PROVEN IN THE NETWORK.</em></h2></div>
-          <Link className={styles.textLink} href="/projects">View all projects <span aria-hidden="true">↗</span></Link>
+          <Link className="button button--primary" href="/projects">View all projects <span aria-hidden="true">↗</span></Link>
         </div>
         <div className={styles.projectGrid}>
           {projects.slice(0, 6).map((project, index) => (
@@ -235,7 +234,7 @@ function ClientsScene() {
             </figure>
           ))}
         </div>
-        <p className={styles.clientNote}>{clients.length} established client and project relationships across Nepal’s infrastructure landscape.</p>
+        <p className={styles.clientNote}>Established client and project relationships across Nepal’s infrastructure landscape.</p>
       </div>
     </SceneShell>
   );
@@ -281,7 +280,6 @@ function FinalScene({ contact }: { contact: HomeContact }) {
           <a className="button button--ghost" href={'mailto:' + contact.email}>{contact.email}</a>
           <a className="button button--ghost" href={contact.phoneHref}><PhoneIcon className="button__icon" /><span>{contact.phone}</span></a>
         </div>
-        <div className="final-scene__foot"><span>{contact.address}</span><span>{contact.email}</span><span>{contact.website}</span></div>
       </div>
     </SceneShell>
   );

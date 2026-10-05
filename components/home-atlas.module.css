@@ -215,8 +215,8 @@
   text-transform: uppercase;
 }
 
-.networkTop { color: var(--paper-muted); }
-.networkBottom { color: var(--signal); }
+.networkTop { color: var(--paper-muted); text-align: center; }
+.networkBottom { color: var(--signal); text-align: center; }
 
 .networkMap {
   --orbit-radius: 165px;
@@ -323,7 +323,7 @@
   content: '';
 }
 
-.timeline span { color: var(--signal); font: 700 10px/1.3 var(--mono); letter-spacing: .09em; text-transform: uppercase; }
+.timeline span { color: var(--signal); font: 700 14px/1.3 var(--mono); letter-spacing: .09em; text-transform: uppercase; }
 .timeline strong { max-width: 190px; font: 600 13px/1.38 var(--body); }
 
 .services {
@@ -485,7 +485,7 @@
 }
 
 .impact { background: #f5f1e9; }
-.impact .displayTitle { max-width: 1000px; font-size: clamp(2.55rem, 1.35rem + 5vw, 7.8rem); }
+.impact .displayTitle { max-width: none; font-size: clamp(2.55rem, 1.35rem + 5vw, 7.8rem); }
 
 .metricGrid {
   display: grid;
@@ -499,10 +499,12 @@
   min-width: 0;
   min-height: 210px;
   align-content: start;
+  justify-items: center;
   gap: 13px;
   padding: 24px 0 0;
   border: 0;
   border-top: 2px solid var(--signal);
+  text-align: center;
 }
 
 .impact .metric strong {
@@ -644,6 +646,7 @@
   .networkCore { width: 148px; padding: 14px; font-size: 1.05rem; }
   .networkTop, .networkBottom { font-size: 8px; }
   .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 29px 15px; }
+  .timeline span { font-size: 12px; }
   .timeline strong { font-size: 12px; }
   .serviceGrid { grid-template-columns: 1fr; }
   .serviceCard { min-height: 310px; }

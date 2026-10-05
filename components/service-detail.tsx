@@ -81,7 +81,7 @@ export function ServiceDetail({ capabilities = [], lifecycle, scope, relatedHref
             <p className="inner-page__eyebrow">PROJECT PORTFOLIO</p>
             <h2>Related Projects</h2>
           </div>
-          <Link className="button button--ghost" href={relatedHref}>All Projects ↗</Link>
+          <Link className="button button--primary" href={relatedHref}>All Projects ↗</Link>
         </div>
         {relatedProjects.length > 0 ? (
           <div className="related-projects__grid">
