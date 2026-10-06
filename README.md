@@ -50,8 +50,11 @@ The project inquiry and contact forms remain presentation-only by design; direct
 
 The public site has a safe static fallback, while homepage hero content, contact settings, published services, published projects, and media can be managed through the Node.js/MySQL admin layer.
 
+For the complete setup, migration, deployment, backup, and troubleshooting instructions, see [docs/backend-setup.md](docs/backend-setup.md).
+
 1. Copy `.env.example` to `.env.local` and set `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, and a long random `SESSION_SECRET`.
 2. Run `server/schema.sql` against the MySQL database, then run `server/seed.sql` to migrate the verified contact, hero, about, service, and project content.
+   For an existing CMS database, run `server/migrations/001_add_project_status.sql` before using the Projects progress field.
 3. Create the first administrator with `npm run admin:create -- admin@example.com "a-long-password" "Administrator name"`.
 4. Run `npm run dev` and open `/admin/login`.
 

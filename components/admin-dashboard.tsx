@@ -4,17 +4,18 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { PROJECT_PROGRESS_STATUSES } from '@/lib/project-progress';
 
 type Hero = { eyebrow: string; title: string; subtitle: string; ctaText: string; ctaUrl: string; image: string };
 type Contact = { email: string; phone: string; address: string; mapUrl: string; facebook: string; website: string };
 type About = { title: string; intro: string; vision: string; mission: string };
 type Service = { id: number; slug: string; title: string; summary: string; sort_order: number; status: string };
-type Project = { id: number; slug: string; title: string; category: string; short_description: string; full_description: string | null; featured_image: string | null; client_name: string | null; location: string | null; completion_info: string | null; featured: number; sort_order: number; status: string };
+type Project = { id: number; slug: string; title: string; category: string; short_description: string; full_description: string | null; featured_image: string | null; client_name: string | null; location: string | null; completion_info: string | null; project_status: string; featured: number; sort_order: number; status: string };
 type Media = { id: number; filename: string; storage_path: string; mime_type: string; size_bytes: number; alt_text: string | null; created_at: string };
 type JobApplication = { id: number; role_id: string; name: string; phone: string; email: string; desired_position: string; message: string | null; cv_filename: string | null; cv_path: string | null; cv_size_bytes: number | null; status: string; created_at: string };
 
 const emptyService = { slug: '', title: '', summary: '', sortOrder: 0, status: 'PUBLISHED' };
-const emptyProject = { slug: '', title: '', category: 'TELECOM', shortDescription: '', fullDescription: '', featuredImage: '', clientName: '', location: '', completionInfo: '', featured: false, sortOrder: 0, status: 'DRAFT' };
+const emptyProject = { slug: '', title: '', category: 'TELECOM', shortDescription: '', fullDescription: '', featuredImage: '', clientName: '', location: '', completionInfo: '', projectStatus: 'ONGOING', featured: false, sortOrder: 0, status: 'DRAFT' };
 
 export function AdminDashboard() {
   const router = useRouter();
@@ -124,7 +125,7 @@ export function AdminDashboard() {
 
   function editProject(project: Project) {
     setEditingProjectId(project.id);
-    setProjectDraft({ slug: project.slug, title: project.title, category: project.category, shortDescription: project.short_description, fullDescription: project.full_description ?? '', featuredImage: project.featured_image ?? '', clientName: project.client_name ?? '', location: project.location ?? '', completionInfo: project.completion_info ?? '', featured: Boolean(project.featured), sortOrder: project.sort_order, status: project.status });
+    setProjectDraft({ slug: project.slug, title: project.title, category: project.category, shortDescription: project.short_description, fullDescription: project.full_description ?? '', featuredImage: project.featured_image ?? '', clientName: project.client_name ?? '', location: project.location ?? '', completionInfo: project.completion_info ?? '', projectStatus: project.project_status === 'COMPLETED' ? 'COMPLETED' : 'ONGOING', featured: Boolean(project.featured), sortOrder: project.sort_order, status: project.status });
     document.querySelector('#project-editor')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -237,7 +238,7 @@ export function AdminDashboard() {
         </section>
         <section className="admin-panel" id="projects">
           <div className="admin-panel__heading"><div><p className="admin-kicker">Portfolio</p><h2>Projects</h2></div></div>
-          <div className="admin-service-list">{projects.map((project) => <article key={project.id}><div><strong>{project.title}</strong><p>{project.short_description}</p><small>{project.status} · {project.category} · order {project.sort_order}</small></div><div className="admin-row-actions"><button className="admin-text-button" type="button" onClick={() => editProject(project)}>Edit</button><button className="admin-text-button" type="button" onClick={() => archiveProject(project.id)}>Archive</button></div></article>)}</div>
+          <div className="admin-service-list">{projects.map((project) => <article key={project.id}><div><strong>{project.title}</strong><p>{project.short_description}</p><small>{project.project_status} · {project.status} · {project.category} · order {project.sort_order}</small></div><div className="admin-row-actions"><button className="admin-text-button" type="button" onClick={() => editProject(project)}>Edit</button><button className="admin-text-button" type="button" onClick={() => archiveProject(project.id)}>Archive</button></div></article>)}</div>
           <form className="admin-service-form" id="project-editor" onSubmit={saveProject}>
             <h3>{editingProjectId ? 'Edit project' : 'Add a project'}</h3>
             <div className="admin-form-grid">
@@ -251,6 +252,7 @@ export function AdminDashboard() {
               <label>Client<input value={projectDraft.clientName} onChange={(event) => setProjectDraft({ ...projectDraft, clientName: event.target.value })} /></label>
               <label>Location<input value={projectDraft.location} onChange={(event) => setProjectDraft({ ...projectDraft, location: event.target.value })} /></label>
               <label>Completion info<input value={projectDraft.completionInfo} onChange={(event) => setProjectDraft({ ...projectDraft, completionInfo: event.target.value })} /></label>
+              <label>Project progress<select value={projectDraft.projectStatus} onChange={(event) => setProjectDraft({ ...projectDraft, projectStatus: event.target.value })}>{PROJECT_PROGRESS_STATUSES.map((status) => <option key={status}>{status}</option>)}</select></label>
               <label>Sort order<input type="number" value={projectDraft.sortOrder} onChange={(event) => setProjectDraft({ ...projectDraft, sortOrder: Number(event.target.value) })} /></label>
               <label className="admin-checkbox"><input type="checkbox" checked={projectDraft.featured} onChange={(event) => setProjectDraft({ ...projectDraft, featured: event.target.checked })} /> Featured project</label>
             </div>

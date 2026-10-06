@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { isProjectProgressStatus } from '@/lib/project-progress';
 import { getAdminSession } from '@/server/session';
 import { execute, getPool } from '@/server/db';
 
@@ -15,11 +16,12 @@ export async function PUT(request: Request, context: RouteContext<'/api/admin/pr
   const category = String(body?.category ?? '').trim().toUpperCase();
   const shortDescription = String(body?.short_description ?? body?.shortDescription ?? '').trim();
   const status = String(body?.status ?? 'DRAFT').trim().toUpperCase();
-  if (!Number.isInteger(numericId) || numericId < 1 || !title || !categories.has(category) || !shortDescription || !statuses.has(status)) {
+  const projectStatus = String(body?.project_status ?? body?.projectStatus ?? 'ONGOING').trim().toUpperCase();
+  if (!Number.isInteger(numericId) || numericId < 1 || !title || !categories.has(category) || !shortDescription || !statuses.has(status) || !isProjectProgressStatus(projectStatus)) {
     return NextResponse.json({ message: 'Project details are invalid.' }, { status: 400 });
   }
   try {
-    const result = await execute('UPDATE projects SET title = ?, category = ?, short_description = ?, full_description = ?, featured_image = ?, client_name = ?, location = ?, completion_info = ?, featured = ?, sort_order = ?, status = ? WHERE id = ?', [
+    const result = await execute('UPDATE projects SET title = ?, category = ?, short_description = ?, full_description = ?, featured_image = ?, client_name = ?, location = ?, completion_info = ?, project_status = ?, featured = ?, sort_order = ?, status = ? WHERE id = ?', [
       title,
       category,
       shortDescription,
@@ -28,6 +30,7 @@ export async function PUT(request: Request, context: RouteContext<'/api/admin/pr
       String(body?.client_name ?? body?.clientName ?? '').trim() || null,
       String(body?.location ?? '').trim() || null,
       String(body?.completion_info ?? body?.completionInfo ?? '').trim() || null,
+      projectStatus,
       body?.featured ? 1 : 0,
       Number(body?.sort_order ?? body?.sortOrder ?? 0),
       status,

@@ -1,4 +1,5 @@
 import { companyAboutIntro, companyAboutTitle, companyMissionCopy, companyVisionTitle, projects, serviceOverview, siteContact, type ProjectRecord } from '@/data/site';
+import { isProjectProgressStatus, type ProjectProgressStatus } from '@/lib/project-progress';
 import { isDatabaseConfigured, queryRows } from './db';
 
 export type HomeHeroContent = Readonly<{
@@ -56,6 +57,7 @@ type ProjectRow = {
   client_name: string | null;
   location: string | null;
   completion_info: string | null;
+  project_status: string | null;
   status: string;
 };
 
@@ -82,10 +84,12 @@ function mapProject(row: ProjectRow): ProjectRecord {
   const categoryLabel = category === 'SOLAR' ? 'SOLAR & ELECTRICAL' : category === 'IT' ? 'IT & DIGITAL' : category;
   const fallback = projects.find((project) => project.id === row.slug);
   const isOngoing = row.completion_info?.toLowerCase().includes('present') ?? false;
+  const progressStatus = row.project_status?.toUpperCase() ?? '';
+  const status: ProjectProgressStatus = isProjectProgressStatus(progressStatus) ? progressStatus : isOngoing ? 'ONGOING' : 'COMPLETED';
   return {
     id: row.slug,
     title: row.title,
-    status: isOngoing ? 'ONGOING' : 'COMPLETED',
+    status,
     category,
     categoryLabel,
     location: row.location ?? 'Nepal',
@@ -133,7 +137,7 @@ export async function getPublicContent(): Promise<PublicContent> {
       queryRows<HeroRow & import('mysql2/promise').RowDataPacket>('SELECT eyebrow, title, subtitle, cta_text AS ctaText, cta_url AS ctaUrl, image_path AS image FROM hero_section WHERE status = \'PUBLISHED\' ORDER BY id DESC LIMIT 1'),
       queryRows<AboutRow & import('mysql2/promise').RowDataPacket>('SELECT title, intro, vision, mission FROM about_section WHERE status = \'PUBLISHED\' ORDER BY id DESC LIMIT 1'),
       queryRows<{ slug: string; title: string; summary: string; sort_order: number } & import('mysql2/promise').RowDataPacket>('SELECT slug, title, summary, sort_order FROM services WHERE status = \'PUBLISHED\' ORDER BY sort_order, id'),
-      queryRows<ProjectRow & import('mysql2/promise').RowDataPacket>('SELECT slug, title, category, short_description, full_description, featured_image, client_name, location, completion_info, status FROM projects WHERE status = \'PUBLISHED\' ORDER BY sort_order, id'),
+      queryRows<ProjectRow & import('mysql2/promise').RowDataPacket>('SELECT slug, title, category, short_description, full_description, featured_image, client_name, location, completion_info, project_status, status FROM projects WHERE status = \'PUBLISHED\' ORDER BY sort_order, id'),
     ]);
     const hero = heroRows[0] ? { ...fallbackHero, ...heroRows[0] } : fallbackHero;
     const about = aboutRows[0] ? { ...fallbackAbout, ...aboutRows[0] } : fallbackAbout;

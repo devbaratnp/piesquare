@@ -95,6 +95,19 @@ test.describe('home experience', () => {
     }
   });
 
+  test('keeps service card headings inside narrow mobile cards', async ({ page }) => {
+    for (const width of [403, 320]) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
+      const headings = await page.locator('#expertise h3').evaluateAll((elements) => elements.map((element) => ({
+        text: element.textContent,
+        scrollWidth: element.scrollWidth,
+        clientWidth: element.clientWidth,
+      })));
+      expect(headings.every((heading) => heading.scrollWidth <= heading.clientWidth + 1), `${width}px service heading clips`).toBe(true);
+    }
+  });
+
   test('keeps company and service typography inside the desktop layout columns', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
