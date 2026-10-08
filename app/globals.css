@@ -5503,7 +5503,7 @@ body {
 
   .final-scene__layout > .display-title {
     margin: 8vh 0 6vh;
-    font-size: 9.5vw;
+    font-size: clamp(1.6rem, 8.5vw, 4rem);
   }
 
   .final-scene__layout .display-title--secondary {

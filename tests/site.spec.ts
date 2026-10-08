@@ -108,6 +108,19 @@ test.describe('home experience', () => {
     }
   });
 
+  test('keeps the final contact headlines inside narrow mobile screens', async ({ page }) => {
+    for (const width of [390, 320]) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
+      const headings = await page.locator('#contact h2, #contact h3').evaluateAll((elements) => elements.map((element) => ({
+        text: element.textContent,
+        scrollWidth: element.scrollWidth,
+        clientWidth: element.clientWidth,
+      })));
+      expect(headings.every((heading) => heading.scrollWidth <= heading.clientWidth + 1), `${width}px final headline clips`).toBe(true);
+    }
+  });
+
   test('keeps company and service typography inside the desktop layout columns', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
