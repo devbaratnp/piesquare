@@ -56,6 +56,17 @@ export function SiteFooter({ contact = siteContact }: { contact?: SiteFooterCont
             <a href={contact.mapUrl}>Google Maps ↗</a>
           </div>
         </nav>
+        <a
+          className="site-footer__powered-by"
+          href="https://isoftro.com"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Powered by iSoftro"
+        >
+          <span>Powered by</span>
+          {' '}
+          <strong>iSoftro</strong>
+        </a>
         <span className="site-footer__legal">© 2026 Pie Square Technologies / All Rights Reserved.</span>
       </div>
     </footer>

@@ -5,6 +5,14 @@ import Page from './page';
 afterEach(() => cleanup());
 
 describe('home page field atlas', () => {
+  it('credits iSoftro with a linked footer credit', async () => {
+    render(await Page());
+
+    const agencyLink = screen.getByRole('link', { name: /powered by isoftro/i });
+    expect(agencyLink).toHaveAttribute('href', 'https://isoftro.com');
+    expect(agencyLink).toHaveTextContent('Powered by iSoftro');
+  });
+
   it('renders the new section sequence with one hero heading and working navigation', async () => {
     render(await Page());
 
