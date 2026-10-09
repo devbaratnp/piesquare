@@ -83,7 +83,7 @@ function HeroScene({ hero }: { hero: HomeHeroContent }) {
               </span>
             ))}
           </h1>
-          {hero.subtitle ? <p className={styles.heroSub}>.{hero.subtitle.replace(/^\.+/, '').replace(/[\s.]+$/, '')}</p> : null}
+          {hero.subtitle ? <p className={styles.heroSub}>{hero.subtitle.replace(/^\.+/, '').replace(/[\s.]+$/, '')}</p> : null}
           <div className={styles.heroMeta}><span>ESTABLISHED 2019</span><span>LALITPUR, NEPAL</span></div>
           <div className={styles.heroActions}>
             <a className="button button--primary" href={hero.ctaUrl}>{hero.ctaText} ↗</a>
