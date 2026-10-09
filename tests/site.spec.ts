@@ -323,6 +323,20 @@ test.describe('responsive foundation', () => {
     expect(fontPair.display).toMatch(/Cormorant Garamond/);
     expect(fontPair.body).toMatch(/Inter/);
   });
+
+  test('keeps the capabilities resources grid inside the mobile viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/capabilities', { waitUntil: 'domcontentloaded' });
+
+    const dimensions = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      bodyScrollWidth: document.body.scrollWidth,
+      resourcesColumnCount: getComputedStyle(document.querySelector('.technical-resources__grid')!).gridTemplateColumns.trim().split(/\s+/).length,
+    }));
+
+    expect(dimensions.bodyScrollWidth).toBeLessThanOrEqual(dimensions.viewport + 1);
+    expect(dimensions.resourcesColumnCount).toBe(1);
+  });
 });
 
 test.describe('inner routes', () => {
