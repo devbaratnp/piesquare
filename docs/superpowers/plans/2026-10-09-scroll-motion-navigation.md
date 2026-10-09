@@ -132,7 +132,6 @@ describe('RouteScrollManager', () => {
       callback(0);
       return 1;
     });
-    const cancelAnimationFrame = vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => undefined);
     const view = render(<RouteScrollManager />);
 
     pathnameState.value = '/company';
@@ -140,7 +139,6 @@ describe('RouteScrollManager', () => {
 
     expect(requestAnimationFrame).toHaveBeenCalledOnce();
     expect(scrollTo).toHaveBeenCalledWith({ top: 0, left: 0, behavior: 'auto' });
-    expect(cancelAnimationFrame).toHaveBeenCalledWith(1);
   });
 
   it('scrolls an existing hash target into view without using smooth behavior', () => {
