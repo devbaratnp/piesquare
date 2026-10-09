@@ -338,6 +338,31 @@ test.describe('inner routes', () => {
     '/contact',
   ];
 
+  test('resets a route to the top when navigating from the homepage bottom', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'networkidle' });
+    await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, left: 0, behavior: 'instant' }));
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+
+    await page.getByRole('link', { name: 'About Us' }).first().click();
+    await page.waitForURL('**/company');
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThanOrEqual(1);
+    await expect.poll(() => page.getByRole('heading', { level: 1 }).evaluate((element) => element.getBoundingClientRect().top)).toBeGreaterThanOrEqual(0);
+  });
+
+  test('keeps hash navigation targeted after a cross-route navigation', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'networkidle' });
+    const desktopQuoteLink = page.locator('.nav-project-link');
+    if (await desktopQuoteLink.isVisible()) {
+      await desktopQuoteLink.click();
+    } else {
+      await page.locator('.menu-toggle').click({ force: true });
+      await page.locator('.mobile-menu__project').click();
+    }
+    await page.waitForURL('**/contact#quote');
+    await expect(page.locator('#quote')).toBeInViewport();
+  });
+
   for (const route of routes) {
     test(`renders ${route} with navigation, heading, and CTA`, async ({ page }) => {
       const consoleErrors: string[] = [];
