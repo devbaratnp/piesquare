@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Libre_Baskerville, Nunito, Plus_Jakarta_Sans } from 'next/font/google';
+import { RouteScrollManager } from '@/components/motion/route-scroll-manager';
+import { ScrollReveals } from '@/components/motion/scroll-reveals';
 import { getPublicContent } from '@/server/content';
 import './globals.css';
 
@@ -64,6 +66,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang="en" className={`${displaySerif.variable} ${inter.variable} ${plexMono.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+        <RouteScrollManager />
+        <ScrollReveals />
         {children}
       </body>
     </html>
