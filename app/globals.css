@@ -113,6 +113,12 @@ img {
   overflow: clip;
 }
 
+.atlas-reveal,
+.inner-page__hero,
+.inner-page__body > * {
+  will-change: transform, opacity;
+}
+
 .experience > section,
 .experience > .scene-shell {
   position: relative;
