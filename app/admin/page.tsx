@@ -1,10 +1,24 @@
 import { redirect } from 'next/navigation';
-import { AdminDashboard } from '../../components/admin-dashboard';
+import { AdminOverview } from '../../components/admin/admin-overview';
+import { AdminRoute } from '../../components/admin/admin-route';
 import { getAdminSession } from '../../server/session';
 
 export const dynamic = 'force-dynamic';
 
+export const metadata = {
+  title: 'Overview | Content studio',
+  robots: { index: false, follow: false },
+};
+
 export default async function AdminPage() {
   if (!(await getAdminSession())) redirect('/admin/login');
-  return <AdminDashboard />;
+  return (
+    <AdminRoute
+      active="overview"
+      kicker="Pie Square Technologies"
+      title="Content studio"
+      lede="Manage public content without changing the design system."
+      render={(onConfigured) => <AdminOverview onConfigured={onConfigured} />}
+    />
+  );
 }
