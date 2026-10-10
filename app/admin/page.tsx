@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import { AdminOverview } from '../../components/admin/admin-overview';
 import { AdminRoute } from '../../components/admin/admin-route';
 import { getAdminSession } from '../../server/session';
 
@@ -18,7 +17,6 @@ export default async function AdminPage() {
       kicker="Pie Square Technologies"
       title="Content studio"
       lede="Manage public content without changing the design system."
-      render={(onConfigured) => <AdminOverview onConfigured={onConfigured} />}
     />
   );
 }

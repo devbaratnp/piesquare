@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import { AdminContentForm } from '../../../components/admin/admin-content-form';
 import { AdminRoute } from '../../../components/admin/admin-route';
 import { getAdminSession } from '../../../server/session';
 
@@ -18,7 +17,6 @@ export default async function AdminContentPage() {
       kicker="Homepage and company"
       title="Public content"
       lede="Hero, company story and contact details shown across the public site."
-      render={(onConfigured) => <AdminContentForm onConfigured={onConfigured} />}
     />
   );
 }

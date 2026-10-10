@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import { AdminProjects } from '../../../components/admin/admin-projects';
 import { AdminRoute } from '../../../components/admin/admin-route';
 import { getAdminSession } from '../../../server/session';
 
@@ -18,7 +17,6 @@ export default async function AdminProjectsPage() {
       kicker="Portfolio"
       title="Projects"
       lede="Portfolio entries shown on the projects pages."
-      render={(onConfigured) => <AdminProjects onConfigured={onConfigured} />}
     />
   );
 }

@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation';
 import { AdminRoute } from '../../../components/admin/admin-route';
-import { AdminServices } from '../../../components/admin/admin-services';
 import { getAdminSession } from '../../../server/session';
 
 export const dynamic = 'force-dynamic';
@@ -18,7 +17,6 @@ export default async function AdminServicesPage() {
       kicker="Capabilities"
       title="Services"
       lede="Capability entries shown on the homepage and capabilities pages."
-      render={(onConfigured) => <AdminServices onConfigured={onConfigured} />}
     />
   );
 }

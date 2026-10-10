@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import { AdminMedia } from '../../../components/admin/admin-media';
 import { AdminRoute } from '../../../components/admin/admin-route';
 import { getAdminSession } from '../../../server/session';
 
@@ -18,7 +17,6 @@ export default async function AdminMediaPage() {
       kicker="Assets"
       title="Media library"
       lede="Upload and manage images used across the public site."
-      render={(onConfigured) => <AdminMedia onConfigured={onConfigured} />}
     />
   );
 }
