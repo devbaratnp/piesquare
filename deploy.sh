@@ -22,7 +22,9 @@ NODE_VERSION="${CPANEL_NODE_VERSION:-20}"
 NODE_ENV_ACTIVATE="${NODE_ENV_ACTIVATE:-$HOME_DIR/nodevenv/$REPO_RELATIVE/$NODE_VERSION/bin/activate}"
 if [ -f "$NODE_ENV_ACTIVATE" ]; then
   # shellcheck disable=SC1090
+  set +u
   source "$NODE_ENV_ACTIVATE"
+  set -u
 fi
 if ! command -v npm >/dev/null 2>&1; then
   echo "npm is not available. Set NODE_ENV_ACTIVATE to the cPanel Node.js environment." >&2
