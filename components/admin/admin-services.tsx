@@ -1,16 +1,18 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { AdminNotice, adminFetch, focusEditor } from './admin-shared';
+import { AdminModal, AdminNotice, adminFetch } from './admin-shared';
 
 type Service = { id: number; slug: string; title: string; summary: string; sort_order: number; status: string };
+type ServiceDraft = { slug: string; title: string; summary: string; sortOrder: number; status: string };
 
-const emptyService = { slug: '', title: '', summary: '', sortOrder: 0, status: 'PUBLISHED' };
+const emptyService: ServiceDraft = { slug: '', title: '', summary: '', sortOrder: 0, status: 'PUBLISHED' };
 
 export function AdminServices({ onConfigured }: { onConfigured: (value: boolean | null) => void }) {
   const [services, setServices] = useState<Service[]>([]);
-  const [draft, setDraft] = useState(emptyService);
+  const [draft, setDraft] = useState<ServiceDraft>(emptyService);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [editorOpen, setEditorOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [pending, setPending] = useState(false);
@@ -41,6 +43,26 @@ export function AdminServices({ onConfigured }: { onConfigured: (value: boolean 
     };
   }, [load]);
 
+  function startCreate() {
+    setEditingId(null);
+    setDraft(emptyService);
+    setError('');
+    setEditorOpen(true);
+  }
+
+  function edit(service: Service) {
+    setEditingId(service.id);
+    setDraft({
+      slug: service.slug,
+      title: service.title,
+      summary: service.summary,
+      sortOrder: service.sort_order,
+      status: service.status === 'DRAFT' ? 'DRAFT' : 'PUBLISHED',
+    });
+    setError('');
+    setEditorOpen(true);
+  }
+
   async function save(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (pending) return;
@@ -58,21 +80,17 @@ export function AdminServices({ onConfigured }: { onConfigured: (value: boolean 
         setError(typeof payload.message === 'string' ? payload.message : 'Service could not be saved.');
         return;
       }
+      const wasEditing = Boolean(editingId);
       setDraft(emptyService);
       setEditingId(null);
-      setMessage(editingId ? 'Service updated.' : 'Service saved.');
+      setEditorOpen(false);
+      setMessage(wasEditing ? 'Service updated.' : 'Service saved.');
       await load();
     } catch {
       setError('Network request failed.');
     } finally {
       setPending(false);
     }
-  }
-
-  function edit(service: Service) {
-    setEditingId(service.id);
-    setDraft({ slug: service.slug, title: service.title, summary: service.summary, sortOrder: service.sort_order, status: service.status === 'DRAFT' ? 'DRAFT' : 'PUBLISHED' });
-    focusEditor('#service-editor');
   }
 
   async function archive(id: number) {
@@ -95,42 +113,64 @@ export function AdminServices({ onConfigured }: { onConfigured: (value: boolean 
           <div>
             <p className="admin-kicker">Capabilities</p>
             <h2>Services ({services.length})</h2>
+            <p className="admin-panel__lede">Keep the offer clear, ordered, and ready for the public site.</p>
           </div>
+          <button className="admin-cta" type="button" onClick={startCreate}>Add service <span aria-hidden="true">＋</span></button>
         </div>
         {loading ? (
           <p className="admin-hint">Loading services…</p>
         ) : services.length === 0 ? (
-          <p className="admin-hint">No services yet. Add the first one below.</p>
+          <div className="admin-empty-state">
+            <strong>No services yet.</strong>
+            <p>Add the first capability so visitors know what Pie Square can deliver.</p>
+            <button className="admin-secondary-button" type="button" onClick={startCreate}>Create first service</button>
+          </div>
         ) : (
-          <div className="admin-service-list">
-            {services.map((service) => (
-              <article key={service.id}>
-                <div>
-                  <strong>{service.title}</strong>
-                  <p>{service.summary}</p>
-                  <small>{service.status} · order {service.sort_order}</small>
+          <div className="admin-record-grid">
+            {services.map((service, index) => (
+              <article className="admin-record-card" key={service.id}>
+                <div className="admin-record-card__topline">
+                  <span className="admin-record-card__index">{String(index + 1).padStart(2, '0')}</span>
+                  <span className={`admin-status-badge ${service.status === 'PUBLISHED' ? 'is-live' : 'is-draft'}`}>{service.status}</span>
                 </div>
-                <div className="admin-row-actions">
-                  <button className="admin-text-button" type="button" onClick={() => edit(service)}>Edit</button>
-                  <button className="admin-text-button" type="button" onClick={() => archive(service.id)}>Archive</button>
+                <div className="admin-record-card__body">
+                  <p className="admin-kicker">{service.slug}</p>
+                  <h3>{service.title}</h3>
+                  <p>{service.summary}</p>
+                </div>
+                <div className="admin-record-card__meta">
+                  <span>Display order {service.sort_order}</span>
+                  <div className="admin-row-actions">
+                    <button className="admin-text-button" type="button" onClick={() => edit(service)}>Edit</button>
+                    <button className="admin-text-button" type="button" onClick={() => archive(service.id)}>Archive</button>
+                  </div>
                 </div>
               </article>
             ))}
           </div>
         )}
-        <form className="admin-service-form" id="service-editor" onSubmit={save} aria-busy={pending}>
-          <h3>{editingId ? 'Edit service' : 'Add a service'}</h3>
-          <label>Slug<input required value={draft.slug} onChange={(event) => setDraft({ ...draft, slug: event.target.value })} placeholder="new-service" /></label>
-          <label>Title<input required value={draft.title} onChange={(event) => setDraft({ ...draft, title: event.target.value })} /></label>
-          <label>Summary<textarea required value={draft.summary} onChange={(event) => setDraft({ ...draft, summary: event.target.value })} /></label>
-          <label>Sort order<input type="number" value={draft.sortOrder} onChange={(event) => setDraft({ ...draft, sortOrder: Number(event.target.value) })} /></label>
-          <label>Status<select value={draft.status} onChange={(event) => setDraft({ ...draft, status: event.target.value })}><option>PUBLISHED</option><option>DRAFT</option></select></label>
-          <div className="admin-row-actions">
+      </section>
+      <AdminModal
+        open={editorOpen}
+        eyebrow="Capability editor"
+        title={editingId ? 'Edit service' : 'Add a service'}
+        description="Short, focused records keep the public capability rail easy to scan."
+        onClose={() => setEditorOpen(false)}
+      >
+        <form className="admin-modal-form" onSubmit={save} aria-busy={pending}>
+          <div className="admin-form-grid">
+            <label>Slug<input required value={draft.slug} onChange={(event) => setDraft({ ...draft, slug: event.target.value })} placeholder="new-service" /></label>
+            <label>Title<input required value={draft.title} onChange={(event) => setDraft({ ...draft, title: event.target.value })} /></label>
+            <label className="admin-form-grid__wide">Summary<textarea required value={draft.summary} onChange={(event) => setDraft({ ...draft, summary: event.target.value })} /></label>
+            <label>Sort order<input type="number" value={draft.sortOrder} onChange={(event) => setDraft({ ...draft, sortOrder: Number(event.target.value) })} /></label>
+            <label>Status<select value={draft.status} onChange={(event) => setDraft({ ...draft, status: event.target.value })}><option>PUBLISHED</option><option>DRAFT</option></select></label>
+          </div>
+          <div className="admin-modal-form__actions">
             <button className="button button--dark" type="submit" disabled={pending}>{pending ? 'Saving…' : editingId ? 'Update service' : 'Add service'}</button>
-            {editingId && <button className="button button--ghost" type="button" onClick={() => { setEditingId(null); setDraft(emptyService); }}>Cancel</button>}
+            <button className="button button--ghost" type="button" onClick={() => setEditorOpen(false)}>Cancel</button>
           </div>
         </form>
-      </section>
+      </AdminModal>
     </>
   );
 }

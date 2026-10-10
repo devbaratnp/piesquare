@@ -16,6 +16,7 @@ type AdminShellProps = {
 
 export function AdminShell({ active, kicker, title, lede, configured, children }: AdminShellProps) {
   const router = useRouter();
+  const activeItem = ADMIN_NAV.find((item) => item.key === active) ?? ADMIN_NAV[0];
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -74,41 +75,62 @@ export function AdminShell({ active, kicker, title, lede, configured, children }
     <div className="admin-shell">
       <a className="admin-skip-link" href="#admin-content">Skip to content</a>
       <div className="admin-topbar">
-        <Link className="admin-brand" href="/">Pie Square <span>Content studio</span></Link>
-        <button
-          ref={toggleRef}
-          className="admin-menu-button"
-          type="button"
-          aria-expanded={open}
-          aria-controls="admin-drawer"
-          aria-label={open ? 'Close admin menu' : 'Open admin menu'}
-          onClick={() => setOpen((value) => !value)}
-        >
-          <span aria-hidden="true">{open ? '✕' : '☰'}</span>
-        </button>
+        <div className="admin-topbar__context">
+          <Link className="admin-topbar__brand" href="/" aria-label="Open public site">PS</Link>
+          <span className="admin-topbar__crumb">Operations</span>
+          <span className="admin-topbar__slash">/</span>
+          <strong>{activeItem.label}</strong>
+        </div>
+        <div className="admin-topbar__meta">
+          <span className="admin-pulse" aria-hidden="true" />
+          <span>{configured ? 'Live database' : configured === false ? 'Setup required' : 'Checking status'}</span>
+          <button
+            ref={toggleRef}
+            className="admin-menu-button"
+            type="button"
+            aria-expanded={open}
+            aria-controls="admin-drawer"
+            aria-label={open ? 'Close admin menu' : 'Open admin menu'}
+            onClick={() => setOpen((value) => !value)}
+          >
+            <span aria-hidden="true">{open ? '✕' : '☰'}</span>
+          </button>
+        </div>
       </div>
       <aside className="admin-sidebar">
-        <Link className="admin-brand" href="/">Pie Square <span>Content studio</span></Link>
+        <div className="admin-sidebar__masthead">
+          <Link className="admin-brand" href="/" aria-label="Pie Square public site">
+            <span className="admin-brand__mark">PS</span>
+            <span><strong>Pie Square</strong><small>Content studio</small></span>
+          </Link>
+          <span className="admin-mode">Operations</span>
+        </div>
+        <p className="admin-sidebar__label">Workspace</p>
         <nav aria-label="Admin navigation">
-          {ADMIN_NAV.map((item) => (
+          {ADMIN_NAV.map((item, index) => (
             <Link key={item.key} className={item.key === active ? 'is-active' : undefined} aria-current={item.key === active ? 'page' : undefined} href={item.href}>
-              {item.label}
+              <span className="admin-nav-index">{String(index + 1).padStart(2, '0')}</span>
+              <span className="admin-nav-copy"><strong>{item.label}</strong><small>{item.description}</small></span>
             </Link>
           ))}
           <Link href="/projects">View public site</Link>
         </nav>
-        <button className="admin-logout" type="button" onClick={logout}>Log out</button>
+        <div className="admin-sidebar__footer">
+          <p><span className="admin-pulse" aria-hidden="true" />Single operator</p>
+          <button className="admin-logout" type="button" onClick={logout}>Log out</button>
+        </div>
       </aside>
       <div className="admin-backdrop" data-open={open} aria-hidden="true" onClick={close} />
       <div ref={panelRef} id="admin-drawer" className="admin-drawer" data-open={open} role="dialog" aria-modal="true" aria-label="Admin navigation" aria-hidden={!open}>
         <div className="admin-drawer__head">
-          <span className="admin-brand">Pie Square <span>Content studio</span></span>
+          <span className="admin-brand"><span className="admin-brand__mark">PS</span><span><strong>Pie Square</strong><small>Operations</small></span></span>
           <button className="admin-menu-button" type="button" aria-label="Close admin menu" onClick={close}>✕</button>
         </div>
         <nav aria-label="Admin navigation">
-          {ADMIN_NAV.map((item) => (
+          {ADMIN_NAV.map((item, index) => (
             <Link key={item.key} className={item.key === active ? 'is-active' : undefined} aria-current={item.key === active ? 'page' : undefined} href={item.href} onClick={close} tabIndex={open ? 0 : -1}>
-              {item.label}
+              <span className="admin-nav-index">{String(index + 1).padStart(2, '0')}</span>
+              <span className="admin-nav-copy"><strong>{item.label}</strong><small>{item.description}</small></span>
             </Link>
           ))}
           <Link href="/projects" onClick={close} tabIndex={open ? 0 : -1}>View public site</Link>
@@ -117,14 +139,15 @@ export function AdminShell({ active, kicker, title, lede, configured, children }
       </div>
       <main className="admin-main" id="admin-content" tabIndex={-1}>
         <header className="admin-header">
-          <div>
+          <div className="admin-header__copy">
             <p className="admin-kicker">{kicker}</p>
             <h1>{title}</h1>
             <p>{lede}</p>
           </div>
-          <div className="admin-status">
-            <span className={configured ? 'is-ready' : 'is-warning'}>{configured === null ? 'Checking database…' : configured ? 'MySQL connected' : 'Database setup required'}</span>
-            <span>Admin session active</span>
+          <div className="admin-header__signal">
+            <span className="admin-header__signal-label">Current workspace</span>
+            <strong>{activeItem.label}</strong>
+            <span className={configured ? 'admin-status is-ready' : 'admin-status is-warning'}>{configured === null ? 'Checking database…' : configured ? 'MySQL connected' : 'Database setup required'}</span>
           </div>
         </header>
         {children}

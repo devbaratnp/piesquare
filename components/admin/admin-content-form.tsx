@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { AdminNotice, adminFetch } from './admin-shared';
 
@@ -81,7 +82,8 @@ export function AdminContentForm({ onConfigured }: { onConfigured: (value: boole
             <h2>Public content settings</h2>
           </div>
         </div>
-        <div className="admin-form-grid">
+        <div className="admin-content-layout">
+          <div className="admin-form-grid">
           <label>Eyebrow<input value={hero.eyebrow} onChange={(event) => setHero({ ...hero, eyebrow: event.target.value })} /></label>
           <label>Headline lines, separated with <code>|</code><input value={hero.title} onChange={(event) => setHero({ ...hero, title: event.target.value })} /></label>
           <label>Hero support line<input value={hero.subtitle} onChange={(event) => setHero({ ...hero, subtitle: event.target.value })} /></label>
@@ -98,6 +100,15 @@ export function AdminContentForm({ onConfigured }: { onConfigured: (value: boole
           <label>About introduction<textarea value={about.intro} onChange={(event) => setAbout({ ...about, intro: event.target.value })} /></label>
           <label>Vision<textarea value={about.vision} onChange={(event) => setAbout({ ...about, vision: event.target.value })} /></label>
           <label>Mission<textarea value={about.mission} onChange={(event) => setAbout({ ...about, mission: event.target.value })} /></label>
+          </div>
+          <aside className="admin-image-preview" aria-label="Live hero image preview">
+            <div className="admin-image-preview__media">
+              {hero.image ? <Image src={hero.image} alt="Current hero visual" fill sizes="(max-width: 900px) 100vw, 360px" /> : <div className="admin-image-preview__fallback">Add a hero image path to preview it here.</div>}
+            </div>
+            <p className="admin-kicker">Live visual</p>
+            <h3>{hero.title.split('|')[0] || 'Hero headline'}</h3>
+            <p>{hero.subtitle || 'Hero support copy will appear here.'}</p>
+          </aside>
         </div>
         <div className="admin-save-bar">
           <button className="button button--primary" type="submit" disabled={pending}>{pending ? 'Saving…' : 'Save changes'}</button>
