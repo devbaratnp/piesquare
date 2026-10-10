@@ -17,6 +17,7 @@ describe('SiteFooter', () => {
     expect(screen.getByRole('link', { name: /company profile/i })).toHaveAttribute('href', '/resources/pie-square-company-profile-2026.pdf');
     expect(screen.getByRole('link', { name: /call pie square technologies/i })).toHaveAttribute('href', siteContact.phoneHref);
     expect(screen.getByRole('link', { name: /message pie square technologies on whatsapp/i })).toHaveAttribute('href', 'https://wa.me/9779715000715');
+    expect(screen.getByRole('link', { name: /powered by jigri tools/i })).toHaveAttribute('href', 'https://jigritools.com/');
     expect(screen.getByTestId('phone-icon')).toBeInTheDocument();
     expect(screen.getByTestId('whatsapp-icon')).toBeInTheDocument();
   });

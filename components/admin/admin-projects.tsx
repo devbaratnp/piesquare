@@ -19,6 +19,8 @@ function ProjectImage({ src, alt }: { src: string | null | undefined; alt: strin
 export function AdminProjects({ onConfigured }: { onConfigured: (value: boolean | null) => void }) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [draft, setDraft] = useState<ProjectDraft>(emptyProject);
+  const [projectImageFile, setProjectImageFile] = useState<File | null>(null);
+  const [projectImagePreview, setProjectImagePreview] = useState('');
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editorOpen, setEditorOpen] = useState(false);
   const [message, setMessage] = useState('');
@@ -51,15 +53,39 @@ export function AdminProjects({ onConfigured }: { onConfigured: (value: boolean 
     };
   }, [load]);
 
+  useEffect(() => () => {
+    if (projectImagePreview) URL.revokeObjectURL(projectImagePreview);
+  }, [projectImagePreview]);
+
+  function clearProjectImageSelection() {
+    if (projectImagePreview) URL.revokeObjectURL(projectImagePreview);
+    setProjectImageFile(null);
+    setProjectImagePreview('');
+  }
+
+  function selectProjectImage(file: File | undefined) {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setError('Choose a JPG, PNG, WebP, GIF or AVIF image.');
+      return;
+    }
+    if (projectImagePreview) URL.revokeObjectURL(projectImagePreview);
+    setError('');
+    setProjectImageFile(file);
+    setProjectImagePreview(URL.createObjectURL(file));
+  }
+
   function startCreate() {
     setEditingId(null);
     setDraft(emptyProject);
+    clearProjectImageSelection();
     setError('');
     setEditorOpen(true);
   }
 
   function edit(project: Project) {
     setEditingId(project.id);
+    clearProjectImageSelection();
     setDraft({
       slug: project.slug,
       title: project.title,
@@ -87,10 +113,23 @@ export function AdminProjects({ onConfigured }: { onConfigured: (value: boolean 
     setPending(true);
     try {
       const endpoint = editingId ? `/api/admin/projects/${editingId}` : '/api/admin/projects';
+      let featuredImage = draft.featuredImage;
+      if (projectImageFile) {
+        const imageForm = new FormData();
+        imageForm.set('file', projectImageFile);
+        imageForm.set('altText', draft.title || 'Project image');
+        const imageResponse = await fetch('/api/admin/media', { method: 'POST', body: imageForm });
+        const imagePayload = (await imageResponse.json().catch(() => ({}))) as { message?: string; path?: string };
+        if (!imageResponse.ok || !imagePayload.path) {
+          setError(imagePayload.message ?? 'Project image could not be uploaded.');
+          return;
+        }
+        featuredImage = imagePayload.path;
+      }
       const { ok, payload } = await adminFetch(endpoint, {
         method: editingId ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(draft),
+        body: JSON.stringify({ ...draft, featuredImage }),
       });
       if (!ok) {
         setError(typeof payload.message === 'string' ? payload.message : 'Project could not be saved.');
@@ -98,6 +137,7 @@ export function AdminProjects({ onConfigured }: { onConfigured: (value: boolean 
       }
       const wasEditing = Boolean(editingId);
       setDraft(emptyProject);
+      clearProjectImageSelection();
       setEditingId(null);
       setEditorOpen(false);
       setMessage(wasEditing ? 'Project updated.' : 'Project created.');
@@ -119,6 +159,11 @@ export function AdminProjects({ onConfigured }: { onConfigured: (value: boolean 
     }
     setMessage('Project archived.');
     await load();
+  }
+
+  function closeEditor() {
+    clearProjectImageSelection();
+    setEditorOpen(false);
   }
 
   return (
@@ -169,13 +214,13 @@ export function AdminProjects({ onConfigured }: { onConfigured: (value: boolean 
         eyebrow="Portfolio editor"
         title={editingId ? 'Edit project' : 'Add a project'}
         description="Add a clear visual, then give the project enough context to stand on its own."
-        onClose={() => setEditorOpen(false)}
+        onClose={closeEditor}
       >
         <form className="admin-modal-form" onSubmit={save} aria-busy={pending}>
           <div className="admin-project-editor">
             <div className="admin-project-editor__preview">
-              <ProjectImage src={draft.featuredImage || null} alt={draft.title || 'Project preview'} />
-              <span>Live image preview</span>
+              <ProjectImage src={projectImagePreview || draft.featuredImage || null} alt={draft.title || 'Project preview'} />
+              <span>{projectImageFile ? `Selected from device · ${projectImageFile.name}` : 'Current project image preview'}</span>
             </div>
             <div className="admin-project-editor__fields">
               <div className="admin-form-grid">
@@ -185,7 +230,8 @@ export function AdminProjects({ onConfigured }: { onConfigured: (value: boolean 
                 <label>Status<select value={draft.status} onChange={(event) => setDraft({ ...draft, status: event.target.value })}><option>DRAFT</option><option>PUBLISHED</option><option>ARCHIVED</option></select></label>
                 <label className="admin-form-grid__wide">Short description<textarea required value={draft.shortDescription} onChange={(event) => setDraft({ ...draft, shortDescription: event.target.value })} /></label>
                 <label className="admin-form-grid__wide">Full description<textarea value={draft.fullDescription} onChange={(event) => setDraft({ ...draft, fullDescription: event.target.value })} /></label>
-                <label className="admin-form-grid__wide">Featured image path<input value={draft.featuredImage} inputMode="url" onChange={(event) => setDraft({ ...draft, featuredImage: event.target.value })} placeholder="/media/uploads/example.jpg" /></label>
+                <label className="admin-form-grid__wide admin-file-field">Project image from device<input type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" onChange={(event) => selectProjectImage(event.target.files?.[0])} /><span>{projectImageFile ? 'This file will be uploaded when you save the project.' : 'Choose a file from this device to replace the current image.'}</span></label>
+                <label className="admin-form-grid__wide">Image path or URL<input value={draft.featuredImage} inputMode="url" onChange={(event) => { if (projectImageFile) clearProjectImageSelection(); setDraft({ ...draft, featuredImage: event.target.value }); }} placeholder="/media/uploads/example.jpg" /></label>
                 <label>Client<input value={draft.clientName} onChange={(event) => setDraft({ ...draft, clientName: event.target.value })} /></label>
                 <label>Location<input value={draft.location} onChange={(event) => setDraft({ ...draft, location: event.target.value })} /></label>
                 <label>Completion info<input value={draft.completionInfo} onChange={(event) => setDraft({ ...draft, completionInfo: event.target.value })} /></label>
@@ -196,8 +242,8 @@ export function AdminProjects({ onConfigured }: { onConfigured: (value: boolean 
             </div>
           </div>
           <div className="admin-modal-form__actions">
-            <button className="button button--dark" type="submit" disabled={pending}>{pending ? 'Saving…' : editingId ? 'Update project' : 'Create project'}</button>
-            <button className="button button--ghost" type="button" onClick={() => setEditorOpen(false)}>Cancel</button>
+            <button className="button button--dark" type="submit" disabled={pending}>{pending ? projectImageFile ? 'Uploading & saving…' : 'Saving…' : editingId ? 'Update project' : 'Create project'}</button>
+            <button className="button button--ghost" type="button" onClick={closeEditor}>Cancel</button>
           </div>
         </form>
       </AdminModal>

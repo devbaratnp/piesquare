@@ -5,12 +5,12 @@ import Page from './page';
 afterEach(() => cleanup());
 
 describe('home page field atlas', () => {
-  it('credits iSoftro with a linked footer credit', async () => {
+  it('credits Jigri Tools with a linked footer credit', async () => {
     render(await Page());
 
-    const agencyLink = screen.getByRole('link', { name: /powered by isoftro/i });
-    expect(agencyLink).toHaveAttribute('href', 'https://isoftro.com');
-    expect(agencyLink).toHaveTextContent('Powered by iSoftro');
+    const agencyLink = screen.getByRole('link', { name: /powered by jigri tools/i });
+    expect(agencyLink).toHaveAttribute('href', 'https://jigritools.com/');
+    expect(agencyLink).toHaveTextContent('Powered by Jigri Tools');
   });
 
   it('renders the new section sequence with one hero heading and working navigation', async () => {

@@ -58,14 +58,14 @@ export function SiteFooter({ contact = siteContact }: { contact?: SiteFooterCont
         </nav>
         <a
           className="site-footer__powered-by"
-          href="https://isoftro.com"
+          href="https://jigritools.com/"
           target="_blank"
           rel="noreferrer"
-          aria-label="Powered by iSoftro"
+          aria-label="Powered by Jigri Tools"
         >
           <span>Powered by</span>
           {' '}
-          <strong>iSoftro</strong>
+          <strong>Jigri Tools</strong>
         </a>
         <span className="site-footer__legal">© 2026 Pie Square Technologies / All Rights Reserved.</span>
       </div>

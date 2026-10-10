@@ -7580,7 +7580,7 @@ body {
 
 .admin-project-editor {
   display: grid;
-  grid-template-columns: minmax(180px, .65fr) minmax(0, 1.35fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
 }
 
@@ -7598,7 +7598,35 @@ body {
 }
 
 .admin-project-editor__preview .admin-project-card__media {
-  min-height: 250px;
+  min-height: 330px;
+  aspect-ratio: 16 / 8;
+}
+
+.admin-project-editor__preview .admin-project-card__image {
+  object-fit: contain;
+  background: var(--admin-night-elevated);
+}
+
+.admin-project-editor__preview .admin-project-card__fallback {
+  min-height: 330px;
+}
+
+.admin-file-field {
+  gap: 8px;
+}
+
+.admin-file-field input[type='file'] {
+  min-height: auto;
+  padding: 12px;
+  border-style: dashed;
+  cursor: pointer;
+}
+
+.admin-file-field span {
+  color: var(--steel);
+  font: 10px/1.4 var(--mono);
+  letter-spacing: .04em;
+  text-transform: none;
 }
 
 .admin-content-layout,
@@ -7928,6 +7956,11 @@ body {
   .admin-overview-visual__layout,
   .admin-project-editor {
     grid-template-columns: 1fr;
+  }
+
+  .admin-project-editor__preview .admin-project-card__media,
+  .admin-project-editor__preview .admin-project-card__fallback {
+    min-height: 240px;
   }
 
   .admin-media-uploader__controls {
