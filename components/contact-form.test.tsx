@@ -1,5 +1,5 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ContactForm } from './contact-form';
 
 afterEach(cleanup);
@@ -12,16 +12,21 @@ describe('ContactForm', () => {
       expect(screen.getByLabelText(new RegExp(label, 'i'))).toBeInTheDocument();
     }
     expect(screen.getByRole('button', { name: /submit request/i })).toBeInTheDocument();
-    expect(screen.getByText(/no backend submission is connected/i)).toBeInTheDocument();
+    expect(screen.getByText(/appears in the admin inbox/i)).toBeInTheDocument();
   });
 
-  it('does not claim an inquiry was sent', () => {
+  it('submits an inquiry to the contact endpoint', async () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
+      ok: true,
+      json: async () => ({ message: 'Thanks — your message was sent.' }),
+    } as Response);
     render(<ContactForm />);
 
     fireEvent.submit(screen.getByRole('form', { name: /project inquiry/i }));
 
-    expect(screen.getByRole('status')).toHaveTextContent(/nothing was sent/i);
-    expect(screen.queryByText(/thank you/i)).not.toBeInTheDocument();
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith('/api/contact', expect.objectContaining({ method: 'POST' })));
+    expect(screen.getByRole('status')).toHaveTextContent(/your message was sent/i);
+    fetchMock.mockRestore();
   });
 
   it('requires phone details on general messages', () => {

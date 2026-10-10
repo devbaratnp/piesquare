@@ -8,7 +8,8 @@ type ContactFormProps = Readonly<{
 }>;
 
 export function ContactForm({ variant = 'quote' }: ContactFormProps) {
-  const [attempted, setAttempted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
+  const [message, setMessage] = useState('');
   const isMessage = variant === 'message';
   const isSurvey = variant === 'survey';
   const ariaLabel = isMessage ? 'General message form' : isSurvey ? 'Site survey form' : 'Project inquiry form';
@@ -17,11 +18,31 @@ export function ContactForm({ variant = 'quote' }: ContactFormProps) {
     <form
       className={`contact-form contact-form--${variant}`}
       aria-label={ariaLabel}
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
-        setAttempted(true);
+        setStatus('sending');
+        setMessage('');
+        const formElement = event.currentTarget;
+        const form = new FormData(formElement);
+        form.set('kind', variant);
+        try {
+          const response = await fetch('/api/contact', { method: 'POST', body: form });
+          const payload = await response.json().catch(() => ({})) as { message?: string };
+          if (!response.ok) {
+            setStatus('error');
+            setMessage(payload.message ?? 'Your message could not be sent.');
+            return;
+          }
+          setStatus('done');
+          setMessage(payload.message ?? 'Thanks — your message was sent. We will be in touch soon.');
+          formElement.reset();
+        } catch {
+          setStatus('error');
+          setMessage('Network error. Please try again or email us directly.');
+        }
       }}
     >
+      <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px' }} />
       <label>Name *<input name="name" autoComplete="name" required /></label>
       {!isMessage && <label>Company<input name="company" autoComplete="organization" /></label>}
       <label>Phone *<input name="phone" type="tel" autoComplete="tel" required /></label>
@@ -53,12 +74,10 @@ export function ContactForm({ variant = 'quote' }: ContactFormProps) {
       )}
 
       <div className="full">
-        <button className="button button--primary" type="submit">{isMessage ? 'Send Message' : isSurvey ? 'Request Site Survey' : 'Submit Request'} ↗</button>
+        <button className="button button--primary" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : isMessage ? 'Send Message' : isSurvey ? 'Request Site Survey' : 'Submit Request'} ↗</button>
       </div>
-      <p className="contact-form__note" role={attempted ? 'status' : undefined}>
-        {attempted
-          ? 'This form is not connected, so nothing was sent. Please use the direct email or phone links above.'
-          : 'No backend submission is connected yet. Your direct email and phone options are listed above.'}
+      <p className="contact-form__note" role={status === 'error' ? 'alert' : status !== 'idle' ? 'status' : undefined}>
+        {status === 'idle' ? 'Your message goes to the Pie Square team and appears in the admin inbox.' : message}
       </p>
     </form>
   );

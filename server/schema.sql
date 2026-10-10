@@ -184,3 +184,19 @@ CREATE TABLE IF NOT EXISTS job_applications (
   INDEX job_applications_status_created (status, created_at),
   INDEX job_applications_role (role_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS contact_messages (
+  id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  kind VARCHAR(20) NOT NULL DEFAULT 'MESSAGE',
+  name VARCHAR(190) NOT NULL,
+  company VARCHAR(190) NULL,
+  phone VARCHAR(60) NOT NULL,
+  email VARCHAR(190) NOT NULL,
+  message LONGTEXT NULL,
+  details TEXT NULL,
+  attachments TEXT NULL,
+  status ENUM('NEW', 'READ', 'ARCHIVED') NOT NULL DEFAULT 'NEW',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX contact_messages_status_created (status, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

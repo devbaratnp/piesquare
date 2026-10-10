@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { careerRoles, generalCareerApplication, siteContact } from '@/data/site';
 
 function ApplicationForm({ roleId, desiredDefault, email, id }: { roleId: string; desiredDefault: string; email: string; id: string }) {
+  const positionLabel = desiredDefault || 'General Application';
   const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
@@ -11,9 +12,10 @@ function ApplicationForm({ roleId, desiredDefault, email, id }: { roleId: string
     event.preventDefault();
     setStatus('sending');
     setMessage('');
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     form.set('roleId', roleId);
-    if (!String(form.get('desiredPosition') ?? '').trim()) form.set('desiredPosition', desiredDefault);
+    if (!String(form.get('desiredPosition') ?? '').trim()) form.set('desiredPosition', positionLabel);
     try {
       const response = await fetch('/api/applications', { method: 'POST', body: form });
       const payload = await response.json().catch(() => ({}));
@@ -23,8 +25,8 @@ function ApplicationForm({ roleId, desiredDefault, email, id }: { roleId: string
         return;
       }
       setStatus('done');
-      setMessage('Application received. We will contact you if your profile matches.');
-      event.currentTarget.reset();
+      setMessage(payload.message ?? 'Application received. We will contact you if your profile matches.');
+      formElement.reset();
     } catch {
       setStatus('error');
       setMessage('Network error. Please try again or email us directly.');
@@ -32,7 +34,7 @@ function ApplicationForm({ roleId, desiredDefault, email, id }: { roleId: string
   }
 
   return (
-    <form className="career-apply-form" aria-label={`Apply for ${desiredDefault}`} onSubmit={onSubmit}>
+    <form className="career-apply-form" aria-label={`Apply for ${positionLabel}`} onSubmit={onSubmit}>
       <label>Name<input name="name" autoComplete="name" required /></label>
       <label>Phone<input name="phone" type="tel" autoComplete="tel" required /></label>
       <label>Email<input name="email" type="email" autoComplete="email" required /></label>
@@ -42,9 +44,9 @@ function ApplicationForm({ roleId, desiredDefault, email, id }: { roleId: string
       <input name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px' }} />
       <div className="career-apply-form__actions">
         <button className="button button--primary" type="submit" disabled={status === 'sending'}>
-          {status === 'sending' ? 'Sending…' : `Apply for ${desiredDefault} ↗`}
+          {status === 'sending' ? 'Sending…' : desiredDefault ? `Apply for ${desiredDefault} ↗` : 'Send your CV ↗'}
         </button>
-        <a className="career-apply-form__fallback" href={`mailto:${email}?subject=${encodeURIComponent(`Application: ${desiredDefault} - Pie Square Technologies`)}`}>
+        <a className="career-apply-form__fallback" href={`mailto:${email}?subject=${encodeURIComponent(`Application: ${positionLabel} - Pie Square Technologies`)}`}>
           or email directly
         </a>
       </div>

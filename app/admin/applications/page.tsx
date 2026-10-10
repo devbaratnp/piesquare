@@ -16,7 +16,7 @@ export default async function AdminApplicationsPage() {
       active="applications"
       kicker="Hiring"
       title="Applications"
-      lede="Review job applications and manage CV files."
+      lede="Review contact messages, project enquiries, site surveys, and job applications in one inbox."
     />
   );
 }

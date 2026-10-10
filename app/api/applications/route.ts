@@ -4,6 +4,7 @@ import path from 'node:path';
 import { NextResponse } from 'next/server';
 import { execute, getPool } from '@/server/db';
 import { CV_MIME_TYPES, validateApplication, validateCv } from '@/server/applications';
+import { publicUrl, sendMail } from '@/server/mail';
 
 export const runtime = 'nodejs';
 
@@ -54,7 +55,24 @@ export async function POST(request: Request) {
       'INSERT INTO job_applications (role_id, name, phone, email, desired_position, message, cv_filename, cv_path, cv_mime, cv_size_bytes, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, \'NEW\')',
       [value.roleId, value.name, value.phone, value.email, value.desiredPosition, value.message ?? null, cv.file.name.slice(0, 255), relativePath, cv.file.type, cv.file.size],
     );
-    return NextResponse.json({ ok: true }, { status: 201 });
+    const emailSent = await sendMail({
+      subject: `[Pie Square] New job application: ${value.desiredPosition}`,
+      replyTo: value.email,
+      text: [
+        'New job application',
+        '',
+        `Name: ${value.name}`,
+        `Phone: ${value.phone}`,
+        `Email: ${value.email}`,
+        `Role: ${value.desiredPosition}`,
+        `Role ID: ${value.roleId}`,
+        '',
+        `Message: ${value.message || '—'}`,
+        '',
+        `CV: ${publicUrl(relativePath, request.url)}`,
+      ].join('\n'),
+    });
+    return NextResponse.json({ ok: true, emailSent, message: emailSent ? 'Application received. We will contact you if your profile matches.' : 'Application received, but the email notification could not be sent.' }, { status: 201 });
   } catch {
     await unlink(absolutePath).catch(() => undefined);
     return NextResponse.json({ message: 'Application could not be saved.' }, { status: 500 });

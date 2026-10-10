@@ -44,7 +44,7 @@ Supplied project proof is under `public/media/projects/`, and the supplied compa
 
 Keep effects reversible, preserve reduced-motion behavior, use optimized `next/image` assets, and test anchors, image loading, mobile overflow, keyboard access, and console errors before opening a pull request. See `AGENTS.md` for detailed contributor guidance.
 
-The project inquiry and contact forms remain presentation-only by design; direct email, phone, and WhatsApp links remain available on the contact route.
+Project inquiry, general message, site-survey, and career forms save to the admin inbox and notify the configured business email. Direct email, phone, and WhatsApp links remain available on the contact route.
 
 ## CMS and MySQL setup
 
@@ -58,6 +58,6 @@ For the complete setup, migration, deployment, backup, and troubleshooting instr
 3. Create the first administrator with `npm run admin:create -- admin@example.com "a-long-password" "Administrator name"`.
 4. Run `npm run dev` and open `/admin/login`.
 
-Admin routes are protected with an HttpOnly, SameSite cookie containing an HMAC-signed session. Passwords are bcrypt-hashed. The API uses parameterized MySQL statements, validates slugs/statuses, archives services and projects instead of deleting them, validates image uploads, and returns the static public content when the database is unavailable. The dashboard includes Homepage, Services, Projects, and Media modules.
+Admin routes are protected with an HttpOnly, SameSite cookie containing an HMAC-signed session. Passwords are bcrypt-hashed. The API uses parameterized MySQL statements, validates slugs/statuses, archives services and projects instead of deleting them, validates image and form uploads, and returns the static public content when the database is unavailable. The dashboard includes Homepage, Services, Projects, Applications/inbox, and Media modules. Configure `MAIL_TO`, `MAIL_FROM`, and `MAIL_SENDMAIL_PATH` in the production Node.js environment for cPanel notifications.
 
 Client-supplied imagery is stored under `public/media/client/` and is used for fiber deployment, fiber testing, solar plant, transformer, and digital operations surfaces. The original legacy prototype files at the repository root remain untouched.

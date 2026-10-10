@@ -1,6 +1,7 @@
 import { companyAboutIntro, companyAboutTitle, companyMissionCopy, companyVisionTitle, projects, serviceOverview, siteContact, type ProjectRecord } from '@/data/site';
 import { isProjectProgressStatus, type ProjectProgressStatus } from '@/lib/project-progress';
 import { isDatabaseConfigured, queryRows } from './db';
+import { ensureContactMessagesTable } from './contact';
 
 export type HomeHeroContent = Readonly<{
   eyebrow: string;
@@ -151,17 +152,19 @@ export async function getPublicContent(): Promise<PublicContent> {
 
 export async function getAdminSummary() {
   if (!isDatabaseConfigured()) {
-    return { configured: false, services: serviceOverview.length, projects: projects.length, publishedProjects: projects.length, media: 0, updatedAt: null };
+    return { configured: false, services: serviceOverview.length, projects: projects.length, publishedProjects: projects.length, media: 0, inbox: 0, updatedAt: null };
   }
 
   try {
-    const [services, projectCounts, media] = await Promise.all([
+    await ensureContactMessagesTable();
+    const [services, projectCounts, media, inbox] = await Promise.all([
       queryRows<{ total: number } & import('mysql2/promise').RowDataPacket>('SELECT COUNT(*) AS total FROM services WHERE status = \'PUBLISHED\''),
       queryRows<{ total: number; published: number } & import('mysql2/promise').RowDataPacket>('SELECT COUNT(*) AS total, SUM(status = \'PUBLISHED\') AS published FROM projects'),
       queryRows<{ total: number } & import('mysql2/promise').RowDataPacket>('SELECT COUNT(*) AS total FROM media_library'),
+      queryRows<{ total: number } & import('mysql2/promise').RowDataPacket>('SELECT (SELECT COUNT(*) FROM job_applications WHERE status = \'NEW\') + (SELECT COUNT(*) FROM contact_messages WHERE status = \'NEW\') AS total'),
     ]);
-    return { configured: true, services: Number(services[0]?.total ?? 0), projects: Number(projectCounts[0]?.total ?? 0), publishedProjects: Number(projectCounts[0]?.published ?? 0), media: Number(media[0]?.total ?? 0), updatedAt: new Date().toISOString() };
+    return { configured: true, services: Number(services[0]?.total ?? 0), projects: Number(projectCounts[0]?.total ?? 0), publishedProjects: Number(projectCounts[0]?.published ?? 0), media: Number(media[0]?.total ?? 0), inbox: Number(inbox[0]?.total ?? 0), updatedAt: new Date().toISOString() };
   } catch {
-    return { configured: false, services: serviceOverview.length, projects: projects.length, publishedProjects: projects.length, media: 0, updatedAt: null };
+    return { configured: false, services: serviceOverview.length, projects: projects.length, publishedProjects: projects.length, media: 0, inbox: 0, updatedAt: null };
   }
 }

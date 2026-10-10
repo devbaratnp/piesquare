@@ -4532,6 +4532,45 @@ img {
   color: var(--paper-muted);
 }
 
+.admin-message-details {
+  display: grid;
+  gap: 5px;
+  margin: 12px 0 0;
+  color: var(--paper-muted);
+  font-size: 13px;
+}
+
+.admin-message-details div {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-message-details dt {
+  min-width: 110px;
+  color: var(--steel);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.admin-message-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.admin-message-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+
+.admin-message-files a {
+  color: var(--signal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .admin-text-button {
   display: inline-flex;
   flex: none;
