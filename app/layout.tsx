@@ -27,7 +27,11 @@ export const metadata: Metadata = {
   title: "Pie Square Technologies | The signal that builds Nepal",
   description: 'Telecom infrastructure, optical fiber, renewable energy, and digital systems across Nepal.',
   metadataBase: new URL('https://piesquaretechnologies.com'),
-  icons: { icon: '/favicon.svg' },
+  icons: {
+    icon: [{ url: '/media/logos/pie-square-logo-transparent.png', type: 'image/png' }],
+    shortcut: '/media/logos/pie-square-logo-transparent.png',
+    apple: '/media/logos/pie-square-logo-transparent.png',
+  },
   openGraph: {
     title: 'Pie Square Technologies | The signal that builds Nepal',
     description: 'Infrastructure, energy, and digital systems engineered for reliable nationwide connectivity.',

@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { AdminNotice, adminFetch } from './admin-shared';
+import { isUploadedImageSource } from '../../lib/image-source';
 
 type Summary = Record<string, number | boolean | null>;
 type Hero = { title?: string; subtitle?: string; image?: string };
@@ -87,7 +88,7 @@ export function AdminOverview({ onConfigured }: { onConfigured: (value: boolean 
         </div>
         <div className="admin-overview-visual__layout">
           <div className="admin-overview-visual__media">
-            {hero.image ? <Image src={hero.image} alt="Current homepage hero visual" fill sizes="(max-width: 900px) 100vw, 520px" /> : <div className="admin-image-preview__fallback">No hero image is configured yet.</div>}
+            {hero.image ? <Image src={hero.image} alt="Current homepage hero visual" fill sizes="(max-width: 900px) 100vw, 520px" unoptimized={isUploadedImageSource(hero.image)} /> : <div className="admin-image-preview__fallback">No hero image is configured yet.</div>}
           </div>
           <div>
             <p className="admin-kicker">Current headline</p>

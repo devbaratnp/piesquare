@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { AdminNotice, adminFetch } from './admin-shared';
+import { isUploadedImageSource } from '../../lib/image-source';
 
 type Hero = { eyebrow: string; title: string; subtitle: string; ctaText: string; ctaUrl: string; image: string };
 type Contact = { email: string; phone: string; address: string; mapUrl: string; facebook: string; website: string };
@@ -103,7 +104,7 @@ export function AdminContentForm({ onConfigured }: { onConfigured: (value: boole
           </div>
           <aside className="admin-image-preview" aria-label="Live hero image preview">
             <div className="admin-image-preview__media">
-              {hero.image ? <Image src={hero.image} alt="Current hero visual" fill sizes="(max-width: 900px) 100vw, 360px" /> : <div className="admin-image-preview__fallback">Add a hero image path to preview it here.</div>}
+              {hero.image ? <Image src={hero.image} alt="Current hero visual" fill sizes="(max-width: 900px) 100vw, 360px" unoptimized={isUploadedImageSource(hero.image)} /> : <div className="admin-image-preview__fallback">Add a hero image path to preview it here.</div>}
             </div>
             <p className="admin-kicker">Live visual</p>
             <h3>{hero.title.split('|')[0] || 'Hero headline'}</h3>

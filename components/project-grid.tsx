@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { projects as fallbackProjects, type ProjectRecord } from '@/data/site';
+import { isUploadedImageSource } from '@/lib/image-source';
 
 const filters = [
   { label: 'All', category: 'ALL' },
@@ -42,7 +43,7 @@ export function ProjectGrid({ projects = fallbackProjects }: { projects?: Readon
           <Link className="project-card" key={project.id} data-category={project.category} data-project-id={project.id} href={`/projects/${project.id}`}>
             <article className="project-card__article">
               <div className="project-card__image">
-                <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 640px) 100vw, 33vw" />
+                <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 640px) 100vw, 33vw" unoptimized={isUploadedImageSource(project.image)} />
                 <span className={`project-card__status project-card__status--${project.status.toLowerCase()}`}>{project.status}</span>
               </div>
               <div className="project-card__copy">

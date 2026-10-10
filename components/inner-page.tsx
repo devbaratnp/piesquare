@@ -6,6 +6,7 @@ import { SignalLine } from '@/components/signal-line';
 import { FloatingContact } from '@/components/floating-contact';
 import { SiteFooter } from '@/components/site-footer';
 import { siteContact } from '@/data/site';
+import { isUploadedImageSource } from '@/lib/image-source';
 import { buildBreadcrumbJsonLd } from '@/lib/seo';
 
 type InnerPageProps = Readonly<{
@@ -44,7 +45,7 @@ export function InnerPage({ eyebrow, title, lede, justifyLede = false, crumbs, i
             </div>}
             {image && (
               <div className="inner-page__hero-media">
-                <Image src={image} alt={imageAlt} fill sizes="(max-width: 720px) calc(100vw - 36px), (max-width: 1440px) calc(100vw - 8vw), 1296px" priority />
+                <Image src={image} alt={imageAlt} fill sizes="(max-width: 720px) calc(100vw - 36px), (max-width: 1440px) calc(100vw - 8vw), 1296px" priority unoptimized={isUploadedImageSource(image)} />
               </div>
             )}
           </div>

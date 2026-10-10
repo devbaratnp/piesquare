@@ -26,6 +26,7 @@ import {
   type ProjectRecord,
 } from '@/data/site';
 import type { SignalState } from '@/lib/motion';
+import { isUploadedImageSource } from '@/lib/image-source';
 import styles from './home-atlas.module.css';
 
 type HomeHeroContent = Readonly<{
@@ -70,7 +71,7 @@ function HeroScene({ hero }: { hero: HomeHeroContent }) {
   return (
     <SceneShell id="top" state="HERO_TRANSMIT" className={styles.hero}>
       <div className={styles.heroPhoto} aria-hidden="true">
-        <Image src={hero.image} alt="" fill priority sizes="(max-width: 720px) 100vw, 58vw" />
+        <Image src={hero.image} alt="" fill priority sizes="(max-width: 720px) 100vw, 58vw" unoptimized={isUploadedImageSource(hero.image)} />
       </div>
       <div className={styles.heroGrid} aria-hidden="true" />
       <div className={`page-wrap ${styles.heroContent}`}>
@@ -194,7 +195,7 @@ function ProjectsScene({ projects }: { projects: ReadonlyArray<ProjectRecord> })
         <div className={styles.projectGrid}>
           {projects.slice(0, 6).map((project, index) => (
             <Link href={`/projects/${project.id}`} className={`${styles.projectCard} atlas-reveal`} key={project.id}>
-              <div className={styles.projectImage}><Image src={project.image || '/media/projects/hero.jpg'} alt={project.imageAlt || project.title} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" /><span className={project.status === 'COMPLETED' ? `${styles.projectStatus} ${styles.projectStatusCompleted}` : styles.projectStatus}>{project.status}</span></div>
+              <div className={styles.projectImage}><Image src={project.image || '/media/projects/hero.jpg'} alt={project.imageAlt || project.title} fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" unoptimized={isUploadedImageSource(project.image)} /><span className={project.status === 'COMPLETED' ? `${styles.projectStatus} ${styles.projectStatusCompleted}` : styles.projectStatus}>{project.status}</span></div>
               <div className={styles.projectMeta}><span>{String(index + 1).padStart(2, '0')} / {project.categoryLabel}</span></div>
               <h3>{project.title}</h3>
               <p>{project.location} · {project.duration}</p>

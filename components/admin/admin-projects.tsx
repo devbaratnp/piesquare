@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { PROJECT_PROGRESS_STATUSES } from '../../lib/project-progress';
+import { isUploadedImageSource } from '../../lib/image-source';
 import { AdminModal, AdminNotice, adminFetch } from './admin-shared';
 
 type Project = { id: number; slug: string; title: string; category: string; short_description: string; full_description: string | null; featured_image: string | null; client_name: string | null; location: string | null; completion_info: string | null; project_status: string; featured: number; sort_order: number; status: string };
@@ -12,7 +13,7 @@ const emptyProject: ProjectDraft = { slug: '', title: '', category: 'TELECOM', s
 
 function ProjectImage({ src, alt }: { src: string | null | undefined; alt: string }) {
   if (!src) return <div className="admin-project-card__fallback" aria-label="No project image"><span>Visual pending</span><strong>{alt.slice(0, 2).toUpperCase()}</strong></div>;
-  if (src.startsWith('/')) return <Image className="admin-project-card__image" src={src} alt={alt} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />;
+  if (src.startsWith('/')) return <Image className="admin-project-card__image" src={src} alt={alt} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" unoptimized={isUploadedImageSource(src)} />;
   return <img className="admin-project-card__image" src={src} alt={alt} loading="lazy" />;
 }
 

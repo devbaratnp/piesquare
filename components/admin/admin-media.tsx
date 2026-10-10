@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AdminNotice, adminFetch } from './admin-shared';
+import { isUploadedImageSource } from '../../lib/image-source';
 
 type Media = { id: number; filename: string; storage_path: string; mime_type: string; size_bytes: number; alt_text: string | null; created_at: string };
 
@@ -171,7 +172,7 @@ export function AdminMedia({ onConfigured }: { onConfigured: (value: boolean | n
             {media.map((item) => (
               <article className="admin-media-card" key={item.id}>
                 <div className="admin-media-card__image">
-                  <Image src={item.storage_path} alt={item.alt_text ?? item.filename} fill sizes="(max-width: 700px) 50vw, (max-width: 1100px) 33vw, 240px" />
+                  <Image src={item.storage_path} alt={item.alt_text ?? item.filename} fill sizes="(max-width: 700px) 50vw, (max-width: 1100px) 33vw, 240px" unoptimized={isUploadedImageSource(item.storage_path)} />
                 </div>
                 <div className="admin-media-card__details">
                   <strong title={item.filename}>{item.filename}</strong>

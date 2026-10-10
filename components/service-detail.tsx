@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ProjectRecord, ServiceCapability } from '@/data/site';
+import { isUploadedImageSource } from '@/lib/image-source';
 
 type ServiceDetailProps = Readonly<{
   capabilities?: ReadonlyArray<ServiceCapability>;
@@ -14,7 +15,7 @@ function ProjectProofCard({ project }: { project: ProjectRecord }) {
   return (
     <article className="related-project-card">
       <div className="related-project-card__image">
-        <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 720px) calc(100vw - 36px), (max-width: 1440px) 46vw, 640px" />
+        <Image src={project.image} alt={project.imageAlt} fill sizes="(max-width: 720px) calc(100vw - 36px), (max-width: 1440px) 46vw, 640px" unoptimized={isUploadedImageSource(project.image)} />
         <span className={`related-project-card__status related-project-card__status--${project.status.toLowerCase()}`}>{project.status}</span>
       </div>
       <div className="related-project-card__copy">
