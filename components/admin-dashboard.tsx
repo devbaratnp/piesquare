@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { PROJECT_PROGRESS_STATUSES } from '@/lib/project-progress';
+import { PROJECT_PROGRESS_STATUSES } from '../lib/project-progress';
 
 type Hero = { eyebrow: string; title: string; subtitle: string; ctaText: string; ctaUrl: string; image: string };
 type Contact = { email: string; phone: string; address: string; mapUrl: string; facebook: string; website: string };
