@@ -219,7 +219,9 @@ export function AdminProjects({ onConfigured }: { onConfigured: (value: boolean 
         <form className="admin-modal-form" onSubmit={save} aria-busy={pending}>
           <div className="admin-project-editor">
             <div className="admin-project-editor__preview">
-              <ProjectImage src={projectImagePreview || draft.featuredImage || null} alt={draft.title || 'Project preview'} />
+              <div className="admin-project-card__media">
+                <ProjectImage src={projectImagePreview || draft.featuredImage || null} alt={draft.title || 'Project preview'} />
+              </div>
               <span>{projectImageFile ? `Selected from device · ${projectImageFile.name}` : 'Current project image preview'}</span>
             </div>
             <div className="admin-project-editor__fields">
