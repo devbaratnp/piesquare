@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { AdminLoginForm } from '@/components/admin-login-form';
+import { AdminLoginForm } from '../../../components/admin-login-form';
 
 export const metadata: Metadata = { title: 'Admin login | Pie Square Technologies', robots: { index: false, follow: false } };
 
