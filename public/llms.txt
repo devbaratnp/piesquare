@@ -1,0 +1,25 @@
+# Pie Square Technologies
+
+Pie Square Technologies is an infrastructure and technology solutions company based in Lalitpur, Nepal.
+
+## What the company does
+
+- Telecom infrastructure, RF drive testing, network verification, and optimization
+- Optical fiber route survey, deployment, splicing, testing, and maintenance
+- Solar, electrical, hybrid power, and renewable-energy systems
+- IT infrastructure, digital systems, and website content services
+
+## Public pages
+
+- Homepage: https://piesquaretechnologies.com/
+- Company: https://piesquaretechnologies.com/company
+- Clients: https://piesquaretechnologies.com/clients
+- Capabilities: https://piesquaretechnologies.com/capabilities
+- Projects: https://piesquaretechnologies.com/projects
+- Careers: https://piesquaretechnologies.com/careers
+- Contact: https://piesquaretechnologies.com/contact
+
+## Canonical sources
+
+- Sitemap: https://piesquaretechnologies.com/sitemap.xml
+- Robots policy: https://piesquaretechnologies.com/robots.txt

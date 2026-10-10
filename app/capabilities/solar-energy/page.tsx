@@ -1,16 +1,16 @@
-import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
 import { ServiceDetail } from '@/components/service-detail';
 import { serviceDetails } from '@/data/site';
 import { getPublicContent } from '@/server/content';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'Solar & Energy Systems | Pie Square Technologies',
   description: 'Hybrid and off-grid power for connectivity infrastructure.',
-  alternates: { canonical: '/capabilities/solar-energy' },
-};
+  path: '/capabilities/solar-energy',
+});
 
 export default async function SolarCapabilityPage() {
   const detail = serviceDetails['solar-energy'];

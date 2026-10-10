@@ -1,15 +1,16 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
 import { InnerPage } from '@/components/inner-page';
 import { clients, trustedClientLogoFiles } from '@/data/site';
 import { getPublicContent } from '@/server/content';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'Clients | Pie Square Technologies',
   description: 'Trusted across critical infrastructure in Nepal.',
-};
+  path: '/clients',
+});
 
 export default async function ClientsPage() {
   const content = await getPublicContent();

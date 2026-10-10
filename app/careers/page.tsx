@@ -1,15 +1,15 @@
-import type { Metadata } from 'next';
 import { CareersList } from '@/components/careers-list';
 import { InnerPage } from '@/components/inner-page';
 import { getPublicContent } from '@/server/content';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'Careers | Pie Square Technologies',
   description: 'Engineering, technical, field and project-management roles across Nepal.',
-  alternates: { canonical: '/careers' },
-};
+  path: '/careers',
+});
 
 export default async function CareersPage() {
   const content = await getPublicContent();

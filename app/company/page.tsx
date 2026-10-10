@@ -1,15 +1,15 @@
-import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
 import { companyAboutIntro, companyApproach, companyApproachIntro, companyMissionCopy, companyMissionTitle, companyTeamIntro, companyValuesDetailed, companyVisionCopy, companyVisionTitle, industryDetails, teamDepartments } from '@/data/site';
 import { getPublicContent } from '@/server/content';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'About Us | Pie Square Technologies',
   description: 'The field force behind critical infrastructure in Nepal.',
-  alternates: { canonical: '/company' },
-};
+  path: '/company',
+});
 
 const provinces = ['Koshi Province', 'Madhesh Province', 'Bagmati Province', 'Gandaki Province', 'Lumbini Province', 'Karnali Province', 'Sudurpashchim Province'];
 

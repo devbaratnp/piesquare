@@ -50,16 +50,30 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const content = await getPublicContent();
   const organizationJsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Pie Square Technologies',
-    url: 'https://piesquaretechnologies.com',
-    email: content.contact.email,
-    telephone: content.contact.phone,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Lalitpur',
-      addressCountry: 'NP',
-    },
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': 'https://piesquaretechnologies.com/#organization',
+        name: 'Pie Square Technologies',
+        url: 'https://piesquaretechnologies.com',
+        logo: 'https://piesquaretechnologies.com/media/logos/pie-square-logo-transparent.png',
+        email: content.contact.email,
+        telephone: content.contact.phone,
+        sameAs: [content.contact.facebook],
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Lalitpur',
+          addressCountry: 'NP',
+        },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://piesquaretechnologies.com/#website',
+        name: 'Pie Square Technologies',
+        url: 'https://piesquaretechnologies.com',
+        publisher: { '@id': 'https://piesquaretechnologies.com/#organization' },
+      },
+    ],
   };
 
   return (

@@ -6,6 +6,7 @@ import { SignalLine } from '@/components/signal-line';
 import { FloatingContact } from '@/components/floating-contact';
 import { SiteFooter } from '@/components/site-footer';
 import { siteContact } from '@/data/site';
+import { buildBreadcrumbJsonLd } from '@/lib/seo';
 
 type InnerPageProps = Readonly<{
   eyebrow: string;
@@ -22,9 +23,11 @@ type InnerPageProps = Readonly<{
   children: React.ReactNode;
 }>;
 
-export function InnerPage({ eyebrow, title, lede, justifyLede = false, image, imageAlt = '', light = true, variant = 'default', hideActions = false, contact = siteContact, children }: InnerPageProps) {
+export function InnerPage({ eyebrow, title, lede, justifyLede = false, crumbs, image, imageAlt = '', light = true, variant = 'default', hideActions = false, contact = siteContact, children }: InnerPageProps) {
+  const breadcrumbJsonLd = crumbs?.length ? buildBreadcrumbJsonLd(crumbs) : null;
   return (
     <>
+      {breadcrumbJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />}
       <a className="skip-link" href="#inner-content">Skip to main content</a>
       <SiteNav tone={light ? 'paper' : 'dark'} />
       <FloatingContact contact={contact} />

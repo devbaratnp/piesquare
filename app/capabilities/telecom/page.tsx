@@ -1,16 +1,16 @@
-import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
 import { ServiceDetail } from '@/components/service-detail';
 import { serviceDetails } from '@/data/site';
 import { getPublicContent } from '@/server/content';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'Telecom Infrastructure | Pie Square Technologies',
   description: 'Site survey through optimization for mobile network infrastructure.',
-  alternates: { canonical: '/capabilities/telecom' },
-};
+  path: '/capabilities/telecom',
+});
 
 export default async function TelecomCapabilityPage() {
   const detail = serviceDetails.telecom;

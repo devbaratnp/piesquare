@@ -1,16 +1,16 @@
-import type { Metadata } from 'next';
 import { ContactForm } from '@/components/contact-form';
 import { InnerPage } from '@/components/inner-page';
 import { PhoneIcon, WhatsAppIcon } from '@/components/contact-icons';
 import { getPublicContent } from '@/server/content';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'Contact | Pie Square Technologies',
   description: 'Talk to the Pie Square Technologies engineering team.',
-  alternates: { canonical: '/contact' },
-};
+  path: '/contact',
+});
 
 export default async function ContactPage() {
   const { contact } = await getPublicContent();

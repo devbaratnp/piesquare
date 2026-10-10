@@ -1,15 +1,15 @@
-import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
 import { ProjectGrid } from '@/components/project-grid';
 import { getPublicContent } from '@/server/content';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'Projects | Pie Square Technologies',
   description: 'Field proof from telecom, fiber, energy, and IT delivery across Nepal.',
-  alternates: { canonical: '/projects' },
-};
+  path: '/projects',
+});
 
 export default async function ProjectsPage() {
   const content = await getPublicContent();

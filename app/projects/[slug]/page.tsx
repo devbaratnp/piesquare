@@ -1,9 +1,9 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { InnerPage } from '@/components/inner-page';
 import { projects } from '@/data/site';
 import { getPublicContent } from '@/server/content';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,12 +13,12 @@ export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.id }));
 }
 
-export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: ProjectPageProps) {
   const { slug } = await params;
   const project = (await getPublicContent()).projects.find((item) => item.id === slug);
   return project
-    ? { title: `${project.title} | Pie Square Technologies`, description: project.description, alternates: { canonical: `/projects/${project.id}` } }
-    : { title: 'Project not found | Pie Square Technologies' };
+    ? buildPageMetadata({ title: `${project.title} | Pie Square Technologies`, description: project.description, path: `/projects/${project.id}`, image: project.image, imageAlt: project.imageAlt })
+    : { title: 'Project not found | Pie Square Technologies', robots: { index: false, follow: false } };
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {

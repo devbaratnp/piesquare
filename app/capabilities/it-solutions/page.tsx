@@ -1,16 +1,16 @@
-import type { Metadata } from 'next';
 import { InnerPage } from '@/components/inner-page';
 import { ServiceDetail } from '@/components/service-detail';
 import { serviceDetails } from '@/data/site';
 import { getPublicContent } from '@/server/content';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'IT & Digital Solutions | Pie Square Technologies',
   description: 'Infrastructure, security, and software for connected organizations.',
-  alternates: { canonical: '/capabilities/it-solutions' },
-};
+  path: '/capabilities/it-solutions',
+});
 
 export default async function ITSolutionsPage() {
   const detail = serviceDetails['it-solutions'];

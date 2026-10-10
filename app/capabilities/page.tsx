@@ -1,17 +1,17 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { InnerPage } from '@/components/inner-page';
 import { ProvenMetrics } from '@/components/proven-metrics';
 import { deliveryCapabilities, technicalResources, technicalWorkforce } from '@/data/site';
 import { getPublicContent } from '@/server/content';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'Capabilities | Pie Square Technologies',
   description: 'Telecom, optical fiber, solar and energy, and IT solutions — one infrastructure partner.',
-  alternates: { canonical: '/capabilities' },
-};
+  path: '/capabilities',
+});
 
 export default async function CapabilitiesPage() {
   const content = await getPublicContent();
